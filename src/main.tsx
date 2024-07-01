@@ -1,14 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import PageButton from "./components/PageButton";
 
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <div className="bg-dark p-20 h-screen grid grid-cols-4 gap-20">
-      <PageButton page={1} state="active" />
-      <PageButton page={2} state="default" />
       <div className="bg-dark-light"></div>
       <div className="bg-white"></div>
       <div className="bg-white-dimmed"></div>

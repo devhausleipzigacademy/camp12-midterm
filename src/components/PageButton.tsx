@@ -1,24 +1,21 @@
 import React from "react";
+import { cn } from "../utils/styling";
 
 type Props = {
-  state: "default" | "active";
+  active?: boolean;
   page: number;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const PageButton: React.FC<Props> = ({ state, page, ...props }) => {
-  const buttonClass =
-    state === "active"
-      ? "text-dark-light h-8 aspect-square rounded-sm bg-yellow"
-      : "text-dark-light h-8 aspect-square rounded-sm bg-white-dimmed";
-
+export const PageButton = ({ active = false, page, ...props }: Props) => {
   return (
-    <>
-      {" "}
-      <button className={buttonClass} {...props}>
-        {page}
-      </button>
-    </>
+    <button
+      className={cn(
+        "text-dark-light size-8 rounded-sm text-xs",
+        active ? "bg-yellow" : "bg-white-dimmed"
+      )}
+      {...props}
+    >
+      {page}
+    </button>
   );
 };
-
-export default PageButton;
