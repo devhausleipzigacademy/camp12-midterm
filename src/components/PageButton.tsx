@@ -6,7 +6,7 @@ type Props = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const PageButton: React.FC<Props> = ({ state, page, ...props }) => {
-  let buttonClass =
+  const buttonClass =
     state === "active"
       ? "text-dark-light h-8 aspect-square rounded-sm bg-yellow"
       : "text-dark-light h-8 aspect-square rounded-sm bg-white-dimmed";
@@ -15,9 +15,6 @@ const PageButton: React.FC<Props> = ({ state, page, ...props }) => {
     <>
       {" "}
       <button className={buttonClass} {...props}>
-        {page}
-      </button>
-      <button className={(buttonClass = "default")} {...props}>
         {page}
       </button>
     </>
