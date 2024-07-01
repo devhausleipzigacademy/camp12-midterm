@@ -3,11 +3,12 @@ import ReactDOM from "react-dom/client";
 
 import "./index.css";
 import Member from "./components/Member";
+import { NavBar } from "./components/NavBar";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    <NavBar></NavBar>
     <div className="bg-dark p-20 h-screen grid grid-cols-4 gap-20">
-      {" "}
       <Member
         name={"Jake Jakeson"}
         role={"Foo the Fork"}
