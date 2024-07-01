@@ -10,33 +10,24 @@ import {
 export function NavBar() {
   const [icon, setIconState] = useState("home");
 
+  const navItems = [
+    { icon: HomeIcon, state: "home" },
+    { icon: FilmIcon, state: "film" },
+    { icon: QueueListIcon, state: "queueList" },
+    { icon: UserIcon, state: "user" },
+  ];
+
   return (
     <div className="bg-dark flex pl-16 pr-16 pt-8 pb-8 gap-6 justify-evenly items-center">
-      <HomeIcon
-        className={`size-6 ${
-          icon === "home" ? "text-white" : "text-white-dimmed"
-        }`}
-        onClick={() => setIconState("home")}
-      />
-
-      <FilmIcon
-        className={`size-6 ${
-          icon === "film" ? "text-white" : "text-white-dimmed"
-        }`}
-        onClick={() => setIconState("film")}
-      />
-      <QueueListIcon
-        className={`size-6 ${
-          icon === "queueList" ? "text-white" : "text-white-dimmed"
-        }`}
-        onClick={() => setIconState("queueList")}
-      />
-      <UserIcon
-        className={`size-6 ${
-          icon === "user" ? "text-white" : "text-white-dimmed"
-        }`}
-        onClick={() => setIconState("user")}
-      />
+      {navItems.map((item, index) => (
+        <item.icon
+          key={index}
+          className={`size-6 ${
+            icon === item.state ? "text-white" : "text-white-dimmed"
+          }`}
+          onClick={() => setIconState(item.state)}
+        />
+      ))}
     </div>
   );
 }
