@@ -8,7 +8,7 @@ import { cn } from "../utils/styling";
 
 type Props = {
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary";
   size?: "default" | "small";
 };
 
