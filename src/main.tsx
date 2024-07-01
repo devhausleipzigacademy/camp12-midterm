@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.css";
+import Footer from "./components/NavigationBar";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -14,5 +15,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <div className="bg-red"></div>
       <div className="bg-green"></div>
     </div>
+    <Footer />
   </React.StrictMode>
 );
