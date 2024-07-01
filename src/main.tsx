@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 
 import "./index.css";
 import Footer from "./components/NavigationBar";
+import GenreOverview from "./layouts/GenreOverview";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <div className="bg-red"></div>
       <div className="bg-green"></div>
     </div>
+    <GenreOverview />
     <Footer />
   </React.StrictMode>
 );

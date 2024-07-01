@@ -1,0 +1,18 @@
+export const genres = [
+  { name: "Action", icon: "🔥" },
+  { name: "Adventure", icon: "🌍" },
+  { name: "Animation", icon: "🎨" },
+  { name: "Comedy", icon: "😂" },
+  { name: "Crime", icon: "🕵️‍♂️" },
+  { name: "Documentary", icon: "🎥" },
+  { name: "Drama", icon: "🎭" },
+  { name: "Family", icon: "👨‍👩‍👧‍👦" },
+  { name: "Fantasy", icon: "🧙‍♂️" },
+  { name: "History", icon: "📜" },
+  { name: "Horror", icon: "👻" },
+  { name: "Music", icon: "🎵" },
+  { name: "Mystery", icon: "🔍" },
+  { name: "Romance", icon: "❤️" },
+  { name: "Science Fiction", icon: "👽" },
+  { name: "Thriller", icon: "🔪" },
+];
