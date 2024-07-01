@@ -21,11 +21,10 @@ export function Button({
     <button
       className={cn(
         "rounded-lg font-semibold",
-        "hover:shadow-xl",
         variant === "primary" ? "bg-yellow disabled:bg-yellow/50" : null,
         variant === "secondary" ? "bg-dark-light" : null,
-        size === "default" ? "py-4 w-full" : null,
-        size === "small" ? "py-2 w-full" : null
+        size === "default" ? "py-4 w-[100%]" : null,
+        size === "small" ? "text-xs py-3 w-[100%]" : null
       )}
     >
       {children}
