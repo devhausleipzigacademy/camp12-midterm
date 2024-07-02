@@ -1,69 +1,74 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import CastPage from "./routes/cast-page";
-
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { LoginPage } from "./layouts/loginpage";
-import { Navbar } from "./layouts/navbar";
-import { Home } from "./layouts/homepage";
-import { Movies } from "./layouts/movies";
-import { Bookmarks } from "./layouts/bookmarks";
-import { Profile } from "./layouts/account";
-import { Genre } from "./layouts/genre";
-import { MovieDetails } from "./layouts/movie-details";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./index.css";
-import { CastAndCrew } from "./layouts/castAndCrew";
-import { TimeSelect } from "./layouts/timeSelect";
-import { SeatsSelect } from "./layouts/seatsSelect";
-import { TicketPage } from "./layouts/ticketPage";
-import { FullPage } from "./layouts/fullPage";
 
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: <p>Login Page</p>,
+  },
+  {
+    path: "/genres",
+    element: <p>Genre Page</p>,
+  },
+  {
     path: "/",
-    element: <Navbar />,
+    element: (
+      <div>
+        <p>Navbar</p>
+        <Outlet />
+      </div>
+    ),
     children: [
-      { index: true, element: <Home /> },
-      { path: "movies", element: <Movies /> },
-      { path: "bookmarks", element: <Bookmarks /> },
-      { path: "profile", element: <Profile /> },
+      {
+        index: true,
+        element: <p>Home Page</p>,
+      },
+      {
+        path: "movies",
+        element: <p>Movies Page</p>,
+      },
+      {
+        path: "bookmarks",
+        element: <p>Bookmarks Page</p>,
+      },
+      {
+        path: "profile",
+        element: <p>Profile Page</p>,
+      },
     ],
   },
   {
-    path: "/full-page",
-    element: <FullPage />,
-  },
-  {
-    path: "/full-page/genre",
-    element: <Genre />,
-  },
-  {
-    path: "full-page/movie-details",
-    element: <MovieDetails />,
-  },
-  {
-    path: "/full-page/movies",
-    element: <Movies />,
-  },
-  {
-    path: "full-page/cast-and-crew",
-    element: <CastAndCrew />,
-  },
-  {
-    path: "/full-page/select-time",
-    element: <TimeSelect />,
-  },
-  {
-    path: "/full-page/select-seats",
-    element: <SeatsSelect />,
-  },
-  {
-    path: "/full-page/tickets",
-    element: <TicketPage />,
-  },
-  {
-    path: "/login",
-    element: <LoginPage />,
+    path: "/movies/:movieId",
+    element: (
+      <div>
+        <p>Full Page</p>
+        <Outlet />
+      </div>
+    ),
+    children: [
+      {
+        index: true,
+        element: <p>Movie Details Page</p>,
+      },
+      {
+        path: "cast-and-crew",
+        element: <p>Cast and Crew Page</p>,
+      },
+      {
+        path: "select-time",
+        element: <p>Select Time Page</p>,
+      },
+      {
+        path: "select-seats",
+        element: <p>Select Seats Page</p>,
+      },
+      {
+        path: "ticket",
+        element: <p>Ticket Page</p>,
+      },
+    ],
   },
 ]);
 
