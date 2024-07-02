@@ -1,11 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import "./index.css";
+import Member from "./components/Member";
+import { NavBar } from "./components/NavBar";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    <NavBar></NavBar>
     <div className="bg-dark p-20 h-screen grid grid-cols-4 gap-20">
+      <Member
+        name={"Jake Jakeson"}
+        role={"Foo the Fork"}
+        image={"https://i.imgflip.com/qixjk.jpg"}
+      />
       <div className="bg-dark-light"></div>
       <div className="bg-white"></div>
       <div className="bg-white-dimmed"></div>
