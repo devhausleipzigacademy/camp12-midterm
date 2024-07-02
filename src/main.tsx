@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <div className="bg-white-dimmed-heavy"></div>
       <div className="bg-yellow"></div>
       <div className="bg-red"></div>
-      <div className="bg-green"></div>
+      <div className="bg-green flex items-center justify-center"></div>
     </div>
   </React.StrictMode>
 );
