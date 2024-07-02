@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { InputFields } from "./components/input";
+import { Input } from "./components/input";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <div className="bg-yellow"></div>
       <div className="bg-red"></div>
       <div className="bg-green flex items-center justify-center">
-        <InputFields placeholder="Search" />
+        <Input placeholder="Search" />
       </div>
     </div>
   </React.StrictMode>
