@@ -2,11 +2,12 @@ type Props = {
   label: string;
   selected: boolean;
   onSelect: () => void;
-};
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export function TabButton({ label, selected, onSelect }: Props) {
+export function TabButton({ label, selected, onSelect, ...props }: Props) {
   return (
     <button
+      {...props}
       className={`w-full py-1 rounded text-center border ${
         selected
           ? "text-white bg-white-dimmed border-white"

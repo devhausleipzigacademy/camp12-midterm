@@ -1,10 +1,10 @@
-type Props = {
+export type Props = {
   image: string;
   name: string;
   role: string;
 };
 
-const Member = ({ image, name, role }: Props) => {
+export const Member = ({ image, name, role }: Props) => {
   return (
     <>
       <div className="flex gap-5 justify-center items-center">
@@ -17,5 +17,3 @@ const Member = ({ image, name, role }: Props) => {
     </>
   );
 };
-
-export default Member;
