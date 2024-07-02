@@ -11,7 +11,7 @@ export function GenreButton({ genre, selected, onSelect }: Props) {
   // const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 items-center">
       <button
         onClick={onSelect}
         className={cn(
