@@ -11,8 +11,8 @@ export function Seat({ disabled = false, selected, onChange }: Props) {
     <Checkbox
       checked={selected}
       onChange={onChange}
-      disabled={disabled && true}
+      disabled={disabled}
       className="group block size-7 rounded border bg-dark-light data-[checked]:bg-yellow data-[disabled]:cursor-not-allowed data-[disabled]:bg-white"
-    ></Checkbox>
+    />
   );
 }
