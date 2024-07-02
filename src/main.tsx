@@ -4,10 +4,12 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import Member from "./components/Member";
 import { NavBar } from "./components/NavBar";
+import { LoginPage } from "./routes/LoginPage";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <NavBar></NavBar>
+    <LoginPage />
+    {/* <NavBar></NavBar>
     <div className="bg-dark p-20 h-screen grid grid-cols-4 gap-20">
       <Member
         name={"Jake Jakeson"}
@@ -21,6 +23,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <div className="bg-yellow"></div>
       <div className="bg-red"></div>
       <div className="bg-green"></div>
-    </div>
+    </div> */}
   </React.StrictMode>
 );
