@@ -3,7 +3,7 @@ type Props = {
   placeholder: string;
 };
 
-export function Login({ icon: Icon, placeholder }: Props) {
+export function LoginInput({ icon: Icon, placeholder }: Props) {
   return (
     <label className="px-5 py-3 bg-dark-light border-2 border-dark-light rounded-md flex items-center gap-5 overflow-hidden focus-within:border-white-dimmed-heavy">
       <Icon className="h-6 w-auto text-white-dimmed" />
