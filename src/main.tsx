@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import NowPlayingMovies from "./components/nowplayingmovies";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -13,9 +12,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <div className="bg-yellow"></div>
       <div className="bg-red"></div>
       <div className="bg-green"></div>
-    </div>
-    <div>
-      <NowPlayingMovies />
     </div>
   </React.StrictMode>
 );
