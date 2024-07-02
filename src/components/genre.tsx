@@ -1,56 +1,27 @@
-import { useState } from "react";
+import { Genre, genreEmojis } from "../utils/genre";
+import { cn } from "../utils/styling";
 
-interface Genres {
-  name: string;
-  emoji: string;
-}
+type Props = {
+  genre: Genre;
+  selected: boolean;
+  onSelect: () => void;
+};
 
-const genres: Genres[] = [
-  { name: "Romance", emoji: "😍" },
-  { name: "Crime", emoji: "🚔" },
-  { name: "History", emoji: "⏳" },
-  { name: "Action", emoji: "🧨" },
-  { name: "Documentary", emoji: "🎥" },
-  { name: "Horror", emoji: "🔪" },
-  { name: "Adventure", emoji: "💎" },
-  { name: "Drama", emoji: "🎭" },
-  { name: "Music", emoji: "🎧" },
-  { name: "Animation", emoji: "🦁" },
-  { name: "Family", emoji: "👪" },
-  { name: "Mystery", emoji: "🔎" },
-  { name: "Comedy", emoji: "🤣" },
-  { name: "Fantasy", emoji: "🦄" },
-  { name: "Science-Fiction", emoji: "👽" },
-  { name: "Thriller", emoji: "😱" },
-];
-
-export function GenreComponent() {
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+export function GenreButton({ genre, selected, onSelect }: Props) {
+  // const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-dark flex items-center justify-center p-4">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        {genres.map((genre) => (
-          <div
-            key={genre.name}
-            className="flex flex-col items-center cursor-pointer p-2 rounded-lg"
-            onClick={() => setSelectedGenre(genre.name)}
-          >
-            <div
-              className={`w-14 h-14 flex items-center justify-center rounded-lg ${
-                selectedGenre === genre.name
-                  ? "bg-white-dimmed"
-                  : "bg-dark-light"
-              }`}
-            >
-              <span className="text-3xl">{genre.emoji}</span>
-            </div>
-            <div className="mt-2 text-center text-white-dimmed font-inter font-bold text-xs">
-              {genre.name}
-            </div>
-          </div>
-        ))}
-      </div>
+    <div className="flex flex-col gap-2">
+      <button
+        onClick={onSelect}
+        className={cn(
+          "text-3xl rounded-xl size-14 flex items-center justify-center",
+          selected ? "bg-white-dimmed" : "bg-dark-light"
+        )}
+      >
+        {genreEmojis[genre]}
+      </button>
+      <span className="text-white-dimmed font-bold text-xs">{genre}</span>
     </div>
   );
 }
