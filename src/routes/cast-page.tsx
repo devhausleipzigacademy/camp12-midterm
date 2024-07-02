@@ -9,7 +9,7 @@ const CastPage = ({ name, role, image }: Props) => {
 
   return (
     <div className="bg-dark grid grid-cols-4 p-5 gap-4 justify-start items-start">
-      <div className="bg-orange-400 col-span-full items-center justify-center relative px-4">
+      <div className=" col-span-full items-center justify-center relative px-4">
         <IconContext.Provider value={{ color: "white", size: "20px" }}>
           <div className="absolute left-4 text-white mb-2">
             <IoIosArrowBack />
@@ -34,12 +34,21 @@ const CastPage = ({ name, role, image }: Props) => {
       <div className="col-span-full justify-start">
         <Member name={name} role={role} image={image} />
       </div>
-
-      <Member name={name} role={role} image={image} />
-      <Member name={name} role={role} image={image} />
-      <Member name={name} role={role} image={image} />
-      <Member name={name} role={role} image={image} />
-      <Member name={name} role={role} image={image} />
+      <div className="col-span-full justify-start">
+        <Member name={name} role={role} image={image} />
+      </div>
+      <div className="col-span-full justify-start">
+        <Member name={name} role={role} image={image} />
+      </div>
+      <div className="col-span-full justify-start">
+        <Member name={name} role={role} image={image} />
+      </div>
+      <div className="col-span-full justify-start">
+        <Member name={name} role={role} image={image} />
+      </div>
+      <div className="col-span-full justify-start">
+        <Member name={name} role={role} image={image} />
+      </div>
     </div>
   );
 };

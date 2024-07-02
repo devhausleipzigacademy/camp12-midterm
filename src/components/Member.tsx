@@ -9,7 +9,7 @@ export const Member = ({ image, name, role }: Props) => {
     <>
       <div className="col-span-full row-span-1">
         {" "}
-        <div className="flex gap-5 items-center">
+        <div className="flex gap-5 justify-start items-center">
           <img src={image} alt={name} className="size-16 object-cover" />
           <div>
             <h2 className="text-white font-bold text-sm mb-1">{name}</h2>
