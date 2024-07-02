@@ -17,6 +17,9 @@ export default {
         red: "#EF4444",
         green: "#22C55E",
       },
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
     },
   },
   plugins: [],
