@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import "./index.css";
 import Member from "./components/Member";
 import { NavBar } from "./components/NavBar";
