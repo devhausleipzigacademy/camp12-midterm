@@ -1,4 +1,5 @@
 import React from "react";
+import Poster from "./poster-component";
 
 type poster = {
 	title: string;
@@ -9,37 +10,27 @@ type poster = {
 type Props = {
 	posters: poster[];
 	pageNumber: number;
-    singlePoster: poster
+	singlePoster: poster;
 };
 
 const displayPerClick = 4;
 
 let displayPosters: poster[];
 
-function Poster({singlePoster}: Props){
-    return (
-		<div className='relative group'>
-			<img
-				src={singlePoster.image}
-				alt={singlePoster.title}
-				className='w-full h-auto'
-			/>
-			<div className='absolute bottom-0 left-0 right-0 bg-black bg-opacity-75 text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity'>
-				<h3 className='text-lg'>{singlePoster.title}</h3>
-				<p>{singlePoster.year}</p>
-			</div>
+// pageNumber needs to be retrived from somewhere
+function MoviePosterDisplay({ posters, pageNumber }: Props) {
+	for (
+		let step = (pageNumber - 1) * displayPerClick;
+		step < pageNumber * displayPerClick;
+		step++
+	) {
+		displayPosters.push(posters[step]);
+	}
+	return (
+		<div>
+			<Poster></Poster>
 		</div>
 	);
 }
-
-function MoviePosterDisplay({ posters, pageNumber }: Props) {
-	for (let step = (pageNumber - 1) * displayPerClick; step < pageNumber * displayPerClick; step++) {
-		displayPosters.push(posters[step]);
-	}
-    return (
-
-    )
-}
-
 
 export default MoviePosterDisplay;
