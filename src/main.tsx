@@ -1,26 +1,44 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
+import { MoviePosterPage } from "./components/movie-poster-page";
 import "./index.css";
-import Member from "./components/Member";
-import { NavBar } from "./components/NavBar";
+
+type movie = {
+	title: string;
+	year: number; // Does it make more sense to have the "year" from type "string"?!
+	image: string;
+};
+
+const movieArr: movie[] = [
+	{
+		title: "Wednesday",
+		year: 2024,
+		image: "./public/img/img01.jpg",
+	},
+	{
+		title: "Avatar",
+		year: 2023,
+		image: "./public/img/img02.jpg",
+	},
+	{
+		title: "Strange World",
+		year: 2024,
+		image: "./public/img/img03.jpg",
+	},
+	{
+		title: "Violent Night",
+		year: 2024,
+		image: "./public/img/img04.jpg",
+	},
+];
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <NavBar></NavBar>
-    <div className="bg-dark p-20 h-screen grid grid-cols-4 gap-20">
-      <Member
-        name={"Jake Jakeson"}
-        role={"Foo the Fork"}
-        image={"https://i.imgflip.com/qixjk.jpg"}
-      />
-      <div className="bg-dark-light"></div>
-      <div className="bg-white"></div>
-      <div className="bg-white-dimmed"></div>
-      <div className="bg-white-dimmed-heavy"></div>
-      <div className="bg-yellow"></div>
-      <div className="bg-red"></div>
-      <div className="bg-green"></div>
-    </div>
-  </React.StrictMode>
+	<React.StrictMode>
+		<div className=''>
+			<MoviePosterPage
+				movies={movieArr}
+				pageNumber={0}
+			/>
+		</div>
+	</React.StrictMode>
 );
