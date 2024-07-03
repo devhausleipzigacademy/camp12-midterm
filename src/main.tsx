@@ -5,7 +5,6 @@ import CastPage from "./routes/cast-page";
 import "./index.css";
 
 import { NavBar } from "./components/nav-bar";
-import { Homepage } from "./routes/Homepage";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
