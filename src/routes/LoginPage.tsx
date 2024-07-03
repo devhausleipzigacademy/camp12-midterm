@@ -1,5 +1,5 @@
 import { LoginInput } from "../components/LoginInput";
-import { Button } from "../components/Button";
+import { Button } from "../components/button";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { KeyIcon } from "@heroicons/react/24/solid";
 
@@ -17,7 +17,7 @@ export function LoginPage() {
         <LoginInput icon={UserIcon} placeholder={"your@email.com"} />
         <LoginInput icon={KeyIcon} placeholder={"Enter your Password"} />
       </div>
-      <Button />
+      <Button children={undefined} />
     </div>
   );
 }
