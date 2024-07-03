@@ -22,12 +22,12 @@ export function GenreOverviewPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dark flex flex-col p-2">
+    <div className="min-h-screen bg-dark flex flex-col p-3">
       <div className="flex items-center justify-between mb-4">
-        <button onClick={handleBackClick} className="text-white text-xl">
+        <button onClick={handleBackClick} className="mb-12 text-white text-sm">
           <IoIosArrowBack />
         </button>
-        <h1 className="text-white text-xl font-bold">Genres</h1>
+        <h1 className="mb-12 text-white text-sm font-semibold">Genres</h1>
         <div></div>
       </div>
       <div className="grid grid-cols-4 gap-4 place-items-center">
@@ -40,15 +40,11 @@ export function GenreOverviewPage() {
           />
         ))}
       </div>
-      <div className="flex gap-1 mt-4 text-white-dimmed text-center">
-        <div className="text-white font-bold">{selectedGenres.length}</div>{" "}
+      <div className=" w-full flex gap-1 mt-11 text-white-dimmed text-sm text-center">
+        <div className="text-white font-semibold">{selectedGenres.length}</div>{" "}
         Genres selected
       </div>
-      <Button
-        className="mt-auto"
-        variant="primary"
-        onClick={handleConfirmClick}
-      >
+      <Button className="mt-4" variant="primary" onClick={handleConfirmClick}>
         Confirm selected Genres
       </Button>
     </div>
