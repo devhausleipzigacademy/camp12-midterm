@@ -4,6 +4,9 @@ import axios from "axios";
 const API_KEY = import.meta.env.REACT_APP_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
+//undefined API_KEY, needs rework regarding import, see console log
+//console.log(API_KEY);
+
 export const fetchMovieDetails = async (movieId: number) => {
   try {
     const response = await axios.get(
