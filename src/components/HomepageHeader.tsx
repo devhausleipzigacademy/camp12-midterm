@@ -10,9 +10,9 @@ export const HomepageHeader: React.FC<HomepageHeaderProps> = ({
   userImage,
 }) => {
   return (
-    <div className="flex w-screen h-10 bg-dark pl-5 pr-5 pt-8 text-white justify-between items-center">
-      <div className="flex-col">
-        <div className="pb-3 text-white-dimmed text-xs">
+    <div className="flex bg-dark text-white justify-between items-center">
+      <div className="flex flex-col font-bold gap-3">
+        <div className="text-white-dimmed text-xs">
           Welcome {userName} <span className="text-white">👋</span>
         </div>
         <div className="text-sm">Let's relax and watch a movie!</div>
