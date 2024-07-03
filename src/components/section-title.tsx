@@ -11,7 +11,7 @@ export function SectionTitle({ text, ShowSeeAll }: Props) {
     <div className="flex justify-between p-4 items-center">
       <span className="text-white font-medium">{text}</span>
       {ShowSeeAll && (
-        <Link to="/Placeholder" className="text-yellow text-sm">
+        <Link to="/" className="text-yellow text-sm">
           <div className="flex flex-row items-center">
             <span className="whitespace-nowrap">See All</span>
             <ChevronRightIcon className="ml-2 w-5 h-5" />
