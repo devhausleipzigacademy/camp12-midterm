@@ -1,4 +1,4 @@
-import { LoginInput } from "../components/LoginInput";
+import { Input } from "../components/input";
 import { Button } from "../components/button";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { KeyIcon } from "@heroicons/react/24/solid";
@@ -14,8 +14,8 @@ export function LoginPage() {
         your watchlist.
       </p>
       <div className="space-y-5 mb-auto">
-        <LoginInput icon={UserIcon} placeholder={"your@email.com"} />
-        <LoginInput icon={KeyIcon} placeholder={"Enter your Password"} />
+        <Input icon={UserIcon} placeholder={"your@email.com"} />
+        <Input icon={KeyIcon} placeholder={"Enter your Password"} />
       </div>
       <Button children={undefined} />
     </div>

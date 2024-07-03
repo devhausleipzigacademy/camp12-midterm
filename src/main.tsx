@@ -2,11 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./index.css";
+import { LoginPage } from "./routes/LoginPage";
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <p>Login Page</p>,
+    element: <LoginPage />,
   },
   {
     path: "/genres",
