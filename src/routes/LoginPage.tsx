@@ -17,8 +17,7 @@ export function LoginPage() {
           icon="../../public/img/email.svg"
           placeholder="Enter your email"
           inputType="email"
-          pattern=".+@example\.com"
-          minLength={5}
+          pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Standard email regex pattern without % or +					minLength={5}
         />
         <Input
           icon="../../public/img/password.svg"
@@ -27,7 +26,7 @@ export function LoginPage() {
           minLength={8}
         />
       </div>
-      <Button children={undefined} />
+      <Button children="Login" />
     </div>
   );
 }
