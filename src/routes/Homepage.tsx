@@ -1,6 +1,7 @@
 import { GenreButton } from "../components/genre";
 import { Input } from "../components/input";
 import { NavBar } from "../components/nav-bar";
+import { SectionTitle } from "../components/section-title";
 
 export function Homepage() {
   return (
@@ -8,36 +9,38 @@ export function Homepage() {
       <div className="px-5 pt-8 pb-4 flex flex-col gap-6">
         {/* <HomepageHeader /> */}
         <Input placeholder={"Search"} />
-        {/* <SectionTitel /> */}
-        <div className="flex justify-between">
-          <GenreButton
-            genre={"Romance"}
-            selected={false}
-            onSelect={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-          />
-          <GenreButton
-            genre={"Comedy"}
-            selected={false}
-            onSelect={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-          />
-          <GenreButton
-            genre={"Horror"}
-            selected={false}
-            onSelect={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-          />
-          <GenreButton
-            genre={"Drama"}
-            selected={false}
-            onSelect={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-          />
+        <div className="flex flex-col gap-4">
+          <SectionTitle text={"Genre"} />
+          <div className="flex justify-between">
+            <GenreButton
+              genre={"Romance"}
+              selected={false}
+              onSelect={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
+            <GenreButton
+              genre={"Comedy"}
+              selected={false}
+              onSelect={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
+            <GenreButton
+              genre={"Horror"}
+              selected={false}
+              onSelect={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
+            <GenreButton
+              genre={"Drama"}
+              selected={false}
+              onSelect={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
+          </div>
         </div>
         <p className="text-white font-bold">Upcoming Movies</p>
       </div>
@@ -58,7 +61,7 @@ export function Homepage() {
           alt="home alone"
         />
       </div>
-      <div className="">
+      <div className="fixed bottom-0 w-full">
         <NavBar />
       </div>
     </div>
