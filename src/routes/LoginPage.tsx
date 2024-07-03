@@ -1,7 +1,5 @@
 import { Input } from "../components/input";
 import { Button } from "../components/button";
-import { UserIcon } from "@heroicons/react/24/solid";
-import { KeyIcon } from "@heroicons/react/24/solid";
 
 export function LoginPage() {
   return (
@@ -13,16 +11,20 @@ export function LoginPage() {
         You need to log in to be able to make reservations and add movies to
         your watchlist.
       </p>
-      <div className="space-y-5 mb-auto">
+      {/* <div className='space-y-5 mb-auto'> */}
+      <div className="p-4">
         <Input
-          type="email"
-          icon={<UserIcon />}
-          placeholder={"your@email.com"}
+          icon="../../public/img/email.svg"
+          placeholder="Enter your email"
+          inputType="email"
+          pattern=".+@example\.com"
+          minLength={5}
         />
         <Input
-          type="password"
-          icon={<KeyIcon />}
-          placeholder={"Enter your Password"}
+          icon="../../public/img/password.svg"
+          placeholder="Enter your password"
+          inputType="password"
+          minLength={8}
         />
       </div>
       <Button children={undefined} />
