@@ -1,5 +1,3 @@
-import React from "react";
-
 type Props = {
   icon?: string;
   placeholder: string;
@@ -16,8 +14,7 @@ export const Input = ({
   minLength,
 }: Props) => {
   return (
-    <label className="flex gap-5 items-center w-full py-3 px-5 rounded-full bg-dark-light border-2 border-dark-light focus-within:border-white-dimmed-heavy transition">
-      {/* <IoIosSearch className='text-white-dimmed size-5' /> */}
+    <label className="flex gap-5 items-center w-full py-3 px-4 rounded-lg bg-dark-light border-2 border-dark-light focus-within:border-white-dimmed-heavy transition">
       {icon && (
         <img
           src={icon}

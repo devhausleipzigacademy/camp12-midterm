@@ -12,21 +12,23 @@ export function LoginPage() {
         your watchlist.
       </p>
       {/* <div className='space-y-5 mb-auto'> */}
-      <div className="p-4">
-        <Input
-          icon="../../public/img/email.svg"
-          placeholder="Enter your email"
-          inputType="email"
-          pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Standard email regex pattern without % or +					minLength={5}
-        />
-        <Input
-          icon="../../public/img/password.svg"
-          placeholder="Enter your password"
-          inputType="password"
-          minLength={8}
-        />
+      <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col gap-4">
+          <Input
+            icon="../../public/img/email.svg"
+            placeholder="Enter your email"
+            inputType="email"
+            pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Standard email regex pattern without % or +					minLength={5}
+          />
+          <Input
+            icon="../../public/img/password.svg"
+            placeholder="Enter your password"
+            inputType="password"
+            minLength={8}
+          />
+        </div>
+        <Button children="Login" />
       </div>
-      <Button children="Login" />
     </div>
   );
 }
