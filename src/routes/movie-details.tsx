@@ -1,55 +1,133 @@
+import { useEffect, useState } from "react";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
+import { fetchMovieDetails, fetchCreditDetails } from "../assets/api";
 
-export default function MovieDetails() {
+type Props = {
+  movieId: string;
+  title: string;
+  releaseDate: string;
+  genre: string[];
+  runtime: number;
+  voteAverage: number;
+  overview: string;
+  director: string;
+  writer: string;
+};
+
+export default function MovieDetails({ movieId }: Props) {
+  const [movie, setMovie] = useState(null);
+  const [credit, setCredit] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getMovieDetails = async () => {
+      try {
+        const movieData = await fetchMovieDetails(movieId);
+        setMovie(movieData);
+      } catch (error) {
+        console.error("Error fetching movie details:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getMovieDetails();
+  }, [movieId]);
+
+  useEffect(() => {
+    const getCreditDetails = async () => {
+      try {
+        const creditData = await fetchCreditDetails(movieId);
+        setCredit(creditData);
+      } catch (error) {
+        console.error("Error fetching movie credits:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getCreditDetails();
+  }, [movieId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!movie) {
+    return <div>Error loading movie details.</div>;
+  }
+
+  console.log(movie);
+
   return (
-    // TOP
-    <section className="flex flex-col h-screen bg-dark px-8">
-      <div className="flex flex-row justify-between mt-8">
-        <span className="text-white">{"<"}</span>
-        <h1 className="text-white font-bold">Movie Detail</h1>
-        <HeartIcon className="size-6 text-red"></HeartIcon>
+    <section className="flex flex-col h-screen bg-dark px-4">
+      <div className="flex-grow">
+        <div className="flex flex-row justify-between my-2 h-16 items-center">
+          <svg
+            className="h-4 aspect-square"
+            viewBox="0 0 16 16"
+            fill="white"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M5.14671 8.35335C5.05308 8.2596 5.00049 8.13252 5.00049 8.00002C5.00049 7.86752 5.05308 7.74044 5.14671 7.64669L10.1467 2.64669C10.1925 2.59756 10.2477 2.55816 10.309 2.53083C10.3704 2.50351 10.4366 2.48881 10.5037 2.48763C10.5708 2.48644 10.6375 2.49879 10.6998 2.52394C10.762 2.54909 10.8186 2.58652 10.8661 2.634C10.9136 2.68147 10.951 2.73803 10.9761 2.80029C11.0013 2.86255 11.0136 2.92923 11.0124 2.99637C11.0113 3.0635 10.9966 3.12971 10.9692 3.19105C10.9419 3.25238 10.9025 3.30758 10.8534 3.35335L6.20672 8.00002L10.8534 12.6467C10.9025 12.6925 10.9419 12.7477 10.9692 12.809C10.9966 12.8703 11.0113 12.9365 11.0124 13.0037C11.0136 13.0708 11.0013 13.1375 10.9761 13.1998C10.951 13.262 10.9136 13.3186 10.8661 13.366C10.8186 13.4135 10.762 13.451 10.6998 13.4761C10.6375 13.5013 10.5708 13.5136 10.5037 13.5124C10.4366 13.5112 10.3704 13.4965 10.309 13.4692C10.2477 13.4419 10.1925 13.4025 10.1467 13.3534L5.14671 8.35335Z" />
+          </svg>
+          <h1 className="text-white text-base font-bold">Movie Detail</h1>
+          <HeartIcon className="size-6 text-red"></HeartIcon>
+        </div>
+        <div className="text-white">
+          <div
+            className={`h-52 bg-orange-300 rounded-lg mb-4 w-full max-h-full max-w-full bg-cover bg-no-repeat bg-center`}
+            style={{
+              backgroundImage: `url('https://image.tmdb.org/t/p/w500/${movie.backdrop_path}')`,
+            }}
+          ></div>
+          <h1 className="text-xl font-bold pb-3">{movie.title}</h1>
+          <ul className="flex flex-row gap-4 pb-3 text-xs">
+            <li className="text-white">{movie.release_date.split("-")[0]}</li>
+            <li className="text-white-dimmed">
+              {movie.genres
+                .map((e: { id: number; name: string }) => {
+                  return e.name;
+                })
+                .join(" / ")}
+            </li>
+            <li className="text-white-dimmed">
+              {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
+            </li>
+            <li className="ml-auto text-green">
+              {(movie.vote_average * 10).toPrecision(2)}%
+              <span className="text-white-dimmed">&nbsp;Score</span>
+            </li>
+          </ul>
+          <div className="grid grid-flow-col-dense grid-cols-5 gap-x-2 text-xs auto-cols-fr">
+            <span className=" text-white-dimmed pb-2 ">Director:&nbsp;</span>
+            <span className=" text-white-dimmed">Writer:&nbsp;</span>
+            <div className="col-span-2">
+              {credit.crew
+                .filter((e) => e.job === "Director")
+                .map((e: { id: number; name: string }) => {
+                  return <p key={e.id}>{e.name} </p>;
+                })}
+            </div>
+            <div className="col-span-2">
+              {credit.crew
+                .filter((e) => e.job === "Writer")
+                .map((e: { id: number; name: string }) => {
+                  return <p key={e.id}>{e.name} </p>;
+                })}
+            </div>
+            <button className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md max-h-10 h-full self-center">
+              Cast & Crew
+            </button>
+          </div>
+          <hr className="h-px my-4 border-0 bg-white-dimmed" />
+          <h2 className="text-sm pb-3">Synopsis</h2>
+          <p className="text-white-dimmed truncate text-sm">{movie.overview}</p>
+          <p className="text-yellow text-sm underline pt-1">Read more</p>
+        </div>
       </div>
 
-      <div className="text-white">
-        <div className="w-80 h-52 bg-orange-300 rounded-lg mb-6 mt-5">
-          IMAGE
-        </div>{" "}
-        {/* IMAGE */}
-        <h1 className="text-xl font-bold pb-3">{"movie.title"}</h1>{" "}
-        {/* TITLE */}
-        <ul className="flex flex-row gap-4 pb-3 text-xs">
-          <li className="text-white">{"date"}</li>
-          <li className="text-white-dimmed">{"genre"}</li>
-          <li className="text-white-dimmed">{"duration"}</li>
-          <li className="ml-auto text-green">
-            ${"score"} %<span className="text-white-dimmed">Score</span>
-          </li>
-        </ul>
-        <div className="grid grid-flow-col-dense grid-cols-4 text-sm gap-x-2 text-xs">
-          <span className="col-span-1 text-white-dimmed pb-2 ">
-            Director:&nbsp;
-          </span>
-          <span className="col-span-1 text-white-dimmed">Writer:&nbsp;</span>
-          <span className="col-span-1 ">{"dir.name"}</span>
-          <span className="col-span-1 ">{"writer.name"}</span>
-          <button className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md">
-            Cast & Crew
-          </button>
-        </div>
-        <hr className="h-px my-4 border-0 bg-white-dimmed" />
-        {/* DESCRIPTION */}
-        <h2 className="text-sm pb-3">Synopsis</h2>
-        <p className="text-white-dimmed truncate text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum ut
-          officiis autem soluta officia veniam voluptatem eaque obcaecati
-          distinctio inventore maiores eligendi ipsam non magni dolore tempora
-          magnam, fugiat illum?
-        </p>
-        <p className="text-yellow underline pb-12">Read more</p>
-        <div className="mb-6 text-dark-light">
-          <Button children={undefined}>Get Reservation</Button>
-        </div>
+      <div className="text-dark-light mt-auto pb-4">
+        <Button children={"Get Reservation"} />
       </div>
     </section>
   );
