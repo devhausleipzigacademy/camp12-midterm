@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./index.css";
 import { LoginPage } from "./routes/LoginPage";
+import NavBarLayout from "./layouts/NavBarLayout";
 
 const router = createBrowserRouter([
   {
@@ -17,8 +18,8 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <div>
-        <p>Navbar</p>
         <Outlet />
+        <NavBarLayout />
       </div>
     ),
     children: [
