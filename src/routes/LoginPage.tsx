@@ -1,7 +1,7 @@
-import { Input } from "../components/input";
 import { Button } from "../components/button";
-import { UserIcon } from "@heroicons/react/24/solid";
 import { KeyIcon } from "@heroicons/react/24/solid";
+import { LockClosedIcon } from "@heroicons/react/24/outline";
+import { LoginInput } from "../components/login-input";
 
 export function LoginPage() {
   return (
@@ -13,19 +13,24 @@ export function LoginPage() {
         You need to log in to be able to make reservations and add movies to
         your watchlist.
       </p>
-      <div className="space-y-5 mb-auto">
-        <Input
-          type="email"
-          icon={<UserIcon />}
-          placeholder={"your@email.com"}
-        />
-        <Input
-          type="password"
-          icon={<KeyIcon />}
-          placeholder={"Enter your Password"}
-        />
+      {/* <div className='space-y-5 mb-auto'> */}
+      <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col gap-4">
+          <LoginInput
+            icon={<KeyIcon />}
+            placeholder="Enter your email"
+            type="email"
+            pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Standard email regex pattern without % or +
+          />
+          <LoginInput
+            icon={<LockClosedIcon />}
+            placeholder="Enter your password"
+            type="password"
+            minLength={8}
+          />
+        </div>
+        <Button children="Login" />
       </div>
-      <Button />
     </div>
   );
 }
