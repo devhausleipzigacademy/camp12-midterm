@@ -1,12 +1,11 @@
 import { GenreButton } from "../components/genre";
 import { HomepageHeader } from "../components/homepage-header";
 import { Input } from "../components/input";
-import { NavBar } from "../components/nav-bar";
 import { SectionTitle } from "../components/section-title";
 
 export function Homepage() {
   return (
-    <div className="h-screen bg-dark">
+    <div className="h-screen bg-dark overflow-hidden">
       <div className="px-5 pt-8 pb-4 flex flex-col gap-6">
         <HomepageHeader
           userName={"Herr Vogel"}
@@ -48,37 +47,39 @@ export function Homepage() {
             />
           </div>
         </div>
-        <p className="text-white font-bold">Upcoming Movies</p>
+        <SectionTitle text={"Upcoming Movies"} />
       </div>
-      <div className="relative w-full h-56 flex gap-6 overflow-hidden">
+      <div className="flex gap-6 overflow-y-hidden scrollbar-hide snap-x h-56 -mx-5">
         <img
-          className="rounded-lg"
+          className="rounded-md snap-center"
           src="https://image.tmdb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg"
           alt="star wars"
         />
         <img
-          className="rounded-lg"
-          src="https://xl.movieposterdb.com/13_10/2001/246578/xl_246578_f3904c49.jpg"
-          alt="Donnie Darko"
-        />
-        <img
-          className="rounded-lg"
+          className="rounded-md snap-center"
           src="https://image.tmdb.org/t/p/original/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg"
           alt="shrek"
         />
         <img
-          className="rounded-lg"
-          src="https://xl.movieposterdb.com/13_06/1999/137523/xl_137523_1d292ea3.jpg?v=2024-07-04%2010:59:05"
-          alt="Fight Club"
-        />
-        <img
-          className="rounded-lg"
+          className="rounded-md snap-center"
           src="https://image.tmdb.org/t/p/original/onTSipZ8R3bliBdKfPtsDuHTdlL.jpg"
           alt="home alone"
         />
-      </div>
-      <div className="fixed bottom-0 w-full">
-        <NavBar />
+        <img
+          className="rounded-md snap-center"
+          src="https://image.tmdb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg"
+          alt="star wars "
+        />
+        <img
+          className="rounded-md snap-center"
+          src="https://image.tmdb.org/t/p/original/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg"
+          alt="shrek"
+        />
+        <img
+          className="rounded-md snap-center"
+          src="https://image.tmdb.org/t/p/original/onTSipZ8R3bliBdKfPtsDuHTdlL.jpg"
+          alt="home alone"
+        />
       </div>
     </div>
   );
