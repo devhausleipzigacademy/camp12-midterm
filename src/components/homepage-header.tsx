@@ -1,14 +1,9 @@
-import React from "react";
-
-interface HomepageHeaderProps {
+type HomepageHeaderProps = {
   userName: string;
   userImage: string;
-}
+};
 
-export const HomepageHeader: React.FC<HomepageHeaderProps> = ({
-  userName,
-  userImage,
-}) => {
+export function HomepageHeader({ userName, userImage }: HomepageHeaderProps) {
   return (
     <div className="flex bg-dark text-white justify-between items-center">
       <div className="flex flex-col font-bold gap-3">
@@ -26,4 +21,4 @@ export const HomepageHeader: React.FC<HomepageHeaderProps> = ({
       </div>
     </div>
   );
-};
+}
