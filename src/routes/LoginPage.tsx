@@ -14,8 +14,16 @@ export function LoginPage() {
         your watchlist.
       </p>
       <div className="space-y-5 mb-auto">
-        <Input icon={UserIcon} placeholder={"your@email.com"} />
-        <Input icon={KeyIcon} placeholder={"Enter your Password"} />
+        <Input
+          type="email"
+          icon={<UserIcon />}
+          placeholder={"your@email.com"}
+        />
+        <Input
+          type="password"
+          icon={<KeyIcon />}
+          placeholder={"Enter your Password"}
+        />
       </div>
       <Button children={undefined} />
     </div>
