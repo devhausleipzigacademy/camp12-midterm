@@ -1,34 +1,36 @@
-import { Input } from "../components/input";
 import { Button } from "../components/button";
+import { KeyIcon } from "@heroicons/react/24/solid";
+import { LockClosedIcon } from "@heroicons/react/24/outline";
+import { LoginInput } from "../components/login-input";
 
 export function LoginPage() {
-  return (
-    <div className="h-screen  bg-dark px-5 py-8 flex flex-col">
-      <h1 className="text-base font-bold text-white mb-3">
-        Welcome to Cine-Scape
-      </h1>
-      <p className="text-white-dimmed text-sm mb-6">
-        You need to log in to be able to make reservations and add movies to
-        your watchlist.
-      </p>
-      {/* <div className='space-y-5 mb-auto'> */}
-      <div className="flex flex-col justify-between h-full">
-        <div className="flex flex-col gap-4">
-          <Input
-            icon="../../public/img/email.svg"
-            placeholder="Enter your email"
-            inputType="email"
-            pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Standard email regex pattern without % or +					minLength={5}
-          />
-          <Input
-            icon="../../public/img/password.svg"
-            placeholder="Enter your password"
-            inputType="password"
-            minLength={8}
-          />
-        </div>
-        <Button children="Login" />
-      </div>
-    </div>
-  );
+	return (
+		<div className='h-screen  bg-dark px-5 py-8 flex flex-col'>
+			<h1 className='text-base font-bold text-white mb-3'>
+				Welcome to Cine-Scape
+			</h1>
+			<p className='text-white-dimmed text-sm mb-6'>
+				You need to log in to be able to make reservations and add movies to
+				your watchlist.
+			</p>
+			{/* <div className='space-y-5 mb-auto'> */}
+			<div className='flex flex-col justify-between h-full'>
+				<div className='flex flex-col gap-4'>
+					<LoginInput
+						icon={KeyIcon}
+						placeholder='Enter your email'
+						inputType='email'
+						pattern='^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' // Standard email regex pattern without % or +
+					/>
+					<LoginInput
+						icon={LockClosedIcon}
+						placeholder='Enter your password'
+						inputType='password'
+						minLength={8}
+					/>
+				</div>
+				<Button children='Login' />
+			</div>
+		</div>
+	);
 }
