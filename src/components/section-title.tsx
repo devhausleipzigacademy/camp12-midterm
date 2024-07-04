@@ -8,7 +8,7 @@ type Props = {
 
 export function SectionTitle({ text, ShowSeeAll }: Props) {
   return (
-    <div className="flex justify-between p-4 items-center">
+    <div className="flex justify-between items-center">
       <span className="text-white font-medium">{text}</span>
       {ShowSeeAll && (
         <Link to="/" className="text-yellow text-sm">
