@@ -29,13 +29,14 @@ const BookmarkedMovies: React.FC = () => {
           <img src="/public/img/zodiac.jpg" alt="Zodiac" />
         </div>
       </div>
-      <div className="grid-cols-5">
+      <div className="grid grid-cols-5 gap-2 p-4">
         {[1, 2, 3, 4, 5].map((page) => (
           <PageButton
             key={page}
             page={page}
             active={page === activePage}
             onClick={() => setActivePage(page)}
+            className="p-2"
           />
         ))}
       </div>
