@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchNowPlayingMovies } from "../services/tmdb";
+import { getNowPlayingMovies } from "../services/tmdb";
 import { Movie } from "../types/movie";
 
 const NowPlayingMovies = () => {
@@ -8,7 +8,7 @@ const NowPlayingMovies = () => {
   useEffect(() => {
     const getMovies = async () => {
       try {
-        const nowPlayingMovies = await fetchNowPlayingMovies();
+        const nowPlayingMovies = await getNowPlayingMovies();
         setMovies(nowPlayingMovies);
       } catch (error) {
         console.error("Failed to fetch now playing movies:", error);
