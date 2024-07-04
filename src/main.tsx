@@ -2,13 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./index.css";
-import { LoginPage } from "./routes/LoginPage";
+//import { LoginPage } from "./routes/LoginPage";
+import MovieDetails from "./routes/movie-details";
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <LoginPage />,
+    element: <MovieDetails movieId={346698} />,
+    // element: <LoginPage />,
   },
+
   {
     path: "/genres",
     element: <p>Genre Page</p>,
