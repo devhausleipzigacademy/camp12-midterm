@@ -8,7 +8,7 @@ export function Homepage() {
     <div className="h-screen bg-dark">
       <div className="px-5 pt-8 pb-4 flex flex-col gap-6">
         {/* <HomepageHeader /> */}
-        <Input placeholder={"Search"} />
+        <Input placeholder={"Search"} icon={undefined} />
         <div className="flex flex-col gap-4">
           <SectionTitle text={"Genre"} />
           <div className="flex justify-between">
