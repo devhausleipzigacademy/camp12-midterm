@@ -50,29 +50,29 @@ export function Homepage() {
         </div>
         <p className="text-white font-bold">Upcoming Movies</p>
       </div>
-      <div className="relative w-full h-56 flex gap-6 snap-x snap-mandatory overflow-x-auto px-6">
+      <div className="relative w-full h-56 flex gap-6 overflow-hidden">
         <img
-          className="rounded-lg snap-center"
+          className="rounded-lg"
           src="https://image.tmdb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg"
           alt="star wars"
         />
         <img
-          className="rounded-lg snap-center"
+          className="rounded-lg"
           src="https://xl.movieposterdb.com/13_10/2001/246578/xl_246578_f3904c49.jpg"
           alt="Donnie Darko"
         />
         <img
-          className="rounded-lg snap-center"
+          className="rounded-lg"
           src="https://image.tmdb.org/t/p/original/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg"
           alt="shrek"
         />
         <img
-          className="rounded-lg snap-center"
+          className="rounded-lg"
           src="https://xl.movieposterdb.com/13_06/1999/137523/xl_137523_1d292ea3.jpg?v=2024-07-04%2010:59:05"
           alt="Fight Club"
         />
         <img
-          className="rounded-lg snap-center"
+          className="rounded-lg"
           src="https://image.tmdb.org/t/p/original/onTSipZ8R3bliBdKfPtsDuHTdlL.jpg"
           alt="home alone"
         />
