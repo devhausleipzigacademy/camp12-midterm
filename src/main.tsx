@@ -10,6 +10,7 @@ import { NavBarLayout } from "./layouts/navbar-layout";
 import { Homepage } from "./routes/home";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import BookmarkedMovies from "./routes/bookmarks";
+import { MoviePage } from "./components/movie-page";
 
 const router = createBrowserRouter([
   {
@@ -78,5 +79,6 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <MoviePage />
   </React.StrictMode>
 );
