@@ -51,7 +51,7 @@ export function Homepage() {
     setSelectedGenres((prev) =>
       // If the list of all active genres includes the genre then..
       prev.includes(genre)
-        ? // remove the genre from the list
+        ? // remove the genre from the list if its already on there
           prev.filter((g) => g !== genre)
         : // else return all elements with the newly added genre
           [...prev, genre]
