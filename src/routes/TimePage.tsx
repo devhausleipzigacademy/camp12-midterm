@@ -30,7 +30,7 @@ export function TimePage() {
         DATE
       </div>
       <DisplayDate today={today} />
-      <div className="border-solid border mt-5 border-white-dimmed"></div>
+      <div className="border-solid border-[1px] mt-5 border-white-dimmed-heavy"></div>
       <div className="mt-3 w-full">
         <TimeSlots />
       </div>
@@ -41,20 +41,4 @@ export function TimePage() {
       </div>
     </div>
   );
-}
-
-{
-  /* <div className="text-white-dimmed text-sm py-4 px-2 font-semibold">
-          TIME
-        </div>
-        <div className="grid grid-cols-4 gap-6 text-white-dimmed tracking-wider text-sm px-4">
-          <div>14:30</div>
-          <div>15:00</div>
-          <div>17:00</div>
-          <div>17:30</div>
-          <div>18:00</div>
-          <div>18:30</div>
-          <div>19:00</div>
-          <div>22:00</div>
-        </div> */
 }

@@ -9,8 +9,8 @@ type Props = {
 
 export function TimeSlots({ today }: Props) {
   const openingTime = 12; // Cinema opens at 12:00
-  const closingTime = 22;
-  const interval = 2;
+  const closingTime = 22; // Cinema closes at 24 but last movie at 22:00
+  const interval = 2; // every two hours
 
   const now = new Date();
 
@@ -19,7 +19,7 @@ export function TimeSlots({ today }: Props) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const handleClick = (index: number) => {
-    setSelectedIndex(index); // Set the selected index
+    setSelectedIndex(index);
   };
   for (let hour = openingTime; hour <= closingTime; hour += interval) {
     const timeSlot = addHours(startOfToday(), hour);
