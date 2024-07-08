@@ -1,26 +1,31 @@
 import { useState } from "react";
 import { PageButton } from "./page-button";
 
+import wednesdayImage from "../img/wednesday_movie-poster.png";
+import avatarImage from "../img/avatar_movie-poster.png";
+import strangeWorldImage from "../img/strangeworld_movie-poster.png";
+import violentNightImage from "../img/violentnight_movie-poster.png";
+
 const movies = [
   {
     title: "Wednesday",
     year: "2022",
-    imgSrc: "./img/wednesday_movie-poster.jpeg",
+    imgSrc: wednesdayImage,
   },
   {
-    title: "Avatar: The Way of Water",
+    title: "Avatar",
     year: "2022",
-    imgSrc: "./img/avatar_movie-poster.jpeg",
+    imgSrc: avatarImage,
   },
   {
     title: "Strange World",
     year: "2022",
-    imgSrc: "./img/strangeworld_movie-poster.jpeg",
+    imgSrc: strangeWorldImage,
   },
   {
     title: "Violent Night",
     year: "2022",
-    imgSrc: "./img/violentnight_movie-poster.jpeg",
+    imgSrc: violentNightImage,
   },
 ];
 
@@ -32,7 +37,7 @@ export function MoviePage() {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-dark">
       <div className="grid grid-cols-2 gap-4">
         {movies.map((movie, index) => (
           <div key={index} className="relative group w-44 h-64 overflow-hidden">
@@ -41,7 +46,7 @@ export function MoviePage() {
               alt={movie.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute inset-0 bg-dark bg-opacity-70 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <p className="text-lg font-bold">{movie.title}</p>
               <p className="text-sm">{movie.year}</p>
             </div>
