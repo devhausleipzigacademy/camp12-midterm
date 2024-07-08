@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { MovieResponse } from "../types/movie";
 
-export function useGetGenres(genres) {
+export function useGetGenres() {
   return useQuery({
     queryKey: ["genres"],
     queryFn: () =>
