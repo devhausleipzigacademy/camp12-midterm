@@ -1,4 +1,5 @@
-import { NavBar } from "../components/NavBar";
+import { Outlet } from "react-router-dom";
+import { NavBar } from "../components/nav-bar";
 import {
   FilmIcon,
   HomeIcon,
@@ -15,10 +16,13 @@ export function NavBarLayout() {
   ];
 
   return (
-    <footer>
+    <div className="h-screen flex flex-col bg-dark">
+      <div className="flex-1">
+        <Outlet />
+      </div>
       <nav>
         <NavBar items={navItems} />
       </nav>
-    </footer>
+    </div>
   );
 }

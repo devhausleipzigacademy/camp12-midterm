@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { fetchMovieDetails, fetchCreditDetails } from "../assets/api";
-
-// fetch Id prop from main.tsx for one specific film
-type Props = {
-  movieId: number;
-};
+import { useParams } from "react-router-dom";
 
 // fetch data defined into a usable type to avoid never type
 type Movie = {
@@ -22,7 +18,8 @@ type Movie = {
 // seperate type for Director and Writer data from credits dirctory
 type Credit = { crew: { id: number; name: string; job: string }[] };
 
-export function MovieDetails({ movieId }: Props) {
+export function MovieDetails() {
+  const { movieId } = useParams();
   // identifying credit and movie as type Credit and Movie to prevent Null being the type
   const [credit, setCredit] = useState<Credit | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
@@ -40,6 +37,7 @@ export function MovieDetails({ movieId }: Props) {
   useEffect(() => {
     // anonymous asyncronous function
     const getMovieDetails = async () => {
+      if (!movieId) return;
       // try fetch and set data based on given movieId
       try {
         const movieData = await fetchMovieDetails(movieId);
@@ -58,6 +56,7 @@ export function MovieDetails({ movieId }: Props) {
   // same thing for the credit data directory (director, writer)
   useEffect(() => {
     const getCreditDetails = async () => {
+      if (!movieId) return;
       try {
         const creditData = await fetchCreditDetails(movieId);
         setCredit(creditData);

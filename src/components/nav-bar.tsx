@@ -1,4 +1,4 @@
-import { NavItemProps, NavItem } from "./NavItem";
+import { NavItemProps, NavItem } from "./nav-item";
 
 type NavBarProps = {
   items: NavItemProps[];

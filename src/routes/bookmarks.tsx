@@ -5,13 +5,12 @@
  Display bookmarked movies (use dummy data for now).
  */
 import React, { useState } from "react";
-import { NavBar } from "../components/nav-bar";
 import { PageButton } from "../components/page-button";
 
 const BookmarkedMovies: React.FC = () => {
   const [activePage, setActivePage] = useState<number>(1);
   return (
-    <div className="bg-dark px-5 py-8">
+    <div className="bg-dark px-5 pt-8">
       <div className="grid grid-cols-2 gap-5">
         <div>
           <img
@@ -39,7 +38,6 @@ const BookmarkedMovies: React.FC = () => {
           />
         ))}
       </div>
-      <NavBar />
     </div>
   );
 };

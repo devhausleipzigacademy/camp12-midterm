@@ -3,12 +3,13 @@ import ReactDOM from "react-dom/client";
 
 import "./index.css";
 
-import { LoginPage } from "./routes/LoginPage";
+import { LoginPage } from "./routes/login";
 import { MovieDetails } from "./routes/movie-details";
 
-import { NavBarLayout } from "./layouts/NavBarLayout";
-import { Homepage } from "./routes/Homepage";
+import { NavBarLayout } from "./layouts/navbar-layout";
+import { Homepage } from "./routes/home";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
+import BookmarkedMovies from "./routes/bookmarks";
 
 const router = createBrowserRouter([
   {
@@ -22,12 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: (
-      <div>
-        <Outlet />
-        <NavBarLayout />
-      </div>
-    ),
+    element: <NavBarLayout />,
     children: [
       {
         index: true,
@@ -39,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: "bookmarks",
-        element: <p>Bookmarks Page</p>,
+        element: <BookmarkedMovies />,
       },
       {
         path: "profile",
@@ -51,14 +47,13 @@ const router = createBrowserRouter([
     path: "/movies/:movieId",
     element: (
       <div>
-        <p>Full Page</p>
         <Outlet />
       </div>
     ),
     children: [
       {
         index: true,
-        element: <p>Movie Details Page</p>,
+        element: <MovieDetails />,
       },
       {
         path: "cast-and-crew",

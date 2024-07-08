@@ -1,7 +1,7 @@
 import { Button } from "../components/button";
 import { KeyIcon } from "@heroicons/react/24/solid";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
-import { LoginInput } from "../components/login-input";
+import { LoginInput } from "../components/input";
 
 export function LoginPage() {
   return (
