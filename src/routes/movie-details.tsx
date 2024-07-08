@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
+import { Link } from "react-router-dom";
 
 type Props = {
   movieId: number;
@@ -96,9 +97,12 @@ export function MovieDetails({ movieId }: Props) {
                 return <p key={e.id}>{e.name} </p>;
               })}
           </div>
-          <button className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md max-h-10 h-full self-center">
+          <Link
+            to="cast-and-crew"
+            className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md max-h-10 h-full self-center"
+          >
             Cast & Crew
-          </button>
+          </Link>
         </div>
         <hr className="h-px my-4 border-0 bg-white-dimmed" />
         {/* Synopsis / overview */}
