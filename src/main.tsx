@@ -21,7 +21,7 @@ const router = createBrowserRouter([
 
   {
     path: "/genres",
-    element: <GenreOverviewPage />,
+    element: <p>Hello</p>,
   },
   {
     path: "/",
