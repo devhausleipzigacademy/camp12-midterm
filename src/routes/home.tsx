@@ -2,8 +2,18 @@ import { GenreButton } from "../components/genre";
 import { HomepageHeader } from "../components/homepage-header";
 import { Input } from "../components/search-input";
 import { SectionTitle } from "../components/section-title";
+import { useState } from "react";
+import { Genre } from "../utils/genre";
 
 export function Homepage() {
+  const [selectedGenres, setSelectedGenres] = useState<Genre[]>([]);
+
+  function handleClick(genre: Genre) {
+    setSelectedGenres((prev) =>
+      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
+    );
+  }
+
   return (
     <div className="bg-dark overflow-hidden pt-8">
       <div className="px-5 mb-4 flex flex-col gap-6">
@@ -20,30 +30,22 @@ export function Homepage() {
             <GenreButton
               genre={"Romance"}
               selected={false}
-              onSelect={function (): void {
-                throw new Error("Function not implemented.");
-              }}
+              onSelect={() => handleClick("Romance")}
             />
             <GenreButton
               genre={"Comedy"}
               selected={false}
-              onSelect={function (): void {
-                throw new Error("Function not implemented.");
-              }}
+              onSelect={() => handleClick("Comedy")}
             />
             <GenreButton
               genre={"Horror"}
               selected={false}
-              onSelect={function (): void {
-                throw new Error("Function not implemented.");
-              }}
+              onSelect={() => handleClick("Horror")}
             />
             <GenreButton
               genre={"Drama"}
               selected={false}
-              onSelect={function (): void {
-                throw new Error("Function not implemented.");
-              }}
+              onSelect={() => handleClick("Drama")}
             />
           </div>
         </div>
