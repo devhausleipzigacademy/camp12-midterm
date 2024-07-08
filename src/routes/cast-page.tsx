@@ -4,7 +4,6 @@ import { TabButton } from "../components/tab-buttton";
 import { useState } from "react";
 import { Member } from "../components/member";
 
-// placeholder cast and crew
 const cast = [
   {
     name: "Chris Hemsworth",
@@ -57,7 +56,6 @@ export const CastPage = () => {
   // toggle between cast and crew
   const [selectedTab, setSelectedTab] = useState<"cast" | "crew">("cast");
 
-  // show either cast or crew, mapping over array
   function members(selectedTab: string) {
     if (selectedTab === "cast") {
       return cast.map((person) => (
