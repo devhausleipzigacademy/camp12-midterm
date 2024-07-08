@@ -9,6 +9,7 @@ import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import BookmarkedMovies from "./routes/bookmarks";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Movies } from "./routes/movies";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: "movies",
-        element: <p>Movies Page</p>,
+        element: <Movies />,
       },
       {
         path: "bookmarks",
