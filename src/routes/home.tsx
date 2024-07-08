@@ -1,11 +1,11 @@
 import { GenreButton } from "../components/genre";
 import { HomepageHeader } from "../components/homepage-header";
-import { Input } from "../components/input";
+import { Input } from "../components/search-input";
 import { SectionTitle } from "../components/section-title";
 
 export function Homepage() {
   return (
-    <div className="h-screen bg-dark overflow-hidden">
+    <div className="bg-dark overflow-hidden">
       <div className="px-5 pt-8 pb-4 flex flex-col gap-6">
         <HomepageHeader
           userName={"Herr Vogel"}
@@ -13,7 +13,7 @@ export function Homepage() {
             "https://devhausleipzig.de/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fjulian.b86ca7f2.jpg&w=3840&q=75"
           }
         />
-        <Input placeholder={"Search"} icon={undefined} />
+        <Input placeholder={"Search"} />
         <div className="flex flex-col gap-4">
           <SectionTitle text={"Genre"} />
           <div className="flex justify-between">

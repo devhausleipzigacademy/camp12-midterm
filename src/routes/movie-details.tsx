@@ -7,7 +7,7 @@ type Props = {
   movieId: number;
 };
 
-export default function MovieDetails({ movieId }: Props) {
+export function MovieDetails({ movieId }: Props) {
   // consts:
 
   // a boolean that toggles the truncate class on Synopsis/overview text
