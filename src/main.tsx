@@ -10,11 +10,12 @@ import { NavBarLayout } from "./layouts/navbar-layout";
 import { Homepage } from "./routes/home";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import BookmarkedMovies from "./routes/bookmarks";
+import { ProfileCustomization } from "./routes/profile-customization";
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <ProfileCustomization />,
+    element: <LoginPage />,
     // element: <LoginPage />,
   },
 
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <p>Profile Page</p>,
+        element: <ProfileCustomization />,
       },
     ],
   },
