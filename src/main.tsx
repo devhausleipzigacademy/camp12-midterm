@@ -1,15 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import "./index.css";
-
 import { LoginPage } from "./routes/login";
 import { MovieDetails } from "./routes/movie-details";
-
 import { NavBarLayout } from "./layouts/navbar-layout";
 import { Homepage } from "./routes/home";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import BookmarkedMovies from "./routes/bookmarks";
+import { CastPage } from "./routes/cast-page";
 
 const router = createBrowserRouter([
   {
@@ -57,7 +55,7 @@ const router = createBrowserRouter([
       },
       {
         path: "cast-and-crew",
-        element: <p>Cast and Crew Page</p>,
+        element: <CastPage />,
       },
       {
         path: "select-time",

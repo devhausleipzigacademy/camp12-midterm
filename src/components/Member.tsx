@@ -1,15 +1,13 @@
 export type Props = {
   image: string;
-
   name: string;
-
   role: string;
 };
 
 export const Member = ({ image, name, role }: Props) => {
   return (
     <>
-      <div className="col-span-full row-span-1">
+      <div className="col-span-full mb-4 row-span-1">
         {" "}
         <div className="flex gap-5 justify-start items-center">
           <img src={image} alt={name} className="size-16 object-cover" />
