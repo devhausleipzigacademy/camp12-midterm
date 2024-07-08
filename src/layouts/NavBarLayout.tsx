@@ -1,4 +1,4 @@
-import NavBar from "../components/NavBar";
+import { NavBar } from "../components/NavBar";
 import {
   FilmIcon,
   HomeIcon,
@@ -6,7 +6,7 @@ import {
   UserIcon,
 } from "@heroicons/react/24/solid";
 
-export default function NavBarLayout() {
+export function NavBarLayout() {
   const navItems = [
     { icon: HomeIcon, route: "/" },
     { icon: FilmIcon, route: "movies" },

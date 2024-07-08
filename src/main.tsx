@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.css";
-import { LoginPage } from "./routes/LoginPage";
-import NavBarLayout from "./layouts/NavBarLayout";
+import { NavBarLayout } from "./layouts/NavBarLayout";
 import { Homepage } from "./routes/Homepage";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 
