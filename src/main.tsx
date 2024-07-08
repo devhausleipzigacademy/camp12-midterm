@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./index.css";
 //import { LoginPage } from "./routes/LoginPage";
-import MovieDetails from "./routes/movie-details";
+import { MovieDetails } from "./routes/movie-details";
 
 const router = createBrowserRouter([
   {

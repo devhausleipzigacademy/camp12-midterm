@@ -22,7 +22,7 @@ type Movie = {
 // seperate type for Director and Writer data from credits dirctory
 type Credit = { crew: { id: number; name: string; job: string }[] };
 
-export default function MovieDetails({ movieId }: Props) {
+export function MovieDetails({ movieId }: Props) {
   // identifying credit and movie as type Credit and Movie to prevent Null being the type
   const [credit, setCredit] = useState<Credit | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
@@ -131,18 +131,22 @@ export default function MovieDetails({ movieId }: Props) {
           <span className=" text-white-dimmed pb-2 ">Director:&nbsp;</span>
           <span className=" text-white-dimmed">Writer:&nbsp;</span>
           <div className="col-span-2">
-            {credit?.crew
-              .filter((e) => e.job === "Director")
-              .map((e: { id: number; name: string }) => {
-                return <p key={e.id}>{e.name} </p>;
-              })}
+            {
+              credit?.crew
+                .filter((e) => e.job === "Director")
+                .map((e: { id: number; name: string }) => {
+                  return <p key={e.id}>{e.name} </p>;
+                })[0]
+            }
           </div>
           <div className="col-span-2">
-            {credit?.crew
-              .filter((e) => e.job === "Writer")
-              .map((e: { id: number; name: string }) => {
-                return <p key={e.id}>{e.name} </p>;
-              })}
+            {
+              credit?.crew
+                .filter((e) => e.job === "Writer")
+                .map((e: { id: number; name: string }) => {
+                  return <p key={e.id}>{e.name} </p>;
+                })[0]
+            }
           </div>
           <button className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md max-h-10 h-full self-center">
             Cast & Crew
