@@ -5,6 +5,7 @@ import "./index.css";
 import { NavBarLayout } from "./layouts/NavBarLayout";
 import { Homepage } from "./routes/Homepage";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
+import GenreOverviewPage from "./routes/genreoverviewpage";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/genres",
-    element: <p>Genre Page</p>,
+    element: <GenreOverviewPage />,
   },
   {
     path: "/",
