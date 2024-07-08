@@ -1,10 +1,10 @@
-import { type Props, Member } from "../components/member";
+import { Member } from "../components/Member";
 import { IoIosArrowBack } from "react-icons/io";
 import { IconContext } from "react-icons";
 import { TabButton } from "../components/tab-buttton";
 import { useState } from "react";
 
-const CastPage = ({ name, role, image }: Props) => {
+const CastPage = () => {
   const [selectedTab, setSelectedTab] = useState<"cast" | "crew">("cast");
 
   return (
@@ -32,22 +32,7 @@ const CastPage = ({ name, role, image }: Props) => {
         />
       </div>
       <div className="col-span-full justify-start">
-        <Member name={name} role={role} image={image} />
-      </div>
-      <div className="col-span-full justify-start">
-        <Member name={name} role={role} image={image} />
-      </div>
-      <div className="col-span-full justify-start">
-        <Member name={name} role={role} image={image} />
-      </div>
-      <div className="col-span-full justify-start">
-        <Member name={name} role={role} image={image} />
-      </div>
-      <div className="col-span-full justify-start">
-        <Member name={name} role={role} image={image} />
-      </div>
-      <div className="col-span-full justify-start">
-        <Member name={name} role={role} image={image} />
+        <Member image={""} role={""} name={""} />
       </div>
     </div>
   );
