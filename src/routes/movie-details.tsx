@@ -1,84 +1,34 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
-import { fetchMovieDetails, fetchCreditDetails } from "../assets/api";
-import { useParams } from "react-router-dom";
+import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
 
-// fetch data defined into a usable type to avoid never type
-type Movie = {
-  backdrop_path: string;
-  title: string;
-  release_date: string;
-  genres: { id: number; name: string }[];
-  runtime: number;
-  vote_average: number;
-  overview: string;
+type Props = {
+  movieId: number;
 };
 
-// seperate type for Director and Writer data from credits dirctory
-type Credit = { crew: { id: number; name: string; job: string }[] };
+export function MovieDetails({ movieId }: Props) {
+  // consts:
 
-export function MovieDetails() {
-  const { movieId } = useParams();
-  // identifying credit and movie as type Credit and Movie to prevent Null being the type
-  const [credit, setCredit] = useState<Credit | null>(null);
-  const [movie, setMovie] = useState<Movie | null>(null);
-  // needed for fetching data from credits and the movie
-  const [loading, setLoading] = useState(true);
   // a boolean that toggles the truncate class on Synopsis/overview text
   const [truncate, setTruncate] = useState(true);
-
+  const { data: movie, isLoading, isError } = useGetSingleMovie(movieId);
   // reverse boolean on click on Read more
   function readMoreHandler() {
     setTruncate(!truncate);
   }
 
-  //useEffect utilitzes the fetch function, when movieId as a dependency is changed
-  useEffect(() => {
-    // anonymous asyncronous function
-    const getMovieDetails = async () => {
-      if (!movieId) return;
-      // try fetch and set data based on given movieId
-      try {
-        const movieData = await fetchMovieDetails(movieId);
-        setMovie(movieData);
-      } catch (error) {
-        console.error("Error fetching movie details:", error);
-      } finally {
-        // complete interim loading display
-        setLoading(false);
-      }
-    };
-    // Call the function
-    getMovieDetails();
-  }, [movieId]);
+  // query:
 
-  // same thing for the credit data directory (director, writer)
-  useEffect(() => {
-    const getCreditDetails = async () => {
-      if (!movieId) return;
-      try {
-        const creditData = await fetchCreditDetails(movieId);
-        setCredit(creditData);
-      } catch (error) {
-        console.error("Error fetching movie credits:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getCreditDetails();
-  }, [movieId]);
-
-  // while loading display the following
-  if (loading) {
+  // if movie is not loaded successfully display the following
+  if (isLoading) {
     return <div>Loading...</div>;
   }
-  // if movie is not loaded successfully display the following
-  if (!movie) {
+  if (isError || !movie) {
     return <div>Error loading movie details.</div>;
   }
+
   // see the actual data intries from tmdb
-  // console.log(movie);
 
   return (
     // background
@@ -102,26 +52,29 @@ export function MovieDetails() {
         <div
           className={`h-52 bg-orange-300 rounded-lg mb-4 w-full max-h-full max-w-full bg-cover bg-no-repeat bg-center`}
           style={{
-            backgroundImage: `url('https://image.tmdb.org/t/p/w500/${movie.backdrop_path}')`,
+            backgroundImage: `url('https://image.tmdb.org/t/p/w500/${movie.details.backdrop_path}')`,
           }}
         ></div>
         {/* movie title */}
-        <h1 className="text-xl font-bold pb-3">{movie.title}</h1>
+        <h1 className="text-xl font-bold pb-3">{movie.details.title}</h1>
         {/* first row info: year, genre, runtime. score */}
         <ul className="flex flex-row gap-4 pb-3 text-xs">
-          <li className="text-white">{movie.release_date.split("-")[0]}</li>
+          <li className="text-white">
+            {movie.details.release_date.split("-")[0]}
+          </li>
           <li className="text-white-dimmed">
-            {movie.genres
+            {movie.details.genres
               .map((e: { id: number; name: string }) => {
                 return e.name;
               })
               .join(" / ")}
           </li>
           <li className="text-white-dimmed">
-            {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
+            {Math.floor(movie.details.runtime / 60)}h{" "}
+            {movie.details.runtime % 60}m
           </li>
           <li className="ml-auto text-green">
-            {(movie.vote_average * 10).toPrecision(2)}%
+            {(movie.details.vote_average * 10).toPrecision(2)}%
             <span className="text-white-dimmed">&nbsp;Score</span>
           </li>
         </ul>
@@ -130,22 +83,18 @@ export function MovieDetails() {
           <span className=" text-white-dimmed pb-2 ">Director:&nbsp;</span>
           <span className=" text-white-dimmed">Writer:&nbsp;</span>
           <div className="col-span-2">
-            {
-              credit?.crew
-                .filter((e) => e.job === "Director")
-                .map((e: { id: number; name: string }) => {
-                  return <p key={e.id}>{e.name} </p>;
-                })[0]
-            }
+            {movie.credits?.crew
+              .filter((e) => e.job === "Director")
+              .map((e: { id: number; name: string }) => {
+                return <p key={e.id}>{e.name} </p>;
+              })}
           </div>
           <div className="col-span-2">
-            {
-              credit?.crew
-                .filter((e) => e.job === "Writer")
-                .map((e: { id: number; name: string }) => {
-                  return <p key={e.id}>{e.name} </p>;
-                })[0]
-            }
+            {movie.credits?.crew
+              .filter((e) => e.job === "Writer")
+              .map((e: { id: number; name: string }) => {
+                return <p key={e.id}>{e.name} </p>;
+              })}
           </div>
           <button className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md max-h-10 h-full self-center">
             Cast & Crew
@@ -158,7 +107,7 @@ export function MovieDetails() {
         <p
           className={`text-white-dimmed text-sm ${truncate ? "truncate" : ""} `}
         >
-          {movie.overview}
+          {movie.details.overview}
         </p>
         {/* toggle the boolean */}
         <p
