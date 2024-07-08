@@ -3,11 +3,13 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./index.css";
 import { LoginPage } from "./routes/LoginPage";
+import { ProfileCustomization } from "./routes/profile-customization";
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <LoginPage />,
+    element: <ProfileCustomization />,
+    // element: <LoginPage />,
   },
   {
     path: "/genres",
