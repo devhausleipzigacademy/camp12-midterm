@@ -3,6 +3,7 @@ import { IconContext } from "react-icons";
 import { TabButton } from "../components/tab-buttton";
 import { useState } from "react";
 import { Member } from "../components/member";
+import { Link } from "react-router-dom";
 
 const cast = [
   {
@@ -69,34 +70,41 @@ export const CastPage = () => {
   }
 
   return (
-    <div className="bg-dark min-h-screen grid grid-cols-4 p-5 gap-4 justify-start items-start">
-      <div className=" col-span-full items-center justify-center relative px-4">
-        <IconContext.Provider value={{ color: "white", size: "20px" }}>
-          <div className="absolute left-4 text-white mb-2">
-            <IoIosArrowBack />
-          </div>
-        </IconContext.Provider>
+    <div className="h-screen bg-dark">
+      <div className=" grid grid-cols-4 p-5 gap-4 justify-start items-start">
+        <div className=" col-span-full items-center justify-center relative px-4">
+          <IconContext.Provider value={{ color: "white", size: "20px" }}>
+            <Link
+              to="/movies/:movieId"
+              className="absolute left-4 text-white mb-2"
+            >
+              <IoIosArrowBack />
+            </Link>
+          </IconContext.Provider>
 
-        <h1 className="text-center text-white mb-2">Cast & Crew</h1>
+          <h1 className="text-center text-white mb-2">Cast & Crew</h1>
+        </div>
+
+        <div className="col-start-1 col-end-3 mb-1">
+          <TabButton
+            selected={selectedTab === "cast"}
+            label={"Cast"}
+            onSelect={() => setSelectedTab("cast")}
+          />
+        </div>
+
+        <div className="col-start-3 col-end-5 mb-1">
+          <TabButton
+            selected={selectedTab === "crew"}
+            label={"Crew"}
+            onSelect={() => setSelectedTab("crew")}
+          />
+        </div>
+
+        <div className="col-span-full justify-start">
+          {members(selectedTab)}
+        </div>
       </div>
-
-      <div className="col-start-1 col-end-3 mb-1">
-        <TabButton
-          selected={selectedTab === "cast"}
-          label={"Cast"}
-          onSelect={() => setSelectedTab("cast")}
-        />
-      </div>
-
-      <div className="col-start-3 col-end-5 mb-1">
-        <TabButton
-          selected={selectedTab === "crew"}
-          label={"Crew"}
-          onSelect={() => setSelectedTab("crew")}
-        />
-      </div>
-
-      <div className="col-span-full justify-start">{members(selectedTab)}</div>
     </div>
   );
 };

@@ -2,18 +2,15 @@ import { useState } from "react";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-type Props = {
-  movieId: number;
-};
-
-export function MovieDetails({ movieId }: Props) {
+export function MovieDetails() {
+  const { movieId } = useParams();
   // consts:
 
   // a boolean that toggles the truncate class on Synopsis/overview text
   const [truncate, setTruncate] = useState(true);
-  const { data: movie, isLoading, isError } = useGetSingleMovie(movieId);
+  const { data: movie, isLoading, isError } = useGetSingleMovie(movieId!);
   // reverse boolean on click on Read more
   function readMoreHandler() {
     setTruncate(!truncate);
