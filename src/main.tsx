@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.css";
+import { NavBarLayout } from "./layouts/NavBarLayout";
 import { Homepage } from "./routes/Homepage";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 
@@ -18,8 +19,8 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <div>
-        <p>Navbar</p>
         <Outlet />
+        <NavBarLayout />
       </div>
     ),
     children: [
