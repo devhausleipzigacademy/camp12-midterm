@@ -11,6 +11,7 @@ import { CastPage } from "./routes/cast-page";
 import { MoviePage } from "./components/movie-page";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Movies } from "./routes/movies";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: "movies",
-        element: <p>Movies Page</p>,
+        element: <Movies />,
       },
       {
         path: "bookmarks",
