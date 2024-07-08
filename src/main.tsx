@@ -4,7 +4,6 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 import { LoginPage } from "./routes/LoginPage";
-import { MovieDetails } from "./routes/movie-details";
 
 import { NavBarLayout } from "./layouts/NavBarLayout";
 import { Homepage } from "./routes/Homepage";
