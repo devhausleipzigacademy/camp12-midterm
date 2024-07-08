@@ -4,14 +4,13 @@ import { cn } from "../utils/styling";
 type Props = {
   genre: Genre;
   selected: boolean;
-  onSelect: () => void;
-};
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export function GenreButton({ genre, selected, onSelect }: Props) {
+export function GenreButton({ genre, selected, ...rest }: Props) {
   return (
     <div className="flex flex-col gap-2 items-center">
       <button
-        onClick={onSelect}
+        {...rest}
         className={cn(
           "text-3xl rounded-xl flex items-center justify-center",
           "w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18", // Responsive sizes

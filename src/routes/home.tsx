@@ -4,14 +4,23 @@ import { Input } from "../components/search-input";
 import { SectionTitle } from "../components/section-title";
 import { useState } from "react";
 import { Genre } from "../utils/genre";
+import { getMoviesByGenre } from "../services/tmdb";
 
 export function Homepage() {
   const [selectedGenres, setSelectedGenres] = useState<Genre[]>([]);
 
   function handleClick(genre: Genre) {
+    //Setter funcion with prev as parameter
     setSelectedGenres((prev) =>
-      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
+      //If in selectedGenres exists genre
+      prev.includes(genre)
+        ? // then filter it and remove any other films that are not in the genre
+          prev.filter((g) => g !== genre)
+        : // else return the selectedGenres
+          [...prev, genre]
     );
+
+    //getMoviesByGenre(genre);
   }
 
   return (
@@ -29,22 +38,22 @@ export function Homepage() {
           <div className="flex justify-between">
             <GenreButton
               genre={"Romance"}
-              selected={false}
-              onSelect={() => handleClick("Romance")}
+              selected={selectedGenres.includes("Romance")}
+              onClick={() => handleClick("Romance")}
             />
             <GenreButton
               genre={"Comedy"}
-              selected={false}
-              onSelect={() => handleClick("Comedy")}
+              selected={selectedGenres.includes("Comedy")}
+              onClick={() => handleClick("Comedy")}
             />
             <GenreButton
               genre={"Horror"}
-              selected={false}
+              selected={selectedGenres.includes("Horror")}
               onSelect={() => handleClick("Horror")}
             />
             <GenreButton
               genre={"Drama"}
-              selected={false}
+              selected={selectedGenres.includes("Drama")}
               onSelect={() => handleClick("Drama")}
             />
           </div>

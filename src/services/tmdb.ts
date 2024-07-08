@@ -21,22 +21,28 @@ export const getNowPlayingMovies = async () => {
 
 export const getMoviesByGenre = async (genre: Genre) => {
   try {
-    // fetching the genre ID from the TMDB API
+    // 1: fetching the genre ID from the TMDB API
+    // Die TMDB API needs the genre-ID, not the name.
+    // therefore we have to look for the ID
     const genreResponse = await axios.get(`${baseUrl}/genre/movie/list`, {
       params: {
         api_key: apiKey,
       },
     });
 
+    // 2: extract ID from response
+    // look for the genre that we gave as parameter
+    // make the search robust, by making it non-case-sensitive
     const genreId = genreResponse.data.genres.find(
       (g: { name: string }) => g.name.toLowerCase() === genre.toLowerCase()
     )?.id;
 
+    // 3: Has the id been found?
     if (!genreId) {
       throw new Error(`Genre '${genre}' not found`);
     }
 
-    // fetching movies based on the genre ID
+    // 4: fetching movies based on the genre ID
     const response = await axios.get(`${baseUrl}/discover/movie`, {
       params: {
         api_key: apiKey,
@@ -44,8 +50,12 @@ export const getMoviesByGenre = async (genre: Genre) => {
       },
     });
 
+    // 5: return the list of the movies
     return response.data.results;
-  } catch (error) {
+  } 
+  
+  //6: If there is a Error, log it
+  catch (error) {
     console.error(`Error fetching movies for genre '${genre}':`, error);
     throw error;
   }
