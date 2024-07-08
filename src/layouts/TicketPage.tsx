@@ -11,7 +11,7 @@ type Props = {
   barcode: string;
 };
 
-export default function TicketPage({
+export function TicketPage({
   img,
   title,
   date,
