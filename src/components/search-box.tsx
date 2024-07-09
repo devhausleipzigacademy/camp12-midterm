@@ -1,7 +1,6 @@
 import {
   Combobox,
   ComboboxInput,
-  ComboboxButton,
   ComboboxOption,
   ComboboxOptions,
 } from "@headlessui/react";
@@ -21,16 +20,18 @@ type Props = React.DetailedHTMLProps<
 >;
 
 export function ComboSearchBox({ ...props }: Props) {
-  const { data: movies = [], isLoading, isError } = useGetMovies();
+  const { data: movies = [] } = useGetMovies();
   const [query, setQuery] = useState<string>("");
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   const filteredMovies =
     query === ""
-      ? movies
-      : movies.filter((movie) =>
-          movie.title.toLowerCase().includes(query.toLowerCase())
-        );
+      ? movies.slice(0, 6)
+      : movies
+          .filter((movie) =>
+            movie.title.toLowerCase().includes(query.toLowerCase())
+          )
+          .slice(0, 6);
 
   return (
     <Combobox
@@ -47,22 +48,25 @@ export function ComboSearchBox({ ...props }: Props) {
             onChange={(event) => setQuery(event.target.value)}
             {...props}
           />
-          <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
-            {/* The ChevronDownIcon has been removed */}
-          </ComboboxButton>
         </label>
       </div>
 
-      <ComboboxOptions className="absolute w-full mt-2 rounded-xl border border-white/5 bg-dark-light p-1 shadow-lg">
+      <ComboboxOptions
+        anchor={{ to: "bottom", gap: 10, offset: -20 }}
+        className="relative w-[calc(100%-40px)] mt-2 rounded-xl border border-white/5 bg-dark-light p-1 shadow-lg"
+      >
         {filteredMovies.map((movie) => (
           <ComboboxOption
             key={movie.id}
             value={movie}
-            className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+            className="group flex cursor-default items-center gap-2 rounded-lg py-2.5 select-none data-[focus]:bg-white/10 px-3s"
           >
-            {/* The CheckIcon has been removed */}
-            <img src={movie.image} alt={movie.title} className="h-6 w-auto" />
-            <div className="text-sm text-white">{movie.title}</div>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title}
+              className="size-16 object-cover w-auto"
+            />
+            <div className="text-base text-white">{movie.title}</div>
           </ComboboxOption>
         ))}
       </ComboboxOptions>
