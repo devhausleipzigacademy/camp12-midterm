@@ -18,17 +18,27 @@ export const CastPage = () => {
     if (selectedTab === "cast") {
       return movie?.credits.cast.map((person) => (
         <Member
+          key={person.id}
           role={person.character}
           name={person.name}
-          image={person.profile_path}
+          image={
+            person.profile_path === null
+              ? "/tDzCAAJinH4Xt3lSKsajfiTyRK9.jpg"
+              : person.profile_path
+          }
         />
       ));
     } else {
       return movie?.credits.crew.map((person) => (
         <Member
+          key={person.id}
           role={person.job}
           name={person.name}
-          image={person.profile_path}
+          image={
+            person.profile_path === null
+              ? "/tDzCAAJinH4Xt3lSKsajfiTyRK9.jpg"
+              : person.profile_path
+          }
         />
       ));
     }
