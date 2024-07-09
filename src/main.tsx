@@ -15,7 +15,7 @@ import { ProfileCustomization } from "./routes/profile-customization";
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <LoginPage />,
+    element: <MovieDetails movieId={519182} />,
     // element: <LoginPage />,
   },
 
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MovieDetails movieId={0} />,
+        element: <MovieDetails movieId={519182} />,
       },
       {
         path: "cast-and-crew",
