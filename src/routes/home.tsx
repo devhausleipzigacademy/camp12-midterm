@@ -5,9 +5,13 @@ import { SectionTitle } from "../components/section-title";
 import { useState, useEffect } from "react";
 import { Genre } from "../utils/genre";
 import { getMoviesByGenre } from "../services/tmdb";
+import { useLocation } from "react-router";
 
 export function Homepage() {
-  const [selectedGenres, setSelectedGenres] = useState<Genre[]>([]);
+  const location = useLocation();
+  const [selectedGenres, setSelectedGenres] = useState<Genre[]>(
+    location.state?.selectedGenres || []
+  );
   const [filteredMovies, setFilteredMovies] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const genres: Genre[] = ["Romance", "Comedy", "Horror", "Drama"];
@@ -69,7 +73,12 @@ export function Homepage() {
         />
         <Input placeholder={"Search"} />
         <div className="flex flex-col gap-4">
-          <SectionTitle text={"Genre"} ShowSeeAll={true} route="/genres" />
+          <SectionTitle
+            text={"Genre"}
+            ShowSeeAll={true}
+            route="/genres"
+            state={selectedGenres}
+          />
           <div className="flex justify-between">
             {genres.map((genre) => (
               <GenreButton
@@ -84,7 +93,7 @@ export function Homepage() {
         <SectionTitle text={"Upcoming Movies"} />
       </div>
 
-      <div className="flex gap-6 overflow-y-hidden scrollbar-hide snap-x h-56 -mx-5">
+      <div className="flex gap-6 overflow-y-hidden scrollbar-hide snap-x h-56 mx-4 text-white">
         {isLoading ? (
           <p>Loading movies...</p>
         ) : filteredMovies.length > 0 ? (
