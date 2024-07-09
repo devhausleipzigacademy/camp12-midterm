@@ -17,50 +17,50 @@ export function Homepage() {
   const genres: Genre[] = ["Romance", "Comedy", "Horror", "Drama"];
 
   // load movies everytime when selectedGenres changes
-  useEffect(() => {
-    loadMovies();
-  }, [selectedGenres]);
+  // useEffect(() => {
+  //   loadMovies();
+  // }, [selectedGenres]);
 
-  async function loadMovies() {
-    try {
-      //activate loading
-      setIsLoading(true);
-      // Check if selectedGenres is empty, if so, display all movies / i.o.w disable filtering
-      let allMoviesPromises;
-      selectedGenres.length === 0
-        ? (allMoviesPromises = genres.map((genre) => getMoviesByGenre(genre)))
-        : (allMoviesPromises = selectedGenres.map((genre) =>
-            getMoviesByGenre(genre)
-          ));
+  // async function loadMovies() {
+  //   try {
+  //     //activate loading
+  //     setIsLoading(true);
+  //     // Check if selectedGenres is empty, if so, display all movies / i.o.w disable filtering
+  //     let allMoviesPromises;
+  //     selectedGenres.length === 0
+  //       ? (allMoviesPromises = genres.map((genre) => getMoviesByGenre(genre)))
+  //       : (allMoviesPromises = selectedGenres.map((genre) =>
+  //           getMoviesByGenre(genre)
+  //         ));
 
-      const allMoviesResults = await Promise.all(allMoviesPromises);
-      const uniqueMovies = [
-        // use Spread Operator to make it an array and
-        // give it the type Map to get rid of duplicates, by assigning every movie a id as a key
-        ...new Map(
-          // flat the Array, and return pairs of movieId and the movie itself
-          allMoviesResults.flat().map((movie) => [movie.id, movie])
-          // use values() as an iterator for the values
-        ).values(),
-      ];
-      setFilteredMovies(uniqueMovies);
-    } catch (error) {
-      console.error("Error loading movies:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  //     const allMoviesResults = await Promise.all(allMoviesPromises);
+  //     const uniqueMovies = [
+  //       // use Spread Operator to make it an array and
+  //       // give it the type Map to get rid of duplicates, by assigning every movie a id as a key
+  //       ...new Map(
+  //         // flat the Array, and return pairs of movieId and the movie itself
+  //         allMoviesResults.flat().map((movie) => [movie.id, movie])
+  //         // use values() as an iterator for the values
+  //       ).values(),
+  //     ];
+  //     setFilteredMovies(uniqueMovies);
+  //   } catch (error) {
+  //     console.error("Error loading movies:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
 
-  function handleClick(genre: Genre) {
-    setSelectedGenres((prev) =>
-      // If the list of all active genres includes the genre then..
-      prev.includes(genre)
-        ? // remove the genre from the list
-          prev.filter((g) => g !== genre)
-        : // else return all elements with the newly added genre
-          [...prev, genre]
-    );
-  }
+  // function handleClick(genre: Genre) {
+  //   setSelectedGenres((prev) =>
+  //     // If the list of all active genres includes the genre then..
+  //     prev.includes(genre)
+  //       ? // remove the genre from the list
+  //         prev.filter((g) => g !== genre)
+  //       : // else return all elements with the newly added genre
+  //         [...prev, genre]
+  //   );
+  // }
 
   return (
     <div className="h-screen bg-dark overflow-hidden">
