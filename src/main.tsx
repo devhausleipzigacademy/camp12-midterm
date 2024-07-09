@@ -1,40 +1,43 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import { TimePage } from "./routes/select-time";
-
 import "./index.css";
-// import { NavBar } from "./components/nav-bar";
+import { LoginPage } from "./routes/login";
+import { MovieDetails } from "./routes/movie-details";
+import { NavBarLayout } from "./layouts/navbar-layout";
+import { Homepage } from "./routes/home";
+import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
+import BookmarkedMovies from "./routes/bookmarks";
+import { TimePage } from "./routes/select-time";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Movies } from "./routes/movies";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <p>Login Page</p>,
+    element: <LoginPage />,
   },
+
   {
     path: "/genres",
     element: <p>Genre Page</p>,
   },
   {
     path: "/",
-    element: (
-      <div>
-        <p>Navbar</p>
-        <Outlet />
-      </div>
-    ),
+    element: <NavBarLayout />,
     children: [
       {
         index: true,
-        element: <p>Home Page</p>,
+        element: <Homepage />,
       },
       {
         path: "movies",
-        element: <p>Movies Page</p>,
+        element: <Movies />,
       },
       {
         path: "bookmarks",
-        element: <p>Bookmarks Page</p>,
+        element: <BookmarkedMovies />,
       },
       {
         path: "profile",
@@ -46,14 +49,13 @@ const router = createBrowserRouter([
     path: "/movies/:movieId",
     element: (
       <div>
-        <p>Full Page</p>
         <Outlet />
       </div>
     ),
     children: [
       {
         index: true,
-        element: <p>Movie Details Page</p>,
+        element: <MovieDetails movieId={0} />,
       },
       {
         path: "cast-and-crew",
@@ -77,6 +79,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>
 );
