@@ -10,6 +10,7 @@ import BookmarkedMovies from "./routes/bookmarks";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Movies } from "./routes/movies";
+import GenreOverviewPage from "./routes/genres";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
 
   {
     path: "/genres",
-    element: <p>Hello</p>,
+    element: <GenreOverviewPage />,
   },
   {
     path: "/",
