@@ -27,7 +27,6 @@ export function MovieDetails({ movieId }: Props) {
   }, [currentId]);
 
   // query:
-  console.log(movie);
 
   // if movie is not loaded successfully display the following
   if (isLoading) {
