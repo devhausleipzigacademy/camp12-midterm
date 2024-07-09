@@ -8,8 +8,7 @@ import { Homepage } from "./routes/home";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import BookmarkedMovies from "./routes/bookmarks";
 import { CastPage } from "./routes/cast-page";
-import { MoviePage } from "./components/movie-page";
-
+// import { MoviePage } from "./components/movie-page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Movies } from "./routes/movies";
 

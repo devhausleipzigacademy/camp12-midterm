@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 export function MovieDetails() {
   const { movieId } = useParams();
@@ -94,12 +94,12 @@ export function MovieDetails() {
                 return <p key={e.id}>{e.name} </p>;
               })}
           </div>
-          <Link
+          <NavLink
             to="cast-and-crew"
-            className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md max-h-10 h-full self-center"
+            className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md max-h-10 h-full self-center flex items-center justify-center"
           >
             Cast & Crew
-          </Link>
+          </NavLink>
         </div>
         <hr className="h-px my-4 border-0 bg-white-dimmed" />
         {/* Synopsis / overview */}
