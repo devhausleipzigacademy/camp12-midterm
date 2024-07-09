@@ -25,7 +25,7 @@ const BookmarkedMovies: React.FC = () => {
           <img src="/img/parasite.jpg" alt="Parasite" />
         </div>
         <div>
-          <img src="/public/img/zodiac.jpg" alt="Zodiac" />
+          <img src="/img/zodiac.jpg" alt="Zodiac" />
         </div>
       </div>
       <div className="flex justify-between mt-5">

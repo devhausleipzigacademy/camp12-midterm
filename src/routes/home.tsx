@@ -5,8 +5,8 @@ import { SectionTitle } from "../components/section-title";
 
 export function Homepage() {
   return (
-    <div className="bg-dark overflow-hidden">
-      <div className="px-5 pt-8 pb-4 flex flex-col gap-6">
+    <div className="bg-dark overflow-hidden pt-8">
+      <div className="px-5 mb-4 flex flex-col gap-6">
         <HomepageHeader
           userName={"Herr Vogel"}
           userImage={
