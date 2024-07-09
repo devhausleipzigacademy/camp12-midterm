@@ -7,6 +7,7 @@ import { NavBarLayout } from "./layouts/navbar-layout";
 import { Homepage } from "./routes/home";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import BookmarkedMovies from "./routes/bookmarks";
+import { ProfileCustomization } from "./routes/profile-customization";
 import { TimePage } from "./routes/select-time";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Movies } from "./routes/movies";
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <p>Profile Page</p>,
+        element: <ProfileCustomization />,
       },
     ],
   },
