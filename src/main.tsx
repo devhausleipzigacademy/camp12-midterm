@@ -14,6 +14,7 @@ import { ProfileCustomization } from "./routes/profile-customization";
 import { TimePage } from "./routes/select-time";
 import { Movies } from "./routes/movies";
 import GenreOverviewPage from "./routes/genres";
+import { Ticket } from "./routes/ticket";
 
 const queryClient = new QueryClient();
 
@@ -75,7 +76,7 @@ const router = createBrowserRouter([
       },
       {
         path: "ticket",
-        element: <p>Ticket Page</p>,
+        element: <Ticket />,
       },
     ],
   },
