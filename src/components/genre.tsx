@@ -2,7 +2,7 @@ import { Genre, genreEmojis } from "../utils/genre";
 import { cn } from "../utils/styling";
 
 type Props = {
-  genre: Genre; // Ändern Sie dies von GenreType zu string
+  genre: Genre;
   selected: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -17,7 +17,7 @@ export function GenreButton({ genre, selected, ...rest }: Props) {
           selected ? "bg-white-dimmed" : "bg-dark-light"
         )}
       >
-        {genreEmojis[genre as Genre]} {/* Verwenden Sie einen Type Assertion */}
+        {genreEmojis[genre as Genre]}
       </button>
       <span className="text-white-dimmed font-bold text-xs truncate w-full text-center">
         {genre}
