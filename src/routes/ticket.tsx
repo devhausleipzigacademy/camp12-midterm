@@ -2,23 +2,23 @@ import Barcode from "react-barcode";
 import { Button } from "../components/button";
 
 type Props = {
-  img: string;
-  title: string;
-  date: string;
-  time: string;
-  price: number;
-  seats: string[];
-  barcode: string;
+  img?: string;
+  title?: string;
+  date?: string;
+  time?: string;
+  price?: number;
+  seats?: string[];
+  barcode?: string;
 };
 
-export function TicketPage({
-  img,
-  title,
-  date,
-  time,
-  price,
-  seats,
-  barcode,
+export function Ticket({
+  img = "../img/avatar_movie-poster.png",
+  title = "Avatar",
+  date = "08 Jan",
+  time = "14:30",
+  price = 42.20,
+  seats = ["C-3", "C-5"],
+  barcode = "dsfew3ej34mdf4k",
 }: Props) {
   return (
     /* Background */
@@ -50,7 +50,7 @@ export function TicketPage({
               </div>
               <div className="flex flex-col">
                 <h3 className="text-dark text-sm">Seats</h3>
-                <h2 className="text-m font-semibold">{...seats}</h2>
+                <h2 className="text-m font-semibold">{seats.join(", ")}</h2>
               </div>
             </div>
           </div>
