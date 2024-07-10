@@ -53,13 +53,13 @@ export function MovieDetails() {
   // Calculate the user rating score as a percentage
   const userRating = movie.details.vote_average * 10;
 
-  // Determine the color class based on the user rating score
-  let ratingColorClass = "text-green"; // Default to green
-  if (userRating < 50) {
-    ratingColorClass = "text-red";
-  } else if (userRating <= 75) {
-    ratingColorClass = "text-orange-500";
-  }
+  // Determine the color class based on the user rating score using a ternary operator
+  const ratingColorClass =
+    userRating < 50
+      ? "text-red"
+      : userRating <= 75
+      ? "text-orange-500"
+      : "text-green";
 
   // see the actual data entries from tmdb
 
