@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { MovieCredit, MovieDetail } from "../types/movie";
 
-export function useGetSingleMovie(movieId: string) {
+export function useGetSingleMovie(movieId: number) {
   return useQuery({
     queryKey: ["movie", movieId],
     enabled: !!movieId,
