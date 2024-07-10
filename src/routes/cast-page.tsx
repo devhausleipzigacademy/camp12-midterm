@@ -4,12 +4,12 @@ import { TabButton } from "../components/tab-buttton";
 import { useState } from "react";
 import { Member } from "../components/member";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 export const CastPage = () => {
   //  movieId:
   const { movieId } = useParams();
-  const { data: movie } = useGetSingleMovie(movieId!);
+  const { data: movie } = useGetSingleMovie(Number(movieId!));
   console.log(movie?.credits);
   // toggle between cast and crew
   const [selectedTab, setSelectedTab] = useState<"cast" | "crew">("cast");
@@ -23,8 +23,8 @@ export const CastPage = () => {
           name={person.name}
           image={
             person.profile_path === null
-              ? "/tDzCAAJinH4Xt3lSKsajfiTyRK9.jpg"
-              : person.profile_path
+              ? "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg"
+              : `https://image.tmdb.org/t/p/w500/${person.profile_path}`
           }
         />
       ));
@@ -36,8 +36,8 @@ export const CastPage = () => {
           name={person.name}
           image={
             person.profile_path === null
-              ? "/tDzCAAJinH4Xt3lSKsajfiTyRK9.jpg"
-              : person.profile_path
+              ? "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg"
+              : `https://image.tmdb.org/t/p/w500/${person.profile_path}`
           }
         />
       ));
@@ -49,12 +49,12 @@ export const CastPage = () => {
       <div className=" grid grid-cols-4 p-5 gap-4 justify-start items-start">
         <div className=" col-span-full items-center justify-center relative px-4">
           <IconContext.Provider value={{ color: "white", size: "20px" }}>
-            <Link
-              to="/movies/:movieId"
+            <NavLink
+              to={`/movies/${movieId}`}
               className="absolute left-4 text-white mb-2"
             >
               <IoIosArrowBack />
-            </Link>
+            </NavLink>
           </IconContext.Provider>
 
           <h1 className="text-center text-white mb-2">Cast & Crew</h1>
