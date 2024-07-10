@@ -7,6 +7,7 @@ import {
 import { useGetMovies } from "../hooks/useGetMovies";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 type Movie = {
   id: number;
@@ -61,12 +62,14 @@ export function ComboSearchBox({ ...props }: Props) {
             value={movie}
             className="group flex cursor-default items-center gap-2 rounded-lg py-2.5 select-none data-[focus]:bg-white/10 px-3s"
           >
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-              className="size-16 object-cover w-auto"
-            />
-            <div className="text-base text-white">{movie.title}</div>
+            <Link to={`/movies/${movie.id}`} key={movie.id}>
+              <img
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+                className="size-16 object-cover w-auto"
+              />
+              <div className="text-base text-white">{movie.title}</div>
+            </Link>
           </ComboboxOption>
         ))}
       </ComboboxOptions>
