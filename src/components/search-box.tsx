@@ -8,6 +8,7 @@ import { useGetMovies } from "../hooks/useGetMovies";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type Movie = {
   id: number;
@@ -23,6 +24,7 @@ type Props = React.DetailedHTMLProps<
 export function ComboSearchBox({ ...props }: Props) {
   const { data: movies = [] } = useGetMovies();
   const [query, setQuery] = useState<string>("");
+  const navigate = useNavigate();
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   const filteredMovies =
@@ -37,7 +39,9 @@ export function ComboSearchBox({ ...props }: Props) {
   return (
     <Combobox
       value={selectedMovie}
-      onChange={(value) => setSelectedMovie(value)}
+      onChange={(value) => {
+        navigate(`/movies/${value?.id}`);
+      }}
       onClose={() => setQuery("")}
     >
       <div className="relative">
@@ -62,14 +66,12 @@ export function ComboSearchBox({ ...props }: Props) {
             value={movie}
             className="group flex cursor-default items-center gap-2 rounded-lg py-2.5 select-none data-[focus]:bg-white/10 px-3s"
           >
-            <Link to={`/movies/${movie.id}`} key={movie.id}>
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                className="size-16 object-cover w-auto"
-              />
-              <div className="text-base text-white">{movie.title}</div>
-            </Link>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title}
+              className="size-16 object-cover w-auto"
+            />
+            <div className="text-base text-white">{movie.title}</div>
           </ComboboxOption>
         ))}
       </ComboboxOptions>
