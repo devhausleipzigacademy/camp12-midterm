@@ -1,8 +1,7 @@
 import axios from "axios";
 import { Genre } from "../utils/genre";
 
-const apiKey ="01c4ae562fe659237a9144fbfed88d3c"
-// const apiKey = import.meta.env.VITE_TMDB_API_KEY;
+const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 
 //console.log("API Key:", apiKey); // Add this line to check if the API key is correctly loaded
 const baseUrl = "https://api.themoviedb.org/3";
