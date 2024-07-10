@@ -3,13 +3,13 @@ import axios from "axios";
 import { Movie } from "../types/movie";
 
 export const useGetMoviesById = () => {
-  const ids = [748783, 46195, 280180, 519182, 1008409];
+  // const ids = [748783, 46195, 280180, 519182, 1008409];
   // change ids with storedIds for getting actual movies from local storage
 
-  // const storedIds = JSON.parse(localStorage.Movies);
+  const storedIds = JSON.parse(localStorage.Movies);
 
   const results = useQueries({
-    queries: ids.map((id) => ({
+    queries: storedIds.map((id: number) => ({
       queryKey: ["movie", id],
       queryFn: async () => {
         const { data } = await axios.get<Movie>(
