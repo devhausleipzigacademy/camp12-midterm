@@ -5,6 +5,7 @@ import { MovieCredit, MovieDetail } from "../types/movie";
 export function useGetSingleMovie(movieId: number) {
   return useQuery({
     queryKey: ["movie", movieId],
+    enabled: !!movieId,
     queryFn: async () => {
       const details = await axios
         .get<MovieDetail>(`https://api.themoviedb.org/3/movie/${movieId}`, {
