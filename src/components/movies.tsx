@@ -11,8 +11,6 @@ const NowPlayingMovies = () => {
     return <div>Error loading movies...</div>;
   }
 
-  console.log(movies);
-
   return (
     <div className="now-playing-movies">
       <h2>Now Playing Movies</h2>
