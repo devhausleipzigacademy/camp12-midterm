@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
@@ -51,6 +50,17 @@ export function MovieDetails() {
     });
   };
 
+  // Calculate the user rating score as a percentage
+  const userRating = movie.details.vote_average * 10;
+
+  // Determine the color class based on the user rating score using a ternary operator
+  const ratingColorClass =
+    userRating < 50
+      ? "text-red"
+      : userRating <= 75
+      ? "text-orange-500"
+      : "text-green";
+
   // see the actual data entries from tmdb
 
   return (
@@ -101,8 +111,9 @@ export function MovieDetails() {
             {Math.floor(movie.details.runtime / 60)}h{" "}
             {movie.details.runtime % 60}m
           </li>
-          <li className="ml-auto text-green">
-            {(movie.details.vote_average * 10).toPrecision(2)}%
+          {/* Apply the color class to the rating score */}
+          <li className={`ml-auto ${ratingColorClass}`}>
+            {userRating.toPrecision(2)}%
             <span className="text-white-dimmed">&nbsp;Score</span>
           </li>
         </ul>
