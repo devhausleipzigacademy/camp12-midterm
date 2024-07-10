@@ -149,31 +149,43 @@ export const SeatsMap = () => {
           id="seats-front"
           className="text-white flex items-center justify-between px-6 mt-4"
         >
-          <SeatCart
-            count={seats.front}
-            category={"Seat-Front"}
-            prize={"$12.95"}
-          />
+          {seats.front === 0 ? (
+            <div></div>
+          ) : (
+            <SeatCart
+              count={seats.front}
+              category={"Seat-Front"}
+              prize={"$12.95"}
+            />
+          )}
         </div>
         <div
           id="seats-front"
           className="text-white flex items-center justify-between px-6 mt-4"
         >
-          <SeatCart
-            count={seats.middle}
-            category={"Seat-Middle"}
-            prize={"$14.95"}
-          />
+          {seats.middle === 0 ? (
+            <div></div>
+          ) : (
+            <SeatCart
+              count={seats.middle}
+              category={"Seat-Middle"}
+              prize={"$14.95"}
+            />
+          )}
         </div>
         <div
           id="seats-front"
           className="text-white flex items-center justify-between px-6 mt-4"
         >
-          <SeatCart
-            count={seats.back}
-            category={"Seat-Back"}
-            prize={"$16.95"}
-          />
+          {seats.back === 0 ? (
+            <div></div>
+          ) : (
+            <SeatCart
+              count={seats.back}
+              category={"Seat-Back"}
+              prize={"$16.95"}
+            />
+          )}
         </div>
         <hr className="flex self-center w-3/4 mt-5" />
 
