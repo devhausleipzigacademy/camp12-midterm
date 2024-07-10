@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { GenreType } from "../types/movie";
 
-// Definieren Sie einen Typ für die API-Antwort
 type GenreResponse = {
   genres: GenreType[];
 };
@@ -20,6 +19,6 @@ export function useGetGenres() {
             region: "DE",
           },
         })
-        .then((res) => res.data.genres), // Extrahieren Sie das genres-Array aus der Antwort
+        .then((res) => res.data.genres),
   });
 }
