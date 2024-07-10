@@ -10,7 +10,7 @@ import BookmarkedMovies from "./routes/bookmarks";
 import { TimePage } from "./routes/select-time";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Movies } from "./routes/movies";
-import { ReservationPage } from "./layouts/reservation-page";
+import { ReservationPage } from "./routes/reservation-page";
 
 const queryClient = new QueryClient();
 
