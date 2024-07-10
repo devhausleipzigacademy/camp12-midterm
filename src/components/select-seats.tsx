@@ -2,6 +2,7 @@ import { Seat } from "./seat";
 import { Button } from "./button";
 import { SeatCart } from "./seat-cart";
 import { useState } from "react";
+
 // define a Type for the seats const
 type Seat = {
   id: string | null;
@@ -91,7 +92,23 @@ export const SeatsMap = () => {
     }
   );
 
-  const cartHeight = seatsChecked.length > 0 ? "h-52" : "h-36";
+  // cartHeight adjustment according to seat selection
+  let cartHeight;
+
+  const { front, middle, back } = seats;
+  const sectionsSelected = [front > 0, middle > 0, back > 0].filter(
+    Boolean
+  ).length;
+
+  if (front === 0 && middle === 0 && back === 0) {
+    cartHeight = "h-36";
+  } else if (sectionsSelected === 2) {
+    cartHeight = "h-44";
+  } else if (sectionsSelected === 1) {
+    cartHeight = "h-40";
+  } else {
+    cartHeight = "h-52";
+  }
 
   return (
     <>
