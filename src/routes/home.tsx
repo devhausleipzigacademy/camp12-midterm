@@ -1,12 +1,18 @@
 import { GenreButton } from "../components/genre";
 import { HomepageHeader } from "../components/homepage-header";
-// import { Input } from "../components/input";
+import { LoginInput } from "../components/input";
 import { SectionTitle } from "../components/section-title";
 import { useState, useEffect } from "react";
 import { Genre } from "../utils/genre";
 import { getMoviesByGenre } from "../services/tmdb";
 import { useLocation } from "react-router";
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// TODOS:
+// Implement the getmovies and getgenres function to display all movies or filtered by genre movies
+// display only some of the genres at first and link the genreoverview page so that genres can be selected
+// fix Input field
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export function Homepage() {
   const location = useLocation();
   const [selectedGenres, setSelectedGenres] = useState<Genre[]>(
@@ -24,14 +30,13 @@ export function Homepage() {
   // async function loadMovies() {
   //   try {
   //     //activate loading
-  //     setIsLoading(true);
   //     // Check if selectedGenres is empty, if so, display all movies / i.o.w disable filtering
   //     let allMoviesPromises;
-  //     selectedGenres.length === 0
-  //       ? (allMoviesPromises = genres.map((genre) => getMoviesByGenre(genre)))
-  //       : (allMoviesPromises = selectedGenres.map((genre) =>
-  //           getMoviesByGenre(genre)
-  //         ));
+  //     movies?.length === 0
+  //       ? (allMoviesPromises = movies)
+  //       : (allMoviesPromises = movies?.filter((movie) => {
+  //           movie.genre_ids.includes(selectedGenres);
+  //         }));
 
   //     const allMoviesResults = await Promise.all(allMoviesPromises);
   //     const uniqueMovies = [
@@ -46,22 +51,19 @@ export function Homepage() {
   //     setFilteredMovies(uniqueMovies);
   //   } catch (error) {
   //     console.error("Error loading movies:", error);
-  //   } finally {
-  //     setIsLoading(false);
   //   }
   // }
 
-  // function handleClick(genre: Genre) {
-  //   setSelectedGenres((prev) =>
-  //     // If the list of all active genres includes the genre then..
-  //     prev.includes(genre)
-  //       ? // remove the genre from the list
-  //         prev.filter((g) => g !== genre)
-  //       : // else return all elements with the newly added genre
-  //         [...prev, genre]
-  //   );
-  // }
-
+  function handleClick(genre: GenreType) {
+    setSelectedGenres((prev) =>
+      // If the list of all active genres includes the genre then..
+      prev.includes(genre)
+        ? // remove the genre from the list
+          prev.filter((g) => g !== genre)
+        : // else return all elements with the newly added genre
+          [...prev, genre]
+    );
+  }
   return (
     <div className="h-screen bg-dark overflow-hidden">
       <div className="px-5 pt-8 pb-4 flex flex-col gap-6">
@@ -71,7 +73,7 @@ export function Homepage() {
             "https://devhausleipzig.de/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fjulian.b86ca7f2.jpg&w=3840&q=75"
           }
         />
-        <Input placeholder={"Search"} icon={undefined} />
+        <LoginInput placeholder={"Search"} icon={undefined} />
         <div className="flex flex-col gap-4">
           <SectionTitle
             text={"Genre"}
@@ -80,12 +82,12 @@ export function Homepage() {
             state={selectedGenres}
           />
           <div className="flex justify-between">
-            {genres.map((genre) => (
+            {genres?.map(({ id, name }: GenreType) => (
               <GenreButton
-                key={genre}
-                genre={genre}
-                selected={selectedGenres.includes(genre)}
-                onClick={() => handleClick(genre)}
+                key={id}
+                genre={name}
+                selected={selectedGenres.includes(name)}
+                onClick={() => handleClick(name)}
               />
             ))}
           </div>
