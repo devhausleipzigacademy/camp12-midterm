@@ -11,6 +11,7 @@ import { ProfileCustomization } from "./routes/profile-customization";
 import { TimePage } from "./routes/select-time";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Movies } from "./routes/movies";
+import GenreOverviewPage from "./routes/genres";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
 
   {
     path: "/genres",
-    element: <p>Genre Page</p>,
+    element: <GenreOverviewPage />,
   },
   {
     path: "/",
