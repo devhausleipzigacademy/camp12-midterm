@@ -28,7 +28,7 @@ export function MovieDetails({ movieId }: Props) {
     return <div>Error loading movie details.</div>;
   }
 
-  // see the actual data intries from tmdb
+  // see the actual data entries from tmdb
 
   return (
     // background

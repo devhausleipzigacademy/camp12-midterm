@@ -26,12 +26,12 @@ export function ComboSearchBox({ ...props }: Props) {
 
   const filteredMovies =
     query === ""
-      ? movies.slice(0, 6)
+      ? movies.slice(0, 5)
       : movies
           .filter((movie) =>
             movie.title.toLowerCase().includes(query.toLowerCase())
           )
-          .slice(0, 6);
+          .slice(0, 5);
 
   return (
     <Combobox
