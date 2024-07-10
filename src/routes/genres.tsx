@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GenreButton } from "../components/genre";
-import { genres, Genre } from "../utils/genre";
+import { knownGenres, Genre } from "../utils/genre";
 import { Button } from "../components/button";
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router";
@@ -35,7 +35,7 @@ export default function GenreOverviewPage() {
         <div></div>
       </div>
       <div className="grid grid-cols-4 gap-4 place-items-center">
-        {genres.map((genre) => (
+        {knownGenres.map((genre) => (
           <GenreButton
             key={genre}
             genre={genre}
