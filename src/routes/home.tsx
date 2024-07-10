@@ -4,26 +4,20 @@ import { Input } from "../components/search-input";
 import { SectionTitle } from "../components/section-title";
 import { useState, useEffect } from "react";
 import { Genre } from "../utils/genre";
-import { getMoviesByGenre } from "../services/tmdb";
 import { useLocation } from "react-router";
 import { useGetMovies } from "../hooks/useGetMovies";
 import { useGetGenres } from "../hooks/useGetGenres";
+import { Movie } from "../types/movie";
 
 export function Homepage() {
+  // If there is data from the genreoverview, use it, else the array is by default empty
   const location = useLocation();
   const [selectedGenres, setSelectedGenres] = useState<Genre[]>(
     location.state?.selectedGenres || []
   );
-  const [filteredMovies, setFilteredMovies] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const genresontop: Genre[] = ["Romance", "Comedy", "Horror", "Drama"];
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
 
-  // load movies everytime when selectedGenres changes
-  useEffect(() => {
-    filterMovies();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedGenres]);
-
+  // Get the tanstack queries
   const {
     data: movies,
     isLoading: MovieIsLoading,
@@ -35,62 +29,35 @@ export function Homepage() {
     isError: GenreIsError,
   } = useGetGenres();
 
-  if (MovieIsLoading || GenreIsLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (MovieIsError || GenreIsError) {
-    return <div>Error loading movies...</div>;
-  }
-
-  if (genres) {
-    const genreNames = genres.map((genre) => genre.name);
-    const genreIds = genres.map((genre) => genre.id);
-    console.log(movies);
-    console.log(genreIds); // Array von { id: number, name: string }
-    console.log(genreNames); // Array von Strings (Genre-Namen)
-  }
-
-  async function filterMovies() {
-    try {
-      //activate loading
-      setIsLoading(true);
-      // Check if selectedGenres is empty, if so, display all movies / i.o.w disable filtering
-      let allMoviesPromises;
-      selectedGenres.length === 0
-        ? (allMoviesPromises = genresontop.map((genre) =>
-            getMoviesByGenre(genre)
-          ))
-        : (allMoviesPromises = selectedGenres.map((genre) =>
-            getMoviesByGenre(genre)
-          ));
-
-      const allMoviesResults = await Promise.all(allMoviesPromises);
-      const uniqueMovies = [
-        // use Spread Operator to make it an array and
-        // give it the type Map to get rid of duplicates, by assigning every movie a id as a key
-        ...new Map(
-          // flat the Array, and return pairs of movieId and the movie itself
-          allMoviesResults.flat().map((movie) => [movie.id, movie])
-          // use values() as an iterator for the values
-        ).values(),
-      ];
-      setFilteredMovies(uniqueMovies);
-    } catch (error) {
-      console.error("Error loading movies:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  useEffect(() => {
+    // If movies is undefined, abort
+    if (!movies) return;
+    let filteredMovies: Movie[];
+    selectedGenres.length === 0
+      ? // if no genres selected, show all movies
+        (filteredMovies = movies)
+      : // else filter by id
+        (filteredMovies = movies.filter((movie: Movie) =>
+          // check if any of the ids inside the movie fulfills the condition of
+          movie.genre_ids.some((genreId: number) =>
+            //selectedGenres containing the genreId of the movie.genre.id
+            selectedGenres.includes(
+              // if so, return the name of the genre, else an empty string
+              genres?.find((g) => g.id === genreId)?.name || ""
+            )
+          )
+        ));
+    // get rid of duplicates by turning it into a map and again into an array
+    const uniqueMovies = [
+      ...new Map(filteredMovies.map((movie) => [movie.id, movie])).values(),
+    ];
+    setFilteredMovies(uniqueMovies);
+  }, [selectedGenres, movies, genres]);
 
   function handleClick(genre: Genre) {
+    // If genre is already in the selectedGenre array, then remove it, else add it
     setSelectedGenres((prev) =>
-      // If the list of all active genres includes the genre then..
-      prev.includes(genre)
-        ? // remove the genre from the list
-          prev.filter((g) => g !== genre)
-        : // else return all elements with the newly added genre
-          [...prev, genre]
+      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
     );
   }
 
@@ -111,23 +78,34 @@ export function Homepage() {
             route="/genres"
             state={selectedGenres}
           />
-          <div className="flex justify-between">
-            {genres?.slice(0, 4).map((genre) => (
-              <GenreButton
-                key={genre.id}
-                genre={genre.name}
-                selected={selectedGenres.includes(genre.name)}
-                onClick={() => handleClick(genre.name)}
-              />
-            ))}
+          <div className="flex justify-between text-white">
+            {GenreIsLoading ? (
+              <p>Loading genres...</p>
+            ) : GenreIsError ? (
+              <p>Error loading genres. Please try again later.</p>
+            ) : genres?.length ? (
+              genres
+                .slice(0, 4)
+                .map((genre) => (
+                  <GenreButton
+                    key={genre.id}
+                    genre={genre.name}
+                    selected={selectedGenres.includes(genre.name)}
+                    onClick={() => handleClick(genre.name)}
+                  />
+                ))
+            ) : (
+              <p>No genres available.</p>
+            )}
           </div>
         </div>
         <SectionTitle text={"Upcoming Movies"} />
       </div>
-
       <div className="flex gap-6 overflow-y-hidden scrollbar-hide snap-x h-56 mx-4 text-white">
-        {isLoading ? (
+        {MovieIsLoading ? (
           <p>Loading movies...</p>
+        ) : MovieIsError ? (
+          <p>Error loading movies. Please try again later.</p>
         ) : filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => (
             <img
