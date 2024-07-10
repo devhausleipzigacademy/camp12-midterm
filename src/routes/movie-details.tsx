@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
 
-type Props = {
-  movieId: number;
-};
+// Remove the Props type as it's no longer needed
 
-export function MovieDetails({ movieId }: Props) {
-  // consts:
+export function MovieDetails() {
+  // Use the useParams hook to get the movieId from the URL
+  const { movieId } = useParams<{ movieId: string }>();
+
+  // Convert movieId to a number
+  const movieIdNumber = Number(movieId);
 
   // a boolean that toggles the truncate class on Synopsis/overview text
   const [truncate, setTruncate] = useState(true);
-  const { data: movie, isLoading, isError } = useGetSingleMovie(movieId);
+  const { data: movie, isLoading, isError } = useGetSingleMovie(movieIdNumber);
+
   // reverse boolean on click on Read more
   function readMoreHandler() {
     setTruncate(!truncate);
@@ -26,8 +30,6 @@ export function MovieDetails({ movieId }: Props) {
     localStorage.setItem("Movies", JSON.stringify(currentId));
   }, [currentId]);
 
-  // query:
-
   // if movie is not loaded successfully display the following
   if (isLoading) {
     return <div>Loading...</div>;
@@ -36,7 +38,7 @@ export function MovieDetails({ movieId }: Props) {
     return <div>Error loading movie details.</div>;
   }
 
-  // this function handles heart click and local storage storage brr
+  // this function handles heart click and local storage
   const handleClick = (movieId: number) => {
     setToggleHeart(!toggleHeart);
     setCurrentId((prevSelectedId) => {
@@ -48,7 +50,7 @@ export function MovieDetails({ movieId }: Props) {
     });
   };
 
-  // see the actual data intries from tmdb
+  // see the actual data entries from tmdb
 
   return (
     // background
@@ -68,10 +70,10 @@ export function MovieDetails({ movieId }: Props) {
           <h1 className="text-white text-base font-bold">Movie Detail</h1>
           <HeartIcon
             className={`size-6 text-red ${
-              currentId.includes(movieId) ? "fill-red" : "fill-none"
+              currentId.includes(movieIdNumber) ? "fill-red" : "fill-none"
             } `}
             onClick={() => {
-              handleClick(movieId);
+              handleClick(movieIdNumber);
             }}
           ></HeartIcon>
         </div>
@@ -84,16 +86,14 @@ export function MovieDetails({ movieId }: Props) {
         ></div>
         {/* movie title */}
         <h1 className="text-xl font-bold pb-3">{movie.details.title}</h1>
-        {/* first row info: year, genre, runtime. score */}
+        {/* first row info: year, genre, runtime, score */}
         <ul className="flex flex-row gap-4 pb-3 text-xs">
           <li className="text-white">
             {movie.details.release_date.split("-")[0]}
           </li>
           <li className="text-white-dimmed">
             {movie.details.genres
-              .map((e: { id: number; name: string }) => {
-                return e.name;
-              })
+              .map((e: { id: number; name: string }) => e.name)
               .join(" / ")}
           </li>
           <li className="text-white-dimmed">
@@ -105,23 +105,23 @@ export function MovieDetails({ movieId }: Props) {
             <span className="text-white-dimmed">&nbsp;Score</span>
           </li>
         </ul>
-        {/* director, write and cast&crew button */}
+        {/* director, writer and cast & crew button */}
         <div className="grid grid-flow-col-dense grid-cols-5 gap-x-2 text-xs auto-cols-fr">
-          <span className=" text-white-dimmed pb-2 ">Director:&nbsp;</span>
-          <span className=" text-white-dimmed">Writer:&nbsp;</span>
+          <span className="text-white-dimmed pb-2">Director:&nbsp;</span>
+          <span className="text-white-dimmed">Writer:&nbsp;</span>
           <div className="col-span-2">
             {movie.credits?.crew
               .filter((e) => e.job === "Director")
-              .map((e: { id: number; name: string }) => {
-                return <p key={e.id}>{e.name} </p>;
-              })}
+              .map((e: { id: number; name: string }) => (
+                <p key={e.id}>{e.name} </p>
+              ))}
           </div>
           <div className="col-span-2">
             {movie.credits?.crew
               .filter((e) => e.job === "Writer")
-              .map((e: { id: number; name: string }) => {
-                return <p key={e.id}>{e.name} </p>;
-              })}
+              .map((e: { id: number; name: string }) => (
+                <p key={e.id}>{e.name} </p>
+              ))}
           </div>
           <button className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md max-h-10 h-full self-center">
             Cast & Crew
@@ -132,7 +132,7 @@ export function MovieDetails({ movieId }: Props) {
         <h2 className="text-sm pb-3">Synopsis</h2>
         {/* read more - do conditional styling based on truncate boolean */}
         <p
-          className={`text-white-dimmed text-sm ${truncate ? "truncate" : ""} `}
+          className={`text-white-dimmed text-sm ${truncate ? "truncate" : ""}`}
         >
           {movie.details.overview}
         </p>

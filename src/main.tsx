@@ -56,7 +56,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MovieDetails movieId={748783} />,
+        element: <MovieDetails />,
       },
       {
         path: "cast-and-crew",
