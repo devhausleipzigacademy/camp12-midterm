@@ -12,7 +12,6 @@ import { TimePage } from "./routes/select-time";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Movies } from "./routes/movies";
 import GenreOverviewPage from "./routes/genres";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -84,9 +83,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-      {/* Uncomment this component and the import statement  to open tanstack Devtools in the Browser
-      <ReactQueryDevtools initialIsOpen={false} /> 
-      */}
     </QueryClientProvider>
   </React.StrictMode>
 );
