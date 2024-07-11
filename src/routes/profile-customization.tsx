@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input } from "@headlessui/react";
 import { UserImage } from "../components/user-image";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userSchema } from "../types/schemas.ts";
 
 type FormData = {
   firstName: string;
@@ -10,37 +14,22 @@ type FormData = {
   confirmPassword: string;
 };
 
-export function HandleInputChange(
-  e: React.ChangeEvent<HTMLInputElement>,
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>
-) {
-  const { name, value } = e.target;
-  console.log(`Field ${name} changed to: ${value}`);
-  setFormData((prevData) => {
-    const newData = { ...prevData, [name]: value };
-    console.log("Current form data:", newData);
-    return newData;
-  });
-}
-
-export function HandleSubmit(e: React.FormEvent, formData: FormData) {
-  e.preventDefault();
-  console.log("Form submitted with data:", formData);
-  // Handle form submission
-}
+type UserSchema = z.infer<typeof userSchema>;
 
 export function ProfileCustomization() {
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<UserSchema>({
+    resolver: zodResolver(userSchema),
   });
 
-  useEffect(() => {
-    console.log("Current form data:", formData);
-  }, [formData]);
+  const onSubmit = (data: UserSchema) => {
+    console.log("Form submitted with data:", data);
+    // Handle form submission
+  };
 
   return (
     <div className="bg-gray-900 h-full text-white flex flex-col">
@@ -63,47 +52,71 @@ export function ProfileCustomization() {
 
       <main className="flex-1 p-4 overflow-y-auto">
         <h1 className="text-2xl font-bold mb-4">Profile Customization</h1>
-        <form onSubmit={(e) => HandleSubmit(e, formData)} className="space-y-4">
-          <Input
-            className="w-full bg-dark-light text-white p-3 rounded"
-            name="firstName"
-            placeholder="Enter your first name"
-            value={formData.firstName}
-            onChange={(e) => HandleInputChange(e, setFormData)}
-          />
-          <Input
-            className="w-full bg-dark-light text-white p-3 rounded"
-            name="lastName"
-            placeholder="Enter your last name"
-            value={formData.lastName}
-            onChange={(e) => HandleInputChange(e, setFormData)}
-          />
-          <Input
-            className="w-full bg-dark-light text-white p-3 rounded"
-            name="email"
-            type="email"
-            placeholder="your@email.com"
-            value={formData.email}
-            onChange={(e) => HandleInputChange(e, setFormData)}
-          />
-          <Input
-            className="w-full bg-dark-light text-white p-3 rounded"
-            name="password"
-            type="password"
-            placeholder="Change your Password"
-            value={formData.password}
-            onChange={(e) => HandleInputChange(e, setFormData)}
-          />
-          <Input
-            className="w-full bg-dark-light text-white p-3 rounded"
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm your Password"
-            value={formData.confirmPassword}
-            onChange={(e) => HandleInputChange(e, setFormData)}
-          />
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <Input
+              className="w-full bg-dark-light text-white p-3 rounded"
+              type="text"
+              placeholder="Enter your first name"
+              {...register("firstName")}
+            />
+            {errors.firstName && (
+              <p className="text-rose-600">{errors.firstName.message}</p>
+            )}
+          </div>
+
+          <div>
+            <Input
+              className="w-full bg-dark-light text-white p-3 rounded"
+              type="text"
+              placeholder="Enter your last name"
+              {...register("lastName")}
+            />
+            {errors.lastName && (
+              <p className="text-rose-600">{errors.lastName.message}</p>
+            )}
+          </div>
+
+          <div>
+            <Input
+              className="w-full bg-dark-light text-white p-3 rounded"
+              type="email"
+              placeholder="your@email.com"
+              {...register("email")}
+            />
+            {errors.email && (
+              <p className="text-rose-600">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div>
+            <Input
+              className="w-full bg-dark-light text-white p-3 rounded"
+              type="password"
+              placeholder="Change your Password"
+              {...register("password")}
+            />
+            {errors.password && (
+              <p className="text-rose-600">{errors.password.message}</p>
+            )}
+          </div>
+
+          <div>
+            <Input
+              className="w-full bg-dark-light text-white p-3 rounded"
+              type="password"
+              placeholder="Confirm your Password"
+              {...register("confirmPassword")}
+            />
+            {errors.confirmPassword && (
+              <p className="text-rose-600">{errors.confirmPassword.message}</p>
+            )}
+          </div>
+
           <div className="text-dark-light bg-yellow mt-auto mb-4 rounded-md pt-2 pb-2 text-center">
-            <Button>Save Data</Button>
+            <Button type="submit" disabled={isSubmitting}>
+              Save Data
+            </Button>
           </div>
         </form>
       </main>
