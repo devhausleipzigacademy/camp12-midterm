@@ -6,36 +6,66 @@
  */
 import React, { useState } from "react";
 import { PageButton } from "../components/page-button";
+import { useGetMoviesById } from "../hooks/useGetMoviesById";
+import { MovieCard } from "../components/movie-card";
+import { Movie } from "../types/movie";
 
 const BookmarkedMovies: React.FC = () => {
   const [activePage, setActivePage] = useState<number>(1);
+
+  const { movies, isLoading, isError } = useGetMoviesById();
+
+  const handlePageSelect = (page: number) => {
+    setActivePage(page);
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading movies</div>;
+  }
+
+  // const storedMovies = JSON.parse(localStorage.Movies);
+  // console.log(storedMovies);
+
+  // Calculate the index range for the current page
+  const moviesPerPage = 4;
+  const startIndex = (activePage - 1) * moviesPerPage;
+  const endIndex = startIndex + moviesPerPage;
+
+  // slice movies array to display only 4 per page
+  const paginatedMovies = movies?.slice(startIndex, endIndex) || [];
+
+  // determine number of total pages
+  const totalPages = Math.ceil((movies?.length || 0) / moviesPerPage);
+
   return (
-    <div className="bg-dark px-5 pt-8">
+    <div
+      id="whole-div"
+      className="flex flex-col bg-dark px-5 pt-8 h-full justify-between"
+    >
       <div className="grid grid-cols-2 gap-5">
-        <div>
-          <img
-            src="/img/im-westen-nichts-neues.jpg"
-            alt="Im Westen nichts Neues"
+        {paginatedMovies.map((movie: Movie) => (
+          <MovieCard
+            key={movie.id}
+            year={movie.release_date.split("-")[0]}
+            title={movie.title}
+            poster={movie.poster_path}
           />
-        </div>
-        <div>
-          <img src="/img/luckynumberslevin.jpg" alt="Lucky Number Slevin" />
-        </div>
-        <div>
-          <img src="/img/parasite.jpg" alt="Parasite" />
-        </div>
-        <div>
-          <img src="/img/zodiac.jpg" alt="Zodiac" />
-        </div>
+        ))}
       </div>
-      <div className="flex justify-between mt-5">
-        {[1, 2, 3, 4, 5].map((page) => (
-          <PageButton
-            key={page}
-            page={page}
-            active={page === activePage}
-            onClick={() => setActivePage(page)}
-          />
+      <div id="button-div" className="flex justify-center gap-4 mt-5">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <div className="flex flex-end">
+            <PageButton
+              key={index + 1}
+              page={index + 1}
+              active={activePage === index + 1}
+              onClick={() => handlePageSelect(index + 1)}
+            />
+          </div>
         ))}
       </div>
     </div>

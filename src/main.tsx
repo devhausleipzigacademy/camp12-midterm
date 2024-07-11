@@ -7,10 +7,15 @@ import { NavBarLayout } from "./layouts/navbar-layout";
 import { Homepage } from "./routes/home";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import BookmarkedMovies from "./routes/bookmarks";
-import { TimePage } from "./routes/select-time";
+import { CastPage } from "./routes/cast-page";
+// import { MoviePage } from "./components/movie-page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ProfileCustomization } from "./routes/profile-customization";
+import { TimePage } from "./routes/select-time";
 import { Movies } from "./routes/movies";
 import { ReservationPage } from "./routes/reservation-page";
+import GenreOverviewPage from "./routes/genres";
+import { Ticket } from "./routes/ticket";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +27,7 @@ const router = createBrowserRouter([
 
   {
     path: "/genres",
-    element: <p>Genre Page</p>,
+    element: <GenreOverviewPage />,
   },
   {
     path: "/",
@@ -42,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <p>Profile Page</p>,
+        element: <ProfileCustomization />,
       },
     ],
   },
@@ -56,11 +61,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MovieDetails movieId={748783} />,
+        element: <MovieDetails />,
       },
       {
         path: "cast-and-crew",
-        element: <p>Cast and Crew Page</p>,
+        element: <CastPage />,
       },
       {
         path: "select-time",
@@ -72,7 +77,7 @@ const router = createBrowserRouter([
       },
       {
         path: "ticket",
-        element: <p>Ticket Page</p>,
+        element: <Ticket />,
       },
     ],
   },
