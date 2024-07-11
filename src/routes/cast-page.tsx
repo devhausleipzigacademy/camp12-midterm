@@ -6,6 +6,24 @@ import { Member } from "../components/member";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
 import { NavLink, useParams } from "react-router-dom";
 
+type CastMember = {
+  character: string;
+  name: string;
+  profile_path: string | null;
+};
+
+type CrewMember = {
+  job: string;
+  name: string;
+  profile_path: string | null;
+};
+
+type GroupedCrewMember = {
+  name: string;
+  profile_path: string | null;
+  jobs: string[];
+};
+
 export const CastPage = () => {
   //  movieId:
   const { movieId } = useParams();
@@ -14,9 +32,13 @@ export const CastPage = () => {
   // toggle between cast and crew
   const [selectedTab, setSelectedTab] = useState<"cast" | "crew">("cast");
 
-  function members(selectedTab: string) {
+  function members(selectedTab: string): JSX.Element[] | null {
+    if (!movie || !movie.credits) {
+      return null;
+    }
+
     if (selectedTab === "cast") {
-      return movie?.credits.cast.map((person) => (
+      return movie.credits.cast.map((person: CastMember) => (
         <Member
           role={person.character}
           name={person.name}
@@ -28,9 +50,22 @@ export const CastPage = () => {
         />
       ));
     } else {
-      return movie?.credits.crew.map((person) => (
+      const crewGrouped = movie.credits.crew.reduce<
+        Record<string, GroupedCrewMember>
+      >((acc, person: CrewMember) => {
+        const key = `${person.name}-${person.profile_path}`;
+        if (!acc[key]) {
+          acc[key] = { ...person, jobs: [person.job] };
+        } else {
+          acc[key].jobs.push(person.job);
+        }
+        return acc;
+      }, {});
+
+      return Object.values(crewGrouped).map((person: GroupedCrewMember) => (
         <Member
-          role={person.job}
+          key={`${person.name}-${person.jobs.join("-")}`}
+          role={person.jobs.join(" & ")}
           name={person.name}
           image={
             person.profile_path === null
@@ -41,7 +76,6 @@ export const CastPage = () => {
       ));
     }
   }
-
   return (
     <div className="bg-dark h-fit">
       <div className="grid grid-cols-4 p-5 gap-4 justify-start items-start">
@@ -74,7 +108,7 @@ export const CastPage = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-full justify-start">
+        <div className="col-span-full justify-start mt-20">
           {members(selectedTab)}
         </div>
       </div>
