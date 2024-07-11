@@ -2,6 +2,7 @@ import { Seat } from "./seat";
 import { Button } from "./button";
 import { SeatCart } from "./seat-cart";
 import { useState } from "react";
+
 // define a Type for the seats const
 type Seat = {
   id: string | null;
@@ -90,10 +91,29 @@ export const SeatsMap = () => {
       back: 0,
     }
   );
+
+  // cartHeight adjustment according to seat selection
+  let cartHeight;
+
+  const { front, middle, back } = seats;
+  const sectionsSelected = [front > 0, middle > 0, back > 0].filter(
+    Boolean
+  ).length;
+
+  if (front === 0 && middle === 0 && back === 0) {
+    cartHeight = "h-36";
+  } else if (sectionsSelected === 2) {
+    cartHeight = "h-44";
+  } else if (sectionsSelected === 1) {
+    cartHeight = "h-40";
+  } else {
+    cartHeight = "h-52";
+  }
+
   return (
     <>
       <div className="flex flex-row items-center justify-between">
-        <div className=" w-44 p-6 grid grid-cols-4 grid-rows-6 gap-4 justify-items-center mt-4 ml-4">
+        <div className=" w-44 p-6 grid grid-cols-4 grid-rows-6 gap-4 justify-items-center mt-2 ml-4">
           {kinoSeatsLeft.map((seat) =>
             seat.id ? (
               <Seat
@@ -117,7 +137,7 @@ export const SeatsMap = () => {
           )}
         </div>
 
-        <div className=" w-44 p-6 grid grid-cols-4 grid-rows-6 gap-4 justify-items-center mt-4 mr-4">
+        <div className=" w-44 p-6 grid grid-cols-4 grid-rows-6 gap-4 justify-items-center mt-2 mr-4">
           {kinoSeatsRight.map((seat) =>
             seat.id ? (
               <Seat
@@ -142,50 +162,78 @@ export const SeatsMap = () => {
         </div>
       </div>
       <div
+        id="categorys"
+        className="flex flex-row gap-2 justify-around mt-1 px-6"
+      >
+        <div className="flex flex-row h-auto gap-2 items-center">
+          <div className="bg-dark-light w-4 aspect-square rounded-full"></div>
+          <small className="text-white-dimmed">Available</small>
+        </div>
+        <div className="flex flex-row h-auto gap-2 items-center">
+          <div className="bg-yellow w-4 aspect-square rounded-full"></div>
+          <small className="text-white-dimmed">Selected</small>
+        </div>
+        <div className="flex flex-row h-auto gap-2 items-center">
+          <div className="bg-white w-4 aspect-square rounded-full"></div>
+          <small className="text-white-dimmed">Reserved</small>
+        </div>
+      </div>
+      <div
         id="cart"
-        className="fixed bottom-0 w-full h-52 bg-dark-light rounded-t-3xl flex flex-col"
+        className={`fixed bottom-0 w-full ${cartHeight} bg-dark-light rounded-t-3xl flex flex-col`}
       >
         <div
           id="seats-front"
-          className="text-white flex items-center justify-between px-6 mt-4"
+          className="text-white flex items-center justify-between px-6 mt-6"
         >
-          <SeatCart
-            count={seats.front}
-            category={"Seat-Front"}
-            prize={"$12.95"}
-          />
+          {seats.front === 0 ? (
+            <div></div>
+          ) : (
+            <SeatCart
+              count={seats.front}
+              category={"Seat-Front"}
+              prize={"$12.95"}
+            />
+          )}
         </div>
         <div
           id="seats-front"
-          className="text-white flex items-center justify-between px-6 mt-4"
+          className="text-white flex items-center justify-between px-6 mt-1"
         >
-          <SeatCart
-            count={seats.middle}
-            category={"Seat-Middle"}
-            prize={"$14.95"}
-          />
+          {seats.middle === 0 ? (
+            <div></div>
+          ) : (
+            <SeatCart
+              count={seats.middle}
+              category={"Seat-Middle"}
+              prize={"$14.95"}
+            />
+          )}
         </div>
         <div
           id="seats-front"
-          className="text-white flex items-center justify-between px-6 mt-4"
+          className="text-white flex items-center justify-between pb-3 mx-6 mt-1 border-b border-b-white-dimmed"
         >
-          <SeatCart
-            count={seats.back}
-            category={"Seat-Back"}
-            prize={"$16.95"}
-          />
+          {seats.back === 0 ? (
+            <div></div>
+          ) : (
+            <SeatCart
+              count={seats.back}
+              category={"Seat-Back"}
+              prize={"$16.95"}
+            />
+          )}
         </div>
-        <hr className="flex self-center w-3/4 mt-5" />
 
         <div
           id="price-total"
-          className="flex justify-center gap-8 items-center pr-4 pl-4"
+          className="grid grid-cols-5 fixed bottom-5 justify-center items-center pr-4 pl-4"
         >
-          <div className="flex flex-col text-white p-4">
-            <div className="text-white-dimmed font-inter-500 text-xs">
+          <div className="col-start-1 col-end-3 bottom-0 flex flex-col text-white">
+            <div className="total text-white-dimmed font-inter-500 text-xs">
               Total Price
             </div>
-            <div className="font-inter-700 text-xl">
+            <div className="prize font-inter-700 text-xl">
               $
               {(
                 seats.front * 12.95 +
@@ -194,7 +242,7 @@ export const SeatsMap = () => {
               ).toFixed(2)}
             </div>
           </div>
-          <div className=" flex items-center w-52 h-12 mt-2">
+          <div className="col-start-3 flex items-center w-52 h-12 mt-2">
             <Button variant="primary" size="default">
               Book Ticket
             </Button>
