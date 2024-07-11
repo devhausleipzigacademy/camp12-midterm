@@ -46,7 +46,7 @@ export const CastPage = () => {
     <div className="bg-dark h-fit">
       <div className="grid grid-cols-4 p-5 gap-4 justify-start items-start">
         <div className="col-span-full items-center justify-center relative px-4">
-          <div className="fixed top-0 left-0 w-full bg-dark p-4 z-10 flex flex-col">
+          <div className="fixed top-0 left-0 w-full bg-gray-800 p-4 z-10 flex flex-col">
             <div className="relative flex items-center">
               <IconContext.Provider value={{ color: "white", size: "20px" }}>
                 <NavLink
@@ -74,17 +74,10 @@ export const CastPage = () => {
             </div>
           </div>
         </div>
-
-        <div className="col-start-1 col-end-3 mb-1 mt-24">
-          {/* Content here */}
-        </div>
-
-        <div className="col-start-3 col-end-5 mb-1 mt-24">
-          {/* Content here */}
+        <div className="col-span-full justify-start">
+          {members(selectedTab)}
         </div>
       </div>
-
-      <div className="col-span-full justify-start">{members(selectedTab)}</div>
     </div>
   );
 };
