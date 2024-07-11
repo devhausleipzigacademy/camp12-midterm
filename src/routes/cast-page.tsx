@@ -94,7 +94,7 @@ export const CastPage = () => {
                 Cast & Crew
               </h1>
             </div>
-            <div className="flex justify-around mt-2">
+            <div className=" gap-4 flex justify-around mt-2">
               <TabButton
                 selected={selectedTab === "cast"}
                 label={"Cast"}
