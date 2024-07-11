@@ -1,12 +1,12 @@
 import { Button } from "./button";
 import { SeatCart } from "./seat-cart";
 import { useState } from "react";
-// import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Seat } from "../types/seat";
 import SeatMap from "./SeatMap";
 
 export default function SelectSeats() {
-  // function for generating Seats, left alignment is default setting
+  // function for generating Seats, left alignment is the default setting
   function generateSeats(isRightSide: boolean = false): Seat[] {
     const seatRows = ["A", "B", "C", "D", "E", "F"];
     const seats: Seat[] = [];
@@ -14,7 +14,6 @@ export default function SelectSeats() {
     const seatCount = 4;
     const offset = isRightSide ? 4 : 0;
     const nullSeatPosition = isRightSide ? 4 : 1;
-
     seatRows.forEach((row) => {
       for (let i = 1; i <= seatCount; i++) {
         // boolean value to check if we have to implement non standard seats
@@ -22,7 +21,15 @@ export default function SelectSeats() {
         //if we are in the edgerow, we look out for the position of our potential null object
         const isNullSeat = isEdgeRow && i === nullSeatPosition;
         seats.push({
-          id: isNullSeat ? null : row + (i + offset),
+          id: isNullSeat
+            ? // make it null if its a nullSeat
+              null
+            : // else check if the seat is in the edgerow
+            isEdgeRow
+            ? // if so, then substract 1 to display the seats in the right order
+              row + (i - 1 + offset)
+            : // if not just add the seats to the array
+              row + (i + offset),
           isSelected: false,
           isReserved: false,
         });
@@ -32,10 +39,11 @@ export default function SelectSeats() {
   }
   const kinoSeatsLeft: Seat[] = generateSeats();
   const kinoSeatsRight: Seat[] = generateSeats(true);
-  // Just a dummy Array for now
-  const reservedSeats: string[] = ["A3", "E5", "F3"];
-
+  // Just a dummy Array for now, ATTENTION: YOU NEED TO ADD +1 TO YOUR DESIRED SEAT FOR NOW
+  const reservedSeats: string[] = ["A2", "E5", "F3"];
+  // track state of selected Seats
   const [seatsChecked, setSeatsChecked] = useState<string[]>([]);
+  // count how many and which type of seats are selected
   const seats = seatsChecked.reduce(
     (acc, current) => {
       if (current[0] === "A") {
@@ -53,7 +61,7 @@ export default function SelectSeats() {
     }
   );
 
-  /*   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   const movieDetails = location.state?.movieDetails;
@@ -64,7 +72,8 @@ export default function SelectSeats() {
         selectedSeats,
       },
     });
-  }; */
+  };
+  console.log(seatsChecked);
 
   return (
     <>
@@ -141,7 +150,7 @@ export default function SelectSeats() {
             <Button
               variant="primary"
               size="default"
-              // onClick={navigateAndSendState}
+              onClick={navigateAndSendState}
               children="Book Ticket"
             ></Button>
           </div>
