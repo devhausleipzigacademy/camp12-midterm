@@ -9,7 +9,7 @@ import { NavLink, useParams } from "react-router-dom";
 export const CastPage = () => {
   //  movieId:
   const { movieId } = useParams();
-  const { data: movie } = useGetSingleMovie(Number(movieId!));
+  const { data: movie } = useGetSingleMovie(movieId!);
   console.log(movie?.credits);
   // toggle between cast and crew
   const [selectedTab, setSelectedTab] = useState<"cast" | "crew">("cast");
