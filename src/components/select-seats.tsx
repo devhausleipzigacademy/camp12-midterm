@@ -1,78 +1,40 @@
-import { Seat } from "./seat";
 import { Button } from "./button";
 import { SeatCart } from "./seat-cart";
 import { useState } from "react";
-// define a Type for the seats const
-type Seat = {
-  id: string | null;
-  isSelected: boolean;
-  isReserved: boolean;
-};
+// import { useLocation, useNavigate } from "react-router-dom";
+import { Seat } from "../types/seat";
+import SeatMap from "./SeatMap";
 
-// function for generating Seats
-function generateSeatsLeft(): Seat[] {
-  const seatRows = ["A", "B", "C", "D", "E", "F"];
-  const seats: Seat[] = [];
-
-  seatRows.forEach((row) => {
+export default function SelectSeats() {
+  // function for generating Seats, left alignment is default setting
+  function generateSeats(isRightSide: boolean = false): Seat[] {
+    const seatRows = ["A", "B", "C", "D", "E", "F"];
+    const seats: Seat[] = [];
+    // amount of standard seat rows
     const seatCount = 4;
-    // for each element in the the Array check if A or F and assign id null or id
-    for (let i = 1; i <= seatCount; i++) {
-      if (row === "A" || row === "F") {
-        seats.push({
-          id: (row === "A" || row === "F") && i === 1 ? null : `${row}${i - 1}`,
+    const offset = isRightSide ? 4 : 0;
+    const nullSeatPosition = isRightSide ? 4 : 1;
 
-          isSelected: false,
-          isReserved: false,
-        });
-      } else {
+    seatRows.forEach((row) => {
+      for (let i = 1; i <= seatCount; i++) {
+        // boolean value to check if we have to implement non standard seats
+        const isEdgeRow = row === "A" || row === "F";
+        //if we are in the edgerow, we look out for the position of our potential null object
+        const isNullSeat = isEdgeRow && i === nullSeatPosition;
         seats.push({
-          id: `${row}${i}`,
+          id: isNullSeat ? null : row + (i + offset),
           isSelected: false,
           isReserved: false,
         });
       }
-    }
-  });
-  return seats;
-}
-function generateSeatsRight(): Seat[] {
-  const seatRows = ["A", "B", "C", "D", "E", "F"];
-  const seats: Seat[] = [];
+    });
+    return seats;
+  }
+  const kinoSeatsLeft: Seat[] = generateSeats();
+  const kinoSeatsRight: Seat[] = generateSeats(true);
+  // Just a dummy Array for now
+  const reservedSeats: string[] = ["A3", "E5", "F3"];
 
-  seatRows.forEach((row) => {
-    const seatCount = 4;
-    // for each element in the the Array check if A or F and assign id null or id
-    for (let i = 1; i <= seatCount; i++) {
-      if (row === "A" || row === "F") {
-        seats.push({
-          id: (row === "A" || row === "F") && i === 4 ? null : `${row}${i + 4}`,
-
-          isSelected: false,
-          isReserved: false,
-        });
-      } else {
-        seats.push({
-          id: `${row}${i + 4}`,
-          isSelected: false,
-          isReserved: false,
-        });
-      }
-    }
-  });
-  return seats;
-}
-
-const kinoSeatsLeft: Seat[] = generateSeatsLeft();
-const kinoSeatsRight: Seat[] = generateSeatsRight();
-
-const combiArray = kinoSeatsLeft.concat(kinoSeatsRight);
-console.log(combiArray);
-
-// Just a dummy Array for now
-const reserved: string[] = ["A3", "E5", "F3"];
-
-export const SeatsMap = () => {
   const [seatsChecked, setSeatsChecked] = useState<string[]>([]);
   const seats = seatsChecked.reduce(
     (acc, current) => {
@@ -90,56 +52,37 @@ export const SeatsMap = () => {
       back: 0,
     }
   );
+
+  /*   const [selectedSeats, setSelectedSeats] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const movieDetails = location.state?.movieDetails;
+  const navigateAndSendState = () => {
+    navigate("/ticket", {
+      state: {
+        movieDetails,
+        selectedSeats,
+      },
+    });
+  }; */
+
   return (
     <>
       <div className="flex flex-row items-center justify-between">
-        <div className=" w-44 p-6 grid grid-cols-4 grid-rows-6 gap-4 justify-items-center mt-4 ml-4">
-          {kinoSeatsLeft.map((seat) =>
-            seat.id ? (
-              <Seat
-                key={seat.id}
-                onChange={() => {
-                  if (!seat.id) return;
-                  if (seatsChecked.includes(seat.id)) {
-                    setSeatsChecked(
-                      seatsChecked.filter((id) => id !== seat.id)
-                    );
-                  } else {
-                    setSeatsChecked((prevState) => [...prevState, seat.id!]);
-                  }
-                }}
-                selected={seatsChecked.includes(seat.id)}
-                disabled={reserved.includes(seat.id) ? true : false}
-              />
-            ) : (
-              <div />
-            )
-          )}
-        </div>
-
-        <div className=" w-44 p-6 grid grid-cols-4 grid-rows-6 gap-4 justify-items-center mt-4 mr-4">
-          {kinoSeatsRight.map((seat) =>
-            seat.id ? (
-              <Seat
-                key={seat.id}
-                onChange={() => {
-                  if (!seat.id) return;
-                  if (seatsChecked.includes(seat.id)) {
-                    setSeatsChecked(
-                      seatsChecked.filter((id) => id !== seat.id)
-                    );
-                  } else {
-                    setSeatsChecked((prevState) => [...prevState, seat.id!]);
-                  }
-                }}
-                selected={seatsChecked.includes(seat.id)}
-                disabled={reserved.includes(seat.id) ? true : false}
-              />
-            ) : (
-              <div />
-            )
-          )}
-        </div>
+        <SeatMap
+          kinoSeats={kinoSeatsLeft}
+          seatsChecked={seatsChecked}
+          setSeatsChecked={setSeatsChecked}
+          reservedSeats={reservedSeats}
+          className="ml-4"
+        />
+        <SeatMap
+          kinoSeats={kinoSeatsRight}
+          seatsChecked={seatsChecked}
+          setSeatsChecked={setSeatsChecked}
+          reservedSeats={reservedSeats}
+          className="mr-4"
+        />
       </div>
       <div
         id="cart"
@@ -195,12 +138,15 @@ export const SeatsMap = () => {
             </div>
           </div>
           <div className=" flex items-center w-52 h-12 mt-2">
-            <Button variant="primary" size="default">
-              Book Ticket
-            </Button>
+            <Button
+              variant="primary"
+              size="default"
+              // onClick={navigateAndSendState}
+              children="Book Ticket"
+            ></Button>
           </div>
         </div>
       </div>
     </>
   );
-};
+}

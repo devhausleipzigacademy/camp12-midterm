@@ -15,6 +15,7 @@ import { TimePage } from "./routes/select-time";
 import { Movies } from "./routes/movies";
 import GenreOverviewPage from "./routes/genres";
 import { Ticket } from "./routes/ticket";
+import ReservationPage from "./layouts/reservation-page";
 
 const queryClient = new QueryClient();
 
@@ -72,7 +73,7 @@ const router = createBrowserRouter([
       },
       {
         path: "select-seats",
-        element: <p>Select Seats Page</p>,
+        element: <ReservationPage />,
       },
       {
         path: "ticket",

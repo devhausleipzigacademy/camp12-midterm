@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 // Remove the Props type as it's no longer needed
 
@@ -16,6 +16,20 @@ export function MovieDetails() {
   // a boolean that toggles the truncate class on Synopsis/overview text
   const [truncate, setTruncate] = useState(true);
   const { data: movie, isLoading, isError } = useGetSingleMovie(movieIdNumber);
+
+  const navigate = useNavigate();
+
+  // Bei der Weiterleitung zur Sitzplatzreservierung
+  function sendState() {
+    navigate("/select-seats", {
+      state: {
+        movieDetails: {
+          title: movie?.details.title,
+          posterPath: movie?.details.backdrop_path,
+        },
+      },
+    });
+  }
 
   // reverse boolean on click on Read more
   function readMoreHandler() {
@@ -161,7 +175,10 @@ export function MovieDetails() {
       </div>
       {/* reservation button */}
       <div className="text-dark-light mt-auto mb-4">
-        <Button children={"Get Reservation"} />
+        <Button
+          onClick={sendState}
+          children={<NavLink to="select-seats">Get Reservation</NavLink>}
+        />
       </div>
     </section>
   );
