@@ -21,11 +21,12 @@ export function MovieDetails() {
 
   // Bei der Weiterleitung zur Sitzplatzreservierung
   function sendState() {
-    navigate("/select-seats", {
+    navigate("./select-seats", {
       state: {
         movieDetails: {
+          id: movie?.details.id,
           title: movie?.details.title,
-          posterPath: movie?.details.backdrop_path,
+          backdrop_path: movie?.details.backdrop_path,
         },
       },
     });
@@ -175,10 +176,7 @@ export function MovieDetails() {
       </div>
       {/* reservation button */}
       <div className="text-dark-light mt-auto mb-4">
-        <Button
-          onClick={sendState}
-          children={<NavLink to="select-seats">Get Reservation</NavLink>}
-        />
+        <Button onClick={sendState} children={"Get Reservation"} />
       </div>
     </section>
   );

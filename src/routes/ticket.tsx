@@ -9,18 +9,31 @@ type Props = {
 
 export function Ticket({ date = "08 Jan", time = "14:30" }: Props) {
   const location = useLocation();
-  const { movieDetails, selectedSeats } = location.state || {};
+  console.log("Received state:", location.state); // Debugging
+
+  const { movieDetails, selectedSeats, totalPrice } = location.state || {};
+
+  console.log("Selected seats:", selectedSeats); // Debugging
+
+  const imageUrl =
+    movieDetails && movieDetails.backdrop_path
+      ? `https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`
+      : "https://www.zooplus.de/magazin/wp-content/uploads/2022/03/pallas-katze-auf-felsen-1024x683.jpg";
+
+  console.log("Received state:", location.state); // Debugging
 
   return (
     /* Background */
     <section className="bg-dark h-dvh flex flex-col justify-center items-stretch p-4 overflow-x-hidden">
       {/* Ticket */}
-      <div className="bg-dark-light rounded-xl flex flex-col flex-grow text-white mb-4">
+      <div className="bg-dark-light rounded-xl flex flex-col flex-grow text-white mb-4 bg-center">
         <div className="h-3/4 ">
           {/* Move Image / Hero */}
           <div
-            className={`bg-[url('${movieDetails?.posterPath}')]
-            h-2/5 w-auto bg-cover bg-no-repeat p-8 rounded-t-xl`}
+            className={`h-2/5 w-auto bg-cover bg-no-repeat p-8 rounded-t-xl`}
+            style={{
+              backgroundImage: `url('${imageUrl}')`,
+            }}
           ></div>
           {/* Content */}
           <div className="px-6 pb-2">
@@ -39,14 +52,12 @@ export function Ticket({ date = "08 Jan", time = "14:30" }: Props) {
               </div>
               <div className="flex flex-col">
                 <h3 className="text-dark text-sm">Price</h3>
-                <h2 className="text-m font-semibold">
-                  ${selectedSeats?.price}
-                </h2>
+                <h2 className="text-m font-semibold">${totalPrice}</h2>
               </div>
               <div className="flex flex-col">
                 <h3 className="text-dark text-sm">Seats</h3>
                 <h2 className="text-m font-semibold">
-                  {selectedSeats?.join(", ")}
+                  {selectedSeats.join(", ")}
                 </h2>
               </div>
             </div>
@@ -61,7 +72,7 @@ export function Ticket({ date = "08 Jan", time = "14:30" }: Props) {
         </div>
 
         {/* Barcode */}
-        <div className="px-12 flex justify-center">
+        <div className="px-12 flex justify-center my-auto">
           <Barcode
             value={"calculatedNumber1234"}
             format="CODE39"
@@ -76,7 +87,7 @@ export function Ticket({ date = "08 Jan", time = "14:30" }: Props) {
       <Button
         variant="primary"
         size="default"
-        children={<NavLink to="select-seats/ticket">Get Reservation</NavLink>}
+        children={<NavLink to="/">Back to Home</NavLink>}
       />
     </section>
   );

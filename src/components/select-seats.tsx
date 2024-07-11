@@ -60,20 +60,26 @@ export default function SelectSeats() {
       back: 0,
     }
   );
-
-  const [selectedSeats, setSelectedSeats] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   const movieDetails = location.state?.movieDetails;
   const navigateAndSendState = () => {
-    navigate("/ticket", {
+    console.log("Sending seats:", seatsChecked); // Debugging
+
+    navigate("../ticket", {
       state: {
         movieDetails,
-        selectedSeats,
+        selectedSeats: seatsChecked,
+        totalPrice,
       },
     });
   };
-  console.log(seatsChecked);
+
+  const totalPrice = (
+    seats.front * 12.95 +
+    seats.middle * 14.95 +
+    seats.back * 16.95
+  ).toFixed(2);
 
   return (
     <>
@@ -137,14 +143,7 @@ export default function SelectSeats() {
             <div className="text-white-dimmed font-inter-500 text-xs">
               Total Price
             </div>
-            <div className="font-inter-700 text-xl">
-              $
-              {(
-                seats.front * 12.95 +
-                seats.middle * 14.95 +
-                seats.back * 16.95
-              ).toFixed(2)}
-            </div>
+            <div className="font-inter-700 text-xl">{totalPrice}</div>
           </div>
           <div className=" flex items-center w-52 h-12 mt-2">
             <Button
