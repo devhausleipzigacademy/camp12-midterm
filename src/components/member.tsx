@@ -10,9 +10,9 @@ export const Member = ({ image, name, role }: Props) => {
       <div className="col-span-full row-span-1">
         <div className="flex gap-5 mb-4 justify-start items-center">
           <img
-            src={`https://image.tmdb.org/t/p/w500/${image}`}
+            src={image}
             alt={name}
-            className="size-16 object-cover"
+            className="size-16 object-cover bg-white-dimmed-heavy"
           />
           <div>
             <h2 className="text-white font-bold text-sm mb-1">{name}</h2>
