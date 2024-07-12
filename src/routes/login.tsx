@@ -7,8 +7,10 @@ import { LockClosedIcon } from "@heroicons/react/24/outline";
 import { LoginInput } from "../components/input";
 
 const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters long"),
+  email: z.string().email({ message: "Invalid email address" }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters long" }),
 });
 
 type LoginSchema = z.infer<typeof loginSchema>;
