@@ -1,20 +1,18 @@
 import { useNavigate } from "react-router";
 import { SeatsMap } from "../components/select-seats";
-import react from "react";
+import { useEffect } from "react";
 
 export const ReservationPage = () => {
   // navigate to login page if no authentifictaion
   const navigate = useNavigate();
 
-  react.useEffect(() => {
+  useEffect(() => {
     let authState = JSON.parse(localStorage.getItem("auth-state") || "{}");
     if (!authState || !authState.authState) {
       authState = false;
-    }
-    if (authState != true) {
       navigate("/login");
     }
-  }, []);
+  });
 
   return (
     <div className="flex flex-col w-full h-screen bg-dark">

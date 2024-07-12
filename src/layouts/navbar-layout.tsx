@@ -6,21 +6,19 @@ import {
   QueueListIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import react from "react";
+import { useEffect } from "react";
 
 export function NavBarLayout() {
   // navigate to login page if no authentifictaion
   const navigate = useNavigate();
 
-  react.useEffect(() => {
+  useEffect(() => {
     let authState = JSON.parse(localStorage.getItem("auth-state") || "{}");
     if (!authState || !authState.authState) {
       authState = false;
-    }
-    if (authState != true) {
       navigate("/login");
     }
-  }, []);
+  });
 
   const navItems = [
     { icon: HomeIcon, route: "/" },

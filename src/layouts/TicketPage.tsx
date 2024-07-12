@@ -1,6 +1,6 @@
 import Barcode from "react-barcode";
 import { Button } from "../components/button";
-import react from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 type Props = {
@@ -25,15 +25,13 @@ export function TicketPage({
   // navigate to login page if no authentifictaion
   const navigate = useNavigate();
 
-  react.useEffect(() => {
+  useEffect(() => {
     let authState = JSON.parse(localStorage.getItem("auth-state") || "{}");
     if (!authState || !authState.authState) {
       authState = false;
-    }
-    if (authState != true) {
       navigate("/login");
     }
-  }, []);
+  });
 
   return (
     /* Background */
