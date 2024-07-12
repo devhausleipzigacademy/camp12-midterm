@@ -6,18 +6,6 @@ import { Member } from "../components/member";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
 import { NavLink, useParams } from "react-router-dom";
 
-type CastMember = {
-  character: string;
-  name: string;
-  profile_path: string | null;
-};
-
-type CrewMember = {
-  job: string;
-  name: string;
-  profile_path: string | null;
-};
-
 type GroupedCrewMember = {
   name: string;
   profile_path: string | null;
@@ -25,11 +13,8 @@ type GroupedCrewMember = {
 };
 
 export const CastPage = () => {
-  //  movieId:
   const { movieId } = useParams();
   const { data: movie } = useGetSingleMovie(Number(movieId!));
-  console.log(movie?.credits);
-  // toggle between cast and crew
   const [selectedTab, setSelectedTab] = useState<"cast" | "crew">("cast");
 
   function members(selectedTab: string): JSX.Element[] | null {
@@ -38,8 +23,9 @@ export const CastPage = () => {
     }
 
     if (selectedTab === "cast") {
-      return movie.credits.cast.map((person: CastMember) => (
+      return movie.credits.cast.map((person) => (
         <Member
+          key={person.id}
           role={person.character}
           name={person.name}
           image={
@@ -52,10 +38,14 @@ export const CastPage = () => {
     } else {
       const crewGrouped = movie.credits.crew.reduce<
         Record<string, GroupedCrewMember>
-      >((acc, person: CrewMember) => {
+      >((acc, person) => {
         const key = `${person.name}-${person.profile_path}`;
         if (!acc[key]) {
-          acc[key] = { ...person, jobs: [person.job] };
+          acc[key] = {
+            name: person.name,
+            profile_path: person.profile_path,
+            jobs: [person.job],
+          };
         } else {
           acc[key].jobs.push(person.job);
         }
