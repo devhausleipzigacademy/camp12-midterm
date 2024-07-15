@@ -1,6 +1,6 @@
 import SelectSeats from "../components/select-seats";
 
-export default function ReservationPage() {
+export function ReservationPage() {
   return (
     <div className="flex flex-col w-full h-screen bg-dark">
       <div
