@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./index.css";
 import { LoginPage } from "./routes/LoginPage";
+import { RegistrationPage } from "./routes/register-page";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
   {
     path: "/genres",
     element: <p>Genre Page</p>,
+  },
+  {
+    path: "/registration",
+    element: <RegistrationPage />,
   },
   {
     path: "/",
