@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Input } from "@headlessui/react";
 import { UserImage } from "../components/user-image";
 import { z } from "zod";
@@ -6,14 +6,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "../types/schemas.ts";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-
-type FormData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
 
 type UserSchema = z.infer<typeof userSchema>;
 
@@ -27,7 +19,6 @@ export function ProfileCustomization() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<UserSchema>({
     resolver: zodResolver(userSchema),
   });
