@@ -1,18 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./index.css";
-import { LoginPage } from "./routes/LoginPage";
 import { RegistrationPage } from "./routes/register-page";
+import { LoginPage } from "./routes/login";
+import { MovieDetails } from "./routes/movie-details";
+import { NavBarLayout } from "./layouts/navbar-layout";
+import { Homepage } from "./routes/home";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import BookmarkedMovies from "./routes/bookmarks";
+import { CastPage } from "./routes/cast-page";
+// import { MoviePage } from "./components/movie-page";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ProfileCustomization } from "./routes/profile-customization";
+import { TimePage } from "./routes/select-time";
+import { Movies } from "./routes/movies";
+import { ReservationPage } from "./routes/reservation-page";
+import GenreOverviewPage from "./routes/genres";
+import { Ticket } from "./routes/ticket";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
   },
+
   {
     path: "/genres",
-    element: <p>Genre Page</p>,
+    element: <GenreOverviewPage />,
   },
   {
     path: "/registration",
@@ -20,28 +36,23 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: (
-      <div>
-        <p>Navbar</p>
-        <Outlet />
-      </div>
-    ),
+    element: <NavBarLayout />,
     children: [
       {
         index: true,
-        element: <p>Home Page</p>,
+        element: <Homepage />,
       },
       {
         path: "movies",
-        element: <p>Movies Page</p>,
+        element: <Movies />,
       },
       {
         path: "bookmarks",
-        element: <p>Bookmarks Page</p>,
+        element: <BookmarkedMovies />,
       },
       {
         path: "profile",
-        element: <p>Profile Page</p>,
+        element: <ProfileCustomization />,
       },
     ],
   },
@@ -49,30 +60,29 @@ const router = createBrowserRouter([
     path: "/movies/:movieId",
     element: (
       <div>
-        <p>Full Page</p>
         <Outlet />
       </div>
     ),
     children: [
       {
         index: true,
-        element: <p>Movie Details Page</p>,
+        element: <MovieDetails />,
       },
       {
         path: "cast-and-crew",
-        element: <p>Cast and Crew Page</p>,
+        element: <CastPage />,
       },
       {
         path: "select-time",
-        element: <p>Select Time Page</p>,
+        element: <TimePage />,
       },
       {
         path: "select-seats",
-        element: <p>Select Seats Page</p>,
+        element: <ReservationPage />,
       },
       {
         path: "ticket",
-        element: <p>Ticket Page</p>,
+        element: <Ticket />,
       },
     ],
   },
@@ -80,6 +90,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>
 );

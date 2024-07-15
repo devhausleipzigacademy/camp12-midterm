@@ -16,6 +16,7 @@ export default {
         yellow: "#FFB43A",
         red: "#EF4444",
         green: "#22C55E",
+        customOrange: "#FFB43A",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

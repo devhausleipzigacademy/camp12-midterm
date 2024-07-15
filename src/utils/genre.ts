@@ -1,4 +1,4 @@
-export const genres = [
+export const knownGenres = [
   "Romance",
   "Crime",
   "History",
@@ -17,7 +17,10 @@ export const genres = [
   "Thriller",
 ] as const;
 
-export type Genre = (typeof genres)[number];
+export type KnownGenre = typeof knownGenres[number];
+export type Genre = KnownGenre | string;
+
+
 
 export const genreEmojis: Record<Genre, string> = {
   Romance: "😍",
@@ -37,3 +40,5 @@ export const genreEmojis: Record<Genre, string> = {
   "Science-Fiction": "👽",
   Thriller: "😱",
 } as const;
+
+
