@@ -1,6 +1,7 @@
 import Barcode from "react-barcode";
 import { Button } from "../components/button";
 import { NavLink, useLocation } from "react-router-dom";
+import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
 
 type Props = {
   date?: string;
@@ -9,15 +10,18 @@ type Props = {
 
 export function Ticket({ date = "08 Jan", time = "14:30" }: Props) {
   const location = useLocation();
+  const { data: movie } = useGetSingleMovie("974262");
+  const totalPrice = 14.99;
+  const selectedSeats = ["A1", "A2"];
   console.log("Received state:", location.state); // Debugging
 
-  const { movieDetails, selectedSeats, totalPrice } = location.state || {};
+  // const { movieDetails, selectedSeats, totalPrice } = location.state || {};
 
-  console.log("Selected seats:", selectedSeats); // Debugging
+  // console.log("Selected seats:", selectedSeats); // Debugging
 
   const imageUrl =
-    movieDetails && movieDetails.backdrop_path
-      ? `https://image.tmdb.org/t/p/w500${movieDetails.backdrop_path}`
+    movie && movie.details.backdrop_path
+      ? `https://image.tmdb.org/t/p/w500${movie.details.backdrop_path}`
       : "https://www.zooplus.de/magazin/wp-content/uploads/2022/03/pallas-katze-auf-felsen-1024x683.jpg";
 
   console.log("Received state:", location.state); // Debugging
@@ -38,7 +42,7 @@ export function Ticket({ date = "08 Jan", time = "14:30" }: Props) {
           {/* Content */}
           <div className="px-6 pb-2">
             <h1 className="text-2xl font-bold mb-4 mt-2">
-              {movieDetails?.title}
+              {movie?.details?.title}
             </h1>
             {/* Information */}
             <div className="flex flex-row gap-8 gap-y-4 flex-wrap justify-between ">
