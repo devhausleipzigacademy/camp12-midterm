@@ -17,7 +17,7 @@ export function GenreButton({ genre, selected, ...rest }: Props) {
           selected ? "bg-white-dimmed" : "bg-dark-light"
         )}
       >
-        {genreEmojis[genre]}
+        {genreEmojis[genre as Genre]}
       </button>
       <span className="text-white-dimmed font-bold text-xs truncate w-full text-center">
         {genre}

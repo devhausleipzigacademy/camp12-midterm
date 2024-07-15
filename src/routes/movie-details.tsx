@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 // Remove the Props type as it's no longer needed
 
@@ -10,12 +10,24 @@ export function MovieDetails() {
   // Use the useParams hook to get the movieId from the URL
   const { movieId } = useParams<{ movieId: string }>();
 
-  // Convert movieId to a number
-  const movieIdNumber = Number(movieId);
-
   // a boolean that toggles the truncate class on Synopsis/overview text
   const [truncate, setTruncate] = useState(true);
-  const { data: movie, isLoading, isError } = useGetSingleMovie(movieIdNumber);
+  const { data: movie, isLoading, isError } = useGetSingleMovie(movieId!);
+
+  const navigate = useNavigate();
+
+  // Bei der Weiterleitung zur Sitzplatzreservierung
+  function sendState() {
+    navigate("./select-seats", {
+      state: {
+        movieDetails: {
+          id: movie?.details.id,
+          title: movie?.details.title,
+          backdrop_path: movie?.details.backdrop_path,
+        },
+      },
+    });
+  }
 
   // reverse boolean on click on Read more
   function readMoreHandler() {
@@ -25,7 +37,7 @@ export function MovieDetails() {
   // toggle the heart icon state
   const [toggleHeart, setToggleHeart] = useState(false);
   // id in array state
-  const [currentId, setCurrentId] = useState<number[]>([]);
+  const [currentId, setCurrentId] = useState<string[]>([]);
   useEffect(() => {
     localStorage.setItem("Movies", JSON.stringify(currentId));
   }, [currentId]);
@@ -39,7 +51,7 @@ export function MovieDetails() {
   }
 
   // this function handles heart click and local storage
-  const handleClick = (movieId: number) => {
+  const handleClick = (movieId: string) => {
     setToggleHeart(!toggleHeart);
     setCurrentId((prevSelectedId) => {
       if (prevSelectedId.includes(movieId)) {
@@ -81,10 +93,11 @@ export function MovieDetails() {
           <h1 className="text-white text-base font-bold">Movie Detail</h1>
           <HeartIcon
             className={`size-6 text-red ${
-              currentId.includes(movieIdNumber) ? "fill-red" : "fill-none"
+              currentId.includes(movieId || "") ? "fill-red" : "fill-none"
             } `}
             onClick={() => {
-              handleClick(movieIdNumber);
+              if (!movieId) return;
+              handleClick(movieId);
             }}
           ></HeartIcon>
         </div>
@@ -161,7 +174,7 @@ export function MovieDetails() {
       </div>
       {/* reservation button */}
       <div className="text-dark-light mt-auto mb-4">
-        <Button children={"Get Reservation"} />
+        <Button onClick={sendState} children={"Get Reservation"} />
       </div>
     </section>
   );
