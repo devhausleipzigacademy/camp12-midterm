@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import { RegistrationPage } from "./routes/register-page";
 import { LoginPage } from "./routes/login";
 import { MovieDetails } from "./routes/movie-details";
 import { NavBarLayout } from "./layouts/navbar-layout";
@@ -16,7 +17,6 @@ import { Movies } from "./routes/movies";
 import { ReservationPage } from "./routes/reservation-page";
 import GenreOverviewPage from "./routes/genres";
 import { Ticket } from "./routes/ticket";
-import ReservationPage from "./layouts/reservation-page";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/genres",
     element: <GenreOverviewPage />,
+  },
+  {
+    path: "/registration",
+    element: <RegistrationPage />,
   },
   {
     path: "/",
