@@ -1,6 +1,6 @@
 import { GenreButton } from "../components/genre";
 import { HomepageHeader } from "../components/homepage-header";
-import { Input } from "../components/search-input";
+import { ComboSearchBox } from "../components/search-box";
 import { SectionTitle } from "../components/section-title";
 import { useState, useEffect } from "react";
 import { Genre } from "../utils/genre";
@@ -70,7 +70,7 @@ export function Homepage() {
             "https://devhausleipzig.de/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fjulian.b86ca7f2.jpg&w=3840&q=75"
           }
         />
-        <Input placeholder={"Search"} />
+        <ComboSearchBox placeholder={"Search"} />
         <div className="flex flex-col gap-4">
           <SectionTitle
             text={"Genre"}

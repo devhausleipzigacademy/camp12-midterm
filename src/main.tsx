@@ -13,6 +13,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ProfileCustomization } from "./routes/profile-customization";
 import { TimePage } from "./routes/select-time";
 import { Movies } from "./routes/movies";
+import { ReservationPage } from "./routes/reservation-page";
 import GenreOverviewPage from "./routes/genres";
 import { Ticket } from "./routes/ticket";
 import ReservationPage from "./layouts/reservation-page";
