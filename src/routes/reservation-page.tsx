@@ -1,6 +1,6 @@
-import { SeatsMap } from "../components/select-seats";
+import SelectSeats from "../components/select-seats";
 
-export const ReservationPage = () => {
+export default function ReservationPage() {
   return (
     <div className="flex flex-col w-full h-screen bg-dark">
       <div
@@ -39,9 +39,9 @@ export const ReservationPage = () => {
       </div>
 
       {/* BEGIN OF SEAT ROWS */}
-      <SeatsMap />
+      <SelectSeats />
       {/* END OF SEAT ROWS */}
       {/* BEGIN CART */}
     </div>
   );
-};
+}

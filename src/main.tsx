@@ -16,6 +16,7 @@ import { Movies } from "./routes/movies";
 import { ReservationPage } from "./routes/reservation-page";
 import GenreOverviewPage from "./routes/genres";
 import { Ticket } from "./routes/ticket";
+import ReservationPage from "./layouts/reservation-page";
 
 const queryClient = new QueryClient();
 

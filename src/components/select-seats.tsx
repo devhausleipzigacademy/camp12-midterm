@@ -1,4 +1,3 @@
-import { Seat } from "./seat";
 import { Button } from "./button";
 import { SeatCart } from "./seat-cart";
 import { useState } from "react";
@@ -10,71 +9,45 @@ type Seat = {
   isReserved: boolean;
 };
 
-// function for generating Seats
-function generateSeatsLeft(): Seat[] {
-  const seatRows = ["A", "B", "C", "D", "E", "F"];
-  const seats: Seat[] = [];
-
-  seatRows.forEach((row) => {
+export default function SelectSeats() {
+  // function for generating Seats, left alignment is the default setting
+  function generateSeats(isRightSide: boolean = false): Seat[] {
+    const seatRows = ["A", "B", "C", "D", "E", "F"];
+    const seats: Seat[] = [];
+    // amount of standard seat rows
     const seatCount = 4;
-    // for each element in the the Array check if A or F and assign id null or id
-    for (let i = 1; i <= seatCount; i++) {
-      if (row === "A" || row === "F") {
+    const offset = isRightSide ? 4 : 0;
+    const nullSeatPosition = isRightSide ? 4 : 1;
+    seatRows.forEach((row) => {
+      for (let i = 1; i <= seatCount; i++) {
+        // boolean value to check if we have to implement non standard seats
+        const isEdgeRow = row === "A" || row === "F";
+        //if we are in the edgerow, we look out for the position of our potential null object
+        const isNullSeat = isEdgeRow && i === nullSeatPosition;
         seats.push({
-          id: (row === "A" || row === "F") && i === 1 ? null : `${row}${i - 1}`,
-
-          isSelected: false,
-          isReserved: false,
-        });
-      } else {
-        seats.push({
-          id: `${row}${i}`,
+          id: isNullSeat
+            ? // make it null if its a nullSeat
+              null
+            : // else check if the seat is in the edgerow
+            isEdgeRow
+            ? // if so, then substract 1 to display the seats in the right order
+              row + (i - 1 + offset)
+            : // if not just add the seats to the array
+              row + (i + offset),
           isSelected: false,
           isReserved: false,
         });
       }
-    }
-  });
-  return seats;
-}
-function generateSeatsRight(): Seat[] {
-  const seatRows = ["A", "B", "C", "D", "E", "F"];
-  const seats: Seat[] = [];
-
-  seatRows.forEach((row) => {
-    const seatCount = 4;
-    // for each element in the the Array check if A or F and assign id null or id
-    for (let i = 1; i <= seatCount; i++) {
-      if (row === "A" || row === "F") {
-        seats.push({
-          id: (row === "A" || row === "F") && i === 4 ? null : `${row}${i + 4}`,
-
-          isSelected: false,
-          isReserved: false,
-        });
-      } else {
-        seats.push({
-          id: `${row}${i + 4}`,
-          isSelected: false,
-          isReserved: false,
-        });
-      }
-    }
-  });
-  return seats;
-}
-
-const kinoSeatsLeft: Seat[] = generateSeatsLeft();
-const kinoSeatsRight: Seat[] = generateSeatsRight();
-
-const combiArray = kinoSeatsLeft.concat(kinoSeatsRight);
-console.log(combiArray);
-
-// Just a dummy Array for now
-const reserved: string[] = ["A3", "E5", "F3"];
-
-export const SeatsMap = () => {
+    });
+    return seats;
+  }
+  const kinoSeatsLeft: Seat[] = generateSeats();
+  const kinoSeatsRight: Seat[] = generateSeats(true);
+  // Just a dummy Array for now, ATTENTION: YOU NEED TO ADD +1 TO YOUR DESIRED SEAT FOR NOW
+  const reservedSeats: string[] = ["A2", "E5", "F3"];
+  // track state of selected Seats
   const [seatsChecked, setSeatsChecked] = useState<string[]>([]);
+  // count how many and which type of seats are selected
   const seats = seatsChecked.reduce(
     (acc, current) => {
       if (current[0] === "A") {
@@ -251,4 +224,4 @@ export const SeatsMap = () => {
       </div>
     </>
   );
-};
+}
