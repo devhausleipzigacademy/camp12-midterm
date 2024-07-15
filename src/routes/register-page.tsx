@@ -20,36 +20,29 @@ export function RegistrationPage() {
 						icon={PencilIcon}
 						placeholder='First name'
 						inputType='text'
-						pattern='^[A-Za-zÀ-ÖØ-öø-ÿ -]+$'
 					/>
 					<LoginInput
 						icon={PencilIcon}
 						placeholder='Last name'
 						inputType='text'
-						pattern='^[A-Za-zÀ-ÖØ-öø-ÿ -]+$'
 					/>
 					<LoginInput
 						icon={KeyIcon}
 						placeholder='Enter your email'
 						inputType='email'
-						pattern='^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' // Standard email regex pattern without % or +
 					/>
 					<LoginInput
 						icon={LockClosedIcon}
 						placeholder='Enter your password'
 						inputType='password'
-						pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$'
-						minLength={8}
 					/>
 					<LoginInput
 						icon={LockClosedIcon}
 						placeholder='Confirm your password'
 						inputType='password'
-						pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$'
-						minLength={8}
 					/>
 				</div>
-				<Button children='Login' />
+				<Button children='Register' />
 			</div>
 		</div>
 	);
