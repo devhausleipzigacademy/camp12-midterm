@@ -1,6 +1,6 @@
-import { SeatsMap } from "../components/select-seats";
+import SelectSeats from "../components/select-seats";
 
-export const ReservationPage = () => {
+export default function ReservationPage() {
   return (
     <div className="flex flex-col w-full h-screen bg-dark">
       <div
@@ -32,34 +32,16 @@ export const ReservationPage = () => {
         id="beams"
         className="w-full h-auto flex justify-center items-center flex-col"
       >
-        <div className="mt-8">
+        <div className="mt-6">
           <div className="w-72 h-1 bg-yellow"></div>
           <div className="w-72 h-5 bg-gradient-to-b from-customOrange/20 to-customOrange/0"></div>
         </div>
       </div>
 
       {/* BEGIN OF SEAT ROWS */}
-      <SeatsMap />
+      <SelectSeats />
       {/* END OF SEAT ROWS */}
-      <div
-        id="categorys"
-        className="flex flex-row gap-2 justify-around mt-6 px-6"
-      >
-        <div className="flex flex-row h-auto gap-2 items-center">
-          <div className="bg-dark-light w-4 aspect-square rounded-full"></div>
-          <small className="text-white-dimmed">Available</small>
-        </div>
-        <div className="flex flex-row h-auto gap-2 items-center">
-          <div className="bg-yellow w-4 aspect-square rounded-full"></div>
-          <small className="text-white-dimmed">Selected</small>
-        </div>
-        <div className="flex flex-row h-auto gap-2 items-center">
-          <div className="bg-white w-4 aspect-square rounded-full"></div>
-          <small className="text-white-dimmed">Reserved</small>
-        </div>
-      </div>
-
       {/* BEGIN CART */}
     </div>
   );
-};
+}

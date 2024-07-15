@@ -1,5 +1,7 @@
 import Barcode from "react-barcode";
 import { Button } from "../components/button";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 type Props = {
   img: string;
@@ -20,6 +22,17 @@ export function TicketPage({
   seats,
   barcode,
 }: Props) {
+  // navigate to login page if no authentifictaion
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let authState = JSON.parse(localStorage.getItem("auth-state") || "{}");
+    if (!authState || !authState.authState) {
+      authState = false;
+      navigate("/login");
+    }
+  });
+
   return (
     /* Background */
     <section className="bg-dark h-dvh flex flex-col justify-center items-stretch p-4">

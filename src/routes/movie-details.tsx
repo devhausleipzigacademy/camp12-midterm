@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 // Remove the Props type as it's no longer needed
 
@@ -10,12 +10,24 @@ export function MovieDetails() {
   // Use the useParams hook to get the movieId from the URL
   const { movieId } = useParams<{ movieId: string }>();
 
-  // Convert movieId to a number
-  const movieIdNumber = Number(movieId);
-
   // a boolean that toggles the truncate class on Synopsis/overview text
   const [truncate, setTruncate] = useState(true);
-  const { data: movie, isLoading, isError } = useGetSingleMovie(movieIdNumber);
+  const { data: movie, isLoading, isError } = useGetSingleMovie(movieId!);
+
+  const navigate = useNavigate();
+
+  // Bei der Weiterleitung zur Sitzplatzreservierung
+  function sendState() {
+    navigate("./select-seats", {
+      state: {
+        movieDetails: {
+          id: movie?.details.id,
+          title: movie?.details.title,
+          backdrop_path: movie?.details.backdrop_path,
+        },
+      },
+    });
+  }
 
   // reverse boolean on click on Read more
   function readMoreHandler() {
@@ -25,7 +37,7 @@ export function MovieDetails() {
   // toggle the heart icon state
   const [toggleHeart, setToggleHeart] = useState(false);
   // id in array state
-  const [currentId, setCurrentId] = useState<number[]>([]);
+  const [currentId, setCurrentId] = useState<string[]>([]);
   useEffect(() => {
     localStorage.setItem("Movies", JSON.stringify(currentId));
   }, [currentId]);
@@ -39,7 +51,7 @@ export function MovieDetails() {
   }
 
   // this function handles heart click and local storage
-  const handleClick = (movieId: number) => {
+  const handleClick = (movieId: string) => {
     setToggleHeart(!toggleHeart);
     setCurrentId((prevSelectedId) => {
       if (prevSelectedId.includes(movieId)) {
@@ -49,6 +61,17 @@ export function MovieDetails() {
       }
     });
   };
+
+  // Calculate the user rating score as a percentage
+  const userRating = movie.details.vote_average * 10;
+
+  // Determine the color class based on the user rating score using a ternary operator
+  const ratingColorClass =
+    userRating < 50
+      ? "text-red"
+      : userRating <= 75
+      ? "text-orange-500"
+      : "text-green";
 
   // see the actual data entries from tmdb
 
@@ -70,10 +93,11 @@ export function MovieDetails() {
           <h1 className="text-white text-base font-bold">Movie Detail</h1>
           <HeartIcon
             className={`size-6 text-red ${
-              currentId.includes(movieIdNumber) ? "fill-red" : "fill-none"
+              currentId.includes(movieId || "") ? "fill-red" : "fill-none"
             } `}
             onClick={() => {
-              handleClick(movieIdNumber);
+              if (!movieId) return;
+              handleClick(movieId);
             }}
           ></HeartIcon>
         </div>
@@ -100,8 +124,9 @@ export function MovieDetails() {
             {Math.floor(movie.details.runtime / 60)}h{" "}
             {movie.details.runtime % 60}m
           </li>
-          <li className="ml-auto text-green">
-            {(movie.details.vote_average * 10).toPrecision(2)}%
+          {/* Apply the color class to the rating score */}
+          <li className={`ml-auto ${ratingColorClass}`}>
+            {userRating.toPrecision(2)}%
             <span className="text-white-dimmed">&nbsp;Score</span>
           </li>
         </ul>
@@ -123,9 +148,12 @@ export function MovieDetails() {
                 <p key={e.id}>{e.name} </p>
               ))}
           </div>
-          <button className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md max-h-10 h-full self-center">
+          <NavLink
+            to="cast-and-crew"
+            className="bg-white-dimmed-heavy col-span-2 row-span-2 rounded-md max-h-10 h-full self-center flex items-center justify-center"
+          >
             Cast & Crew
-          </button>
+          </NavLink>
         </div>
         <hr className="h-px my-4 border-0 bg-white-dimmed" />
         {/* Synopsis / overview */}
@@ -146,7 +174,7 @@ export function MovieDetails() {
       </div>
       {/* reservation button */}
       <div className="text-dark-light mt-auto mb-4">
-        <Button children={"Get Reservation"} />
+        <Button onClick={sendState} children={"Get Reservation"} />
       </div>
     </section>
   );

@@ -5,6 +5,8 @@ import { Button } from "../components/button";
 import { KeyIcon } from "@heroicons/react/24/solid";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 import { LoginInput } from "../components/input";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -16,6 +18,10 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>;
 
 export function LoginPage() {
+   
+  const hardCodePw = "Password123456";
+  const hardCodeMail = "letsgo@hyped.com";
+  
   const {
     register,
     handleSubmit,
@@ -25,7 +31,12 @@ export function LoginPage() {
   });
 
   const onSubmit = (data: LoginSchema) => {
-    console.log(data);
+    if (email === hardCodeMail && password === hardCodePw) {
+      localStorage.setItem("auth-state", JSON.stringify({ authState: true }));
+      navigate("/");
+    } else {
+      console.error("Invalid Email or Password");
+    }
   };
 
   return (

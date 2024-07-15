@@ -2,9 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { MovieCredit, MovieDetail } from "../types/movie";
 
-export function useGetSingleMovie(movieId: number) {
+export function useGetSingleMovie(movieId: string) {
   return useQuery({
     queryKey: ["movie", movieId],
+    enabled: !!movieId,
     queryFn: async () => {
       const details = await axios
         .get<MovieDetail>(`https://api.themoviedb.org/3/movie/${movieId}`, {

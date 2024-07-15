@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { GenreButton } from "../components/genre";
-import { genres, Genre } from "../utils/genre";
+import { knownGenres, Genre } from "../utils/genre";
 import { Button } from "../components/button";
 import { IoIosArrowBack } from "react-icons/io";
+import { useLocation, useNavigate } from "react-router";
 
-export function GenreOverviewPage() {
-  const [selectedGenres, setSelectedGenres] = useState<Genre[]>([]);
+export default function GenreOverviewPage() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [selectedGenres, setSelectedGenres] = useState<Genre[]>(location.state);
 
   const handleGenreClick = (genre: Genre) => {
     setSelectedGenres((prev) =>
@@ -13,30 +17,30 @@ export function GenreOverviewPage() {
     );
   };
 
-  const handleBackClick = () => {
-    console.log("Back button clicked");
-  };
+  function navigateBack() {
+    navigate("/");
+  }
 
-  const handleConfirmClick = () => {
-    console.log("Selected genres:", selectedGenres);
-  };
+  function navigateBackWithData() {
+    navigate("/", { state: { selectedGenres } });
+  }
 
   return (
     <div className="min-h-screen bg-dark flex flex-col p-3">
       <div className="flex items-center justify-between mb-4">
-        <button onClick={handleBackClick} className="mb-12 text-white text-sm">
+        <button onClick={navigateBack} className="mb-12 text-white text-sm">
           <IoIosArrowBack />
         </button>
         <h1 className="mb-12 text-white text-sm font-semibold">Genres</h1>
         <div></div>
       </div>
       <div className="grid grid-cols-4 gap-4 place-items-center">
-        {genres.map((genre) => (
+        {knownGenres.map((genre) => (
           <GenreButton
             key={genre}
             genre={genre}
             selected={selectedGenres.includes(genre)}
-            onSelect={() => handleGenreClick(genre)}
+            onClick={() => handleGenreClick(genre)}
           />
         ))}
       </div>
@@ -44,11 +48,9 @@ export function GenreOverviewPage() {
         <div className="text-white font-semibold">{selectedGenres.length}</div>{" "}
         Genres selected
       </div>
-      <Button className="mt-4" variant="primary" onClick={handleConfirmClick}>
+      <Button className="mt-4" variant="primary" onClick={navigateBackWithData}>
         Confirm selected Genres
       </Button>
     </div>
   );
 }
-
-export default GenreOverviewPage;
