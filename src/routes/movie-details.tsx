@@ -10,12 +10,9 @@ export function MovieDetails() {
   // Use the useParams hook to get the movieId from the URL
   const { movieId } = useParams<{ movieId: string }>();
 
-  // Convert movieId to a number
-  const movieIdNumber = Number(movieId);
-
   // a boolean that toggles the truncate class on Synopsis/overview text
   const [truncate, setTruncate] = useState(true);
-  const { data: movie, isLoading, isError } = useGetSingleMovie(movieIdNumber);
+  const { data: movie, isLoading, isError } = useGetSingleMovie(movieId!);
 
   // reverse boolean on click on Read more
   function readMoreHandler() {
@@ -25,7 +22,7 @@ export function MovieDetails() {
   // toggle the heart icon state
   const [toggleHeart, setToggleHeart] = useState(false);
   // id in array state
-  const [currentId, setCurrentId] = useState<number[]>([]);
+  const [currentId, setCurrentId] = useState<string[]>([]);
   useEffect(() => {
     localStorage.setItem("Movies", JSON.stringify(currentId));
   }, [currentId]);
@@ -39,7 +36,7 @@ export function MovieDetails() {
   }
 
   // this function handles heart click and local storage
-  const handleClick = (movieId: number) => {
+  const handleClick = (movieId: string) => {
     setToggleHeart(!toggleHeart);
     setCurrentId((prevSelectedId) => {
       if (prevSelectedId.includes(movieId)) {
@@ -81,10 +78,11 @@ export function MovieDetails() {
           <h1 className="text-white text-base font-bold">Movie Detail</h1>
           <HeartIcon
             className={`size-6 text-red ${
-              currentId.includes(movieIdNumber) ? "fill-red" : "fill-none"
+              currentId.includes(movieId || "") ? "fill-red" : "fill-none"
             } `}
             onClick={() => {
-              handleClick(movieIdNumber);
+              if (!movieId) return;
+              handleClick(movieId);
             }}
           ></HeartIcon>
         </div>
