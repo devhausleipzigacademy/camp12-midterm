@@ -1,19 +1,17 @@
+// time-slots.tsx
 import { format, addHours, startOfToday, isBefore } from "date-fns";
 import { Label } from "./label";
+import { useBookingStore } from "../store/useBookingStore";
 
-type Props = {
-  selectedTime: string | null;
-  handleClick: (time: string) => void;
-};
+export function TimeSlots() {
+  const selectedTime = useBookingStore((state) => state.time);
+  const setTime = useBookingStore((state) => state.setTime);
 
-export function TimeSlots({ selectedTime, handleClick }: Props) {
-  const openingTime = 12; // Cinema opens at 12:00
-  const closingTime = 22; // Cinema closes at 24 but last movie at 22:00
-  const interval = 2; // every two hours
-
+  const openingTime = 12;
+  const closingTime = 22;
+  const interval = 2;
   const now = new Date();
 
-  // Generate time slots from openingTime to closingTime
   const timeSlots = [];
   for (let hour = openingTime; hour <= closingTime; hour += interval) {
     const timeSlot = addHours(startOfToday(), hour);
@@ -30,7 +28,7 @@ export function TimeSlots({ selectedTime, handleClick }: Props) {
           <Label
             selected={selectedTime === time}
             disabled={false}
-            handleClick={() => handleClick(time)}
+            handleClick={() => setTime(time)}
             key={index}
           >
             {time}

@@ -2,21 +2,23 @@ import { useEffect, useState } from "react";
 import { Button } from "../components/button";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
-
-// Remove the Props type as it's no longer needed
+import { useNavigate, useParams, NavLink } from "react-router-dom";
+import { useBookingStore } from "../store/useBookingStore";
 
 export function MovieDetails() {
-  // Use the useParams hook to get the movieId from the URL
   const { movieId } = useParams<{ movieId: string }>();
+  const setMovieId = useBookingStore((state) => state.setMovieId);
+  const { data: movie, isLoading, isError } = useGetSingleMovie();
 
-  // a boolean that toggles the truncate class on Synopsis/overview text
+  useEffect(() => {
+    if (movieId) {
+      setMovieId(movieId);
+    }
+  }, [movieId, setMovieId]);
+
   const [truncate, setTruncate] = useState(true);
-  const { data: movie, isLoading, isError } = useGetSingleMovie(movieId!);
-
   const navigate = useNavigate();
 
-  // Bei der Weiterleitung zur Sitzplatzreservierung
   function sendState() {
     navigate("./select-seats", {
       state: {
@@ -29,20 +31,16 @@ export function MovieDetails() {
     });
   }
 
-  // reverse boolean on click on Read more
   function readMoreHandler() {
     setTruncate(!truncate);
   }
 
-  // toggle the heart icon state
   const [toggleHeart, setToggleHeart] = useState(false);
-  // id in array state
   const [currentId, setCurrentId] = useState<string[]>([]);
   useEffect(() => {
     localStorage.setItem("Movies", JSON.stringify(currentId));
   }, [currentId]);
 
-  // if movie is not loaded successfully display the following
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -50,7 +48,6 @@ export function MovieDetails() {
     return <div>Error loading movie details.</div>;
   }
 
-  // this function handles heart click and local storage
   const handleClick = (movieId: string) => {
     setToggleHeart(!toggleHeart);
     setCurrentId((prevSelectedId) => {
@@ -62,10 +59,7 @@ export function MovieDetails() {
     });
   };
 
-  // Calculate the user rating score as a percentage
   const userRating = movie.details.vote_average * 10;
-
-  // Determine the color class based on the user rating score using a ternary operator
   const ratingColorClass =
     userRating < 50
       ? "text-red"
@@ -73,14 +67,9 @@ export function MovieDetails() {
       ? "text-orange-500"
       : "text-green";
 
-  // see the actual data entries from tmdb
-
   return (
-    // background
     <section className="flex flex-col h-full min-h-screen bg-dark px-4 overflow-x-hidden">
-      {/* wrapper for content */}
       <div className="flex-grow text-white">
-        {/* Header */}
         <div className="flex flex-row justify-between my-2 h-16 items-center">
           <svg
             className="h-4 aspect-square"
@@ -101,16 +90,13 @@ export function MovieDetails() {
             }}
           ></HeartIcon>
         </div>
-        {/* Poster Image */}
         <div
           className={`h-52 bg-orange-300 rounded-lg mb-4 w-full max-h-full max-w-full bg-cover bg-no-repeat bg-center`}
           style={{
             backgroundImage: `url('https://image.tmdb.org/t/p/w500/${movie.details.backdrop_path}')`,
           }}
         ></div>
-        {/* movie title */}
         <h1 className="text-xl font-bold pb-3">{movie.details.title}</h1>
-        {/* first row info: year, genre, runtime, score */}
         <ul className="flex flex-row gap-4 pb-3 text-xs">
           <li className="text-white">
             {movie.details.release_date.split("-")[0]}
@@ -124,13 +110,11 @@ export function MovieDetails() {
             {Math.floor(movie.details.runtime / 60)}h{" "}
             {movie.details.runtime % 60}m
           </li>
-          {/* Apply the color class to the rating score */}
           <li className={`ml-auto ${ratingColorClass}`}>
             {userRating.toPrecision(2)}%
             <span className="text-white-dimmed">&nbsp;Score</span>
           </li>
         </ul>
-        {/* director, writer and cast & crew button */}
         <div className="grid grid-flow-col-dense grid-cols-5 gap-x-2 text-xs auto-cols-fr">
           <span className="text-white-dimmed pb-2">Director:&nbsp;</span>
           <span className="text-white-dimmed">Writer:&nbsp;</span>
@@ -156,15 +140,12 @@ export function MovieDetails() {
           </NavLink>
         </div>
         <hr className="h-px my-4 border-0 bg-white-dimmed" />
-        {/* Synopsis / overview */}
         <h2 className="text-sm pb-3">Synopsis</h2>
-        {/* read more - do conditional styling based on truncate boolean */}
         <p
           className={`text-white-dimmed text-sm ${truncate ? "truncate" : ""}`}
         >
           {movie.details.overview}
         </p>
-        {/* toggle the boolean */}
         <p
           className="text-yellow text-sm underline py-1 cursor-pointer"
           onClick={readMoreHandler}
@@ -172,7 +153,6 @@ export function MovieDetails() {
           Read more
         </p>
       </div>
-      {/* reservation button */}
       <div className="text-dark-light mt-auto mb-4">
         <Button onClick={sendState} children={"Get Reservation"} />
       </div>

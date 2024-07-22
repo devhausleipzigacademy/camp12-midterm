@@ -1,12 +1,16 @@
-import { useState } from "react";
+// select-time.tsx
+import { useBookingStore } from "../store/useBookingStore"; // Adjust the import path as needed
 import { DisplayDate } from "../components/display-dates";
 import { TimeSlots } from "../components/time-slots";
 
 export function TimePage() {
   // Get today's date
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+
+  // Access global state and state setters from Zustand store
+  useBookingStore((state) => ({
+    setDate: state.setDate,
+  }));
 
   return (
     <div className="flex flex-col bg-dark h-dvh px-5 py-8">
@@ -28,17 +32,10 @@ export function TimePage() {
         <div className="text-white text-base">Select Date & Time</div>
       </div>
       <div className="text-white-dimmed text-sm py-2 px-2 font-bold">DATE</div>
-      <DisplayDate
-        today={today}
-        selectedDate={selectedDate}
-        handleClick={(date: string) => setSelectedDate(date)}
-      />
+      <DisplayDate today={today} />
       <div className="h-px my-5 bg-white-dimmed-heavy"></div>
       <div className="w-full">
-        <TimeSlots
-          selectedTime={selectedTime}
-          handleClick={(time: string) => setSelectedTime(time)}
-        />
+        <TimeSlots /> {/* No props needed for TimeSlots */}
       </div>
       <div className="flex justify-center mt-auto pb-4">
         <button className="bg-yellow rounded-md text-dark-light font-semibold py-4 w-full text-sm">
