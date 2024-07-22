@@ -2,8 +2,7 @@ import { NavLink, useParams } from "react-router-dom";
 import SelectSeats from "../components/select-seats";
 
 export function ReservationPage() {
-  const movieId = useParams();
-
+  const { movieId } = useParams();
   return (
     <div className="flex flex-col w-full h-screen bg-dark">
       <div
@@ -11,7 +10,7 @@ export function ReservationPage() {
         className="w-full h-auto flex flex-row justify-between py-6 px-5 gap-6"
       >
         <div className="flex">
-          <NavLink to={`/movies/${movieId}`}>
+          <NavLink to={`../../movies/${movieId}/select-time`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

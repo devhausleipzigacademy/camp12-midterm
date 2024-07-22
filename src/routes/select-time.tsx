@@ -4,7 +4,7 @@ import { TimeSlots } from "../components/time-slots";
 import { NavLink, useParams } from "react-router-dom";
 
 export function TimePage() {
-  const movieId = useParams();
+  const { movieId } = useParams();
   // Get today's date
   const today = new Date();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -13,7 +13,7 @@ export function TimePage() {
   return (
     <div className="flex flex-col bg-dark h-dvh px-5 py-8">
       <div className="flex w-full items-center justify-center relative mb-8">
-        <NavLink to={`movies/${movieId}`}>
+        <NavLink to={`../../movies/${movieId}`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -45,7 +45,7 @@ export function TimePage() {
           handleClick={(time: string) => setSelectedTime(time)}
         />
       </div>
-      <NavLink to="/select-seats">
+      <NavLink to={`../../movies/${movieId}/select-seats`}>
         <div className="flex justify-center mt-auto pb-4">
           <button className="bg-yellow rounded-md text-dark-light font-semibold py-4 w-full text-sm">
             Select Seat
