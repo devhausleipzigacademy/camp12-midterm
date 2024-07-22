@@ -12,7 +12,6 @@ export function NavBarLayout() {
   // navigate to login page if no authentifictaion
 
   useAuthenticated();
-
   const navItems = [
     { icon: HomeIcon, route: "/" },
     { icon: FilmIcon, route: "movies" },

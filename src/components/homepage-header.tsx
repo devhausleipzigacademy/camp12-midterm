@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 type HomepageHeaderProps = {
   userName: string;
   userImage: string;
@@ -12,13 +14,13 @@ export function HomepageHeader({ userName, userImage }: HomepageHeaderProps) {
         </div>
         <div className="text-sm">Let's relax and watch a movie!</div>
       </div>
-      <div className="bg-white w-10 h-10 rounded-full">
+      <NavLink to="profile" className="bg-white w-10 h-10 rounded-full">
         <img
           src={userImage}
           alt={`${userName}'s avatar`}
           className="w-full h-full rounded-full"
         />
-      </div>
+      </NavLink>
     </div>
   );
 }
