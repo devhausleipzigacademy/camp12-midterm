@@ -4,7 +4,7 @@ import { ComboSearchBox } from "../components/search-box";
 import { SectionTitle } from "../components/section-title";
 import { useState, useEffect } from "react";
 import { Genre } from "../utils/genre";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import { useGetMovies } from "../hooks/useGetMovies";
 import { useGetGenres } from "../hooks/useGetGenres";
 import { Movie } from "../types/movie";
