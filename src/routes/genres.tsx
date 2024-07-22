@@ -3,14 +3,15 @@ import { GenreButton } from "../components/genre";
 import { knownGenres, Genre } from "../utils/genre";
 import { Button } from "../components/button";
 import { IoIosArrowBack } from "react-icons/io";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function GenreOverviewPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [selectedGenres, setSelectedGenres] = useState<Genre[]>(location.state);
-
+  const [selectedGenres, setSelectedGenres] = useState<Genre[]>(
+    location.state || []
+  );
   const handleGenreClick = (genre: Genre) => {
     setSelectedGenres((prev) =>
       prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
