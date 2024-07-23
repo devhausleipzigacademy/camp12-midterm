@@ -12,8 +12,8 @@ export function Seat({ seatId, disabled = false }: Props) {
 
   const selected = seats.includes(seatId);
 
-  const handleChange = (checked: boolean) => {
-    if (checked) {
+  const handleChange = (isSelected: boolean) => {
+    if (isSelected) {
       setSeats([...seats, seatId]);
     } else {
       setSeats(seats.filter((seat) => seat !== seatId));
@@ -23,7 +23,7 @@ export function Seat({ seatId, disabled = false }: Props) {
   return (
     <Checkbox
       checked={selected}
-      onChange={handleChange}
+      onChange={(event) => handleChange(event)}
       disabled={disabled}
       className="group block size-7 rounded border bg-dark-light data-[checked]:bg-yellow data-[disabled]:cursor-not-allowed data-[disabled]:bg-white"
     />
