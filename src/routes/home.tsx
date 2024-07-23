@@ -108,10 +108,13 @@ export function Homepage() {
           <p>Error loading movies. Please try again later.</p>
         ) : filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => (
-            <a href={`/movies/${movie.id}`}>
+            <a
+              href={`/movies/${movie.id}`}
+              className="rounded-md snap-center flex-shrink-0"
+            >
               <img
                 key={movie.id}
-                className="rounded-md snap-center"
+                className="rounded-md h-full w-auto"
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
               />
