@@ -38,7 +38,7 @@ export function ProfileCustomization() {
   ];
 
   return (
-    <div className="bg-gray-900 h-full text-white flex flex-col">
+    <div className="bg-dark h-full text-white flex flex-col">
       <header className="p-4 flex justify-between items-center ml-4 mr-1 mt-5">
         <NavLink to="/">
           <svg
@@ -55,7 +55,7 @@ export function ProfileCustomization() {
           <MenuButton as="div">
             <UserImage userName={"Herr Vogel"} userImage={currentAvatar} />
           </MenuButton>
-          <MenuItems className="absolute right-1 mt-2 w-72 origin-top-right bg-dark divide-y divide-white-dimmed-heavy rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <MenuItems className="absolute right-1 mt-2 w-72 origin-top-right bg-dark border border-white-dimmed-heavy divide-y divide-white-dimmed-heavy rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="flex gap-2 p-2">
               {avatarOptions.map((avatar, index) => (
                 <MenuItem key={index} as="div">
