@@ -35,12 +35,14 @@ export function Movies() {
     <div className="flex flex-col items-center bg-dark pt-8 px-5">
       <div className="grid grid-cols-2 gap-4 w-full max-w-2xl">
         {paginatedMovies.map((movie: Movie) => (
-          <MovieCard
-            key={movie.id}
-            year={movie.release_date.split("-")[0]}
-            title={movie.title}
-            poster={movie.poster_path}
-          />
+          <a href={`/movies/${movie.id}`}>
+            <MovieCard
+              key={movie.id}
+              year={movie.release_date.split("-")[0]}
+              title={movie.title}
+              poster={movie.poster_path}
+            />
+          </a>
         ))}
       </div>
       <div className="flex justify-between w-full max-w-2xl mt-4">

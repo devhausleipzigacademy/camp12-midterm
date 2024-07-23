@@ -108,12 +108,14 @@ export function Homepage() {
           <p>Error loading movies. Please try again later.</p>
         ) : filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => (
-            <img
-              key={movie.id}
-              className="rounded-md snap-center"
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-            />
+            <a href={`/movies/${movie.id}`}>
+              <img
+                key={movie.id}
+                className="rounded-md snap-center"
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+              />
+            </a>
           ))
         ) : (
           <p>No movies found for the selected genres.</p>
