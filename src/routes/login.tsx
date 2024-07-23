@@ -5,7 +5,6 @@ import { Button } from "../components/button";
 import { KeyIcon } from "@heroicons/react/24/solid";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 import { LoginInput } from "../components/input";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const loginSchema = z.object({
@@ -18,10 +17,10 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>;
 
 export function LoginPage() {
-   
+  const navigate = useNavigate();
   const hardCodePw = "Password123456";
   const hardCodeMail = "letsgo@hyped.com";
-  
+
   const {
     register,
     handleSubmit,
@@ -30,8 +29,12 @@ export function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
+  // const onSubmit = () => {
+  //   console.log("submit");
+  // };
+
   const onSubmit = (data: LoginSchema) => {
-    if (email === hardCodeMail && password === hardCodePw) {
+    if (data.email === hardCodeMail && data.password === hardCodePw) {
       localStorage.setItem("auth-state", JSON.stringify({ authState: true }));
       navigate("/");
     } else {

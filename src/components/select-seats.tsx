@@ -1,4 +1,5 @@
 import { Button } from "./button";
+import { Seat } from "./seat";
 import { SeatCart } from "./seat-cart";
 import { useState } from "react";
 
@@ -102,7 +103,7 @@ export default function SelectSeats() {
                   }
                 }}
                 selected={seatsChecked.includes(seat.id)}
-                disabled={reserved.includes(seat.id) ? true : false}
+                disabled={reservedSeats.includes(seat.id) ? true : false}
               />
             ) : (
               <div />
@@ -126,7 +127,7 @@ export default function SelectSeats() {
                   }
                 }}
                 selected={seatsChecked.includes(seat.id)}
-                disabled={reserved.includes(seat.id) ? true : false}
+                disabled={reservedSeats.includes(seat.id) ? true : false}
               />
             ) : (
               <div />
