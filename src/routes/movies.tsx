@@ -3,6 +3,7 @@ import { useGetMovies } from "../hooks/useGetMovies";
 import { PageButton } from "../components/page-button";
 import { Movie } from "../types/movie";
 import { MovieCard } from "../components/movie-card";
+import { Link } from "react-router-dom";
 
 export function Movies() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,14 +36,14 @@ export function Movies() {
     <div className="flex flex-col items-center bg-dark pt-8 px-5">
       <div className="grid grid-cols-2 gap-4 w-full max-w-2xl">
         {paginatedMovies.map((movie: Movie) => (
-          <a href={`/movies/${movie.id}`}>
+          <Link to={`/movies/${movie.id}`}>
             <MovieCard
               key={movie.id}
               year={movie.release_date.split("-")[0]}
               title={movie.title}
               poster={movie.poster_path}
             />
-          </a>
+          </Link>
         ))}
       </div>
       <div className="flex justify-between w-full max-w-2xl mt-4">
