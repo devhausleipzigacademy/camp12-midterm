@@ -1,33 +1,40 @@
 import { Button } from "./button";
-import { SeatCart } from "./seat-cart";
 import { Seat } from "./seat";
+import { SeatCart } from "./seat-cart";
 import { useState } from "react";
 
-// Define a type for the seats
-type SeatType = {
+// define a Type for the seats const
+type Seat = {
   id: string | null;
   isSelected: boolean;
   isReserved: boolean;
 };
 
 export default function SelectSeats() {
-  // Function for generating seats, left alignment is the default setting
-  function generateSeats(isRightSide: boolean = false): SeatType[] {
+  // function for generating Seats, left alignment is the default setting
+  function generateSeats(isRightSide: boolean = false): Seat[] {
     const seatRows = ["A", "B", "C", "D", "E", "F"];
-    const seats: SeatType[] = [];
+    const seats: Seat[] = [];
+    // amount of standard seat rows
     const seatCount = 4;
     const offset = isRightSide ? 4 : 0;
     const nullSeatPosition = isRightSide ? 4 : 1;
     seatRows.forEach((row) => {
       for (let i = 1; i <= seatCount; i++) {
+        // boolean value to check if we have to implement non standard seats
         const isEdgeRow = row === "A" || row === "F";
+        //if we are in the edgerow, we look out for the position of our potential null object
         const isNullSeat = isEdgeRow && i === nullSeatPosition;
         seats.push({
           id: isNullSeat
-            ? null
-            : isEdgeRow
-            ? row + (i - 1 + offset)
-            : row + (i + offset),
+            ? // make it null if its a nullSeat
+              null
+            : // else check if the seat is in the edgerow
+            isEdgeRow
+            ? // if so, then substract 1 to display the seats in the right order
+              row + (i - 1 + offset)
+            : // if not just add the seats to the array
+              row + (i + offset),
           isSelected: false,
           isReserved: false,
         });
@@ -35,12 +42,13 @@ export default function SelectSeats() {
     });
     return seats;
   }
-
-  const kinoSeatsLeft: SeatType[] = generateSeats();
-  const kinoSeatsRight: SeatType[] = generateSeats(true);
+  const kinoSeatsLeft: Seat[] = generateSeats();
+  const kinoSeatsRight: Seat[] = generateSeats(true);
+  // Just a dummy Array for now, ATTENTION: YOU NEED TO ADD +1 TO YOUR DESIRED SEAT FOR NOW
   const reservedSeats: string[] = ["A2", "E5", "F3"];
-  const [seatsChecked] = useState<string[]>([]);
-
+  // track state of selected Seats
+  const [seatsChecked, setSeatsChecked] = useState<string[]>([]);
+  // count how many and which type of seats are selected
   const seats = seatsChecked.reduce(
     (acc, current) => {
       if (current[0] === "A") {
@@ -51,9 +59,14 @@ export default function SelectSeats() {
         return { ...acc, middle: acc.middle + 1 };
       }
     },
-    { front: 0, middle: 0, back: 0 }
+    {
+      front: 0,
+      middle: 0,
+      back: 0,
+    }
   );
 
+  // cartHeight adjustment according to seat selection
   let cartHeight;
 
   const { front, middle, back } = seats;
@@ -74,30 +87,50 @@ export default function SelectSeats() {
   return (
     <>
       <div className="flex flex-row items-center justify-between">
-        <div className="w-44 p-6 grid grid-cols-4 grid-rows-6 gap-4 justify-items-center mt-2 ml-4">
+        <div className=" w-44 p-6 grid grid-cols-4 grid-rows-6 gap-4 justify-items-center mt-2 ml-4">
           {kinoSeatsLeft.map((seat) =>
             seat.id ? (
               <Seat
                 key={seat.id}
-                seatId={seat.id}
-                disabled={reservedSeats.includes(seat.id)}
+                onChange={() => {
+                  if (!seat.id) return;
+                  if (seatsChecked.includes(seat.id)) {
+                    setSeatsChecked(
+                      seatsChecked.filter((id) => id !== seat.id)
+                    );
+                  } else {
+                    setSeatsChecked((prevState) => [...prevState, seat.id!]);
+                  }
+                }}
+                selected={seatsChecked.includes(seat.id)}
+                disabled={reservedSeats.includes(seat.id) ? true : false}
               />
             ) : (
-              <div key={`${seat.id}-empty`} />
+              <div />
             )
           )}
         </div>
 
-        <div className="w-44 p-6 grid grid-cols-4 grid-rows-6 gap-4 justify-items-center mt-2 mr-4">
+        <div className=" w-44 p-6 grid grid-cols-4 grid-rows-6 gap-4 justify-items-center mt-2 mr-4">
           {kinoSeatsRight.map((seat) =>
             seat.id ? (
               <Seat
                 key={seat.id}
-                seatId={seat.id}
-                disabled={reservedSeats.includes(seat.id)}
+                onChange={() => {
+                  if (!seat.id) return;
+                  if (seatsChecked.includes(seat.id)) {
+                    setSeatsChecked(
+                      seatsChecked.filter((id) => id !== seat.id)
+                    );
+                  } else {
+                    setSeatsChecked((prevState) => [...prevState, seat.id!]);
+                  }
+                }}
+                selected={seatsChecked.includes(seat.id)}
+                disabled={reservedSeats.includes(seat.id) ? true : false}
               />
             ) : (
-              <div key={`${seat.id}-empty`} />
+              <div />
             )
           )}
         </div>

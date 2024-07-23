@@ -1,29 +1,16 @@
 import { Checkbox } from "@headlessui/react";
-import { useBookingStore } from "../store/useBookingStore";
 
 type Props = {
-  seatId: string;
   disabled?: boolean;
+  selected: boolean;
+  onChange: (value: boolean) => void;
 };
 
-export function Seat({ seatId, disabled = false }: Props) {
-  const seats = useBookingStore((state) => state.seats);
-  const setSeats = useBookingStore((state) => state.setSeats);
-
-  const selected = seats.includes(seatId);
-
-  const handleChange = (isSelected: boolean) => {
-    if (isSelected) {
-      setSeats([...seats, seatId]);
-    } else {
-      setSeats(seats.filter((seat) => seat !== seatId));
-    }
-  };
-
+export function Seat({ disabled = false, selected, onChange }: Props) {
   return (
     <Checkbox
       checked={selected}
-      onChange={(event) => handleChange(event)}
+      onChange={onChange}
       disabled={disabled}
       className="group block size-7 rounded border bg-dark-light data-[checked]:bg-yellow data-[disabled]:cursor-not-allowed data-[disabled]:bg-white"
     />

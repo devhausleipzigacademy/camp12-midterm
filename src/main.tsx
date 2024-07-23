@@ -22,19 +22,6 @@ const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <LoginPage />,
-  },
-
-  {
-    path: "/genres",
-    element: <GenreOverviewPage />,
-  },
-  {
-    path: "/registration",
-    element: <RegistrationPage />,
-  },
-  {
     path: "/",
     element: <NavBarLayout />,
     children: [
@@ -55,6 +42,18 @@ const router = createBrowserRouter([
         element: <ProfileCustomization />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/genres",
+    element: <GenreOverviewPage />,
+  },
+  {
+    path: "/registration",
+    element: <RegistrationPage />,
   },
   {
     path: "/movies/:movieId",
