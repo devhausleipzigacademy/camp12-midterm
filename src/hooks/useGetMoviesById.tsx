@@ -6,7 +6,7 @@ export const useGetMoviesById = () => {
   // const ids = [748783, 46195, 280180, 519182, 1008409];
   // change ids with storedIds for getting actual movies from local storage
 
-  const storedIds = JSON.parse(localStorage.Movies);
+  const storedIds = JSON.parse(localStorage.Movies || "[]");
 
   const results = useQueries({
     queries: storedIds.map((id: number) => ({
