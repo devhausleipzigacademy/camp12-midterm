@@ -4,6 +4,7 @@ import { LockClosedIcon } from "@heroicons/react/24/outline";
 import { LoginInput } from "../components/input";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");
@@ -12,18 +13,21 @@ export function LoginPage() {
 
   const navigate = useNavigate();
 
-  const hardCodePw = "Password123456";
-  const hardCodeMail = "letsgo@hyped.com";
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (email === hardCodeMail && password === hardCodePw) {
-      localStorage.setItem("auth-state", JSON.stringify({ authState: true }));
-      navigate("/");
-    } else {
-      setError("Invalid Email or Password");
-    }
+    const { data } = await axios.post("http://localhost:3000/login", {
+      email,
+      password,
+    });
+
+    await axios.get("http://localhost:3000/protected", {
+      headers: {
+        Authorization: data.token,
+      },
+    });
+    localStorage.setItem("auth-state", JSON.stringify({ token: data.token }));
+    navigate("/");
   };
 
   return (
@@ -53,7 +57,7 @@ export function LoginPage() {
               icon={<LockClosedIcon />}
               placeholder="Enter your password"
               type="password"
-              minLength={8}
+              minLength={6}
             />
             {error && <p className="text-white flex justify-center">{error}</p>}
           </div>

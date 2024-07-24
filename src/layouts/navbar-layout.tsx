@@ -13,9 +13,8 @@ export function NavBarLayout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let authState = JSON.parse(localStorage.getItem("auth-state") || "{}");
-    if (!authState || !authState.authState) {
-      authState = false;
+    const authState = JSON.parse(localStorage.getItem("auth-state") || "{}");
+    if (!authState || !authState.token) {
       navigate("/login");
     }
   });
