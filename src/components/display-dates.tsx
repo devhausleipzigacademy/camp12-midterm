@@ -1,14 +1,15 @@
 import { format, addDays } from "date-fns";
 import { Label } from "./label";
+import { useBookingStore } from "../store/useBookingStore";
 
 type Props = {
   today: Date;
-  selectedDate: string | null;
-  handleClick: (date: string) => void;
 };
 
-export function DisplayDate({ today, selectedDate, handleClick }: Props) {
-  // Generate an array of the next 12 days
+export function DisplayDate({ today }: Props) {
+  const selectedDate = useBookingStore((state) => state.date);
+  const setDate = useBookingStore((state) => state.setDate);
+
   const next12Days = Array.from({ length: 12 }, (_, i) => addDays(today, i));
 
   return (
@@ -19,7 +20,7 @@ export function DisplayDate({ today, selectedDate, handleClick }: Props) {
             selected={selectedDate === format(date, "dd-MM-yyyy")}
             disabled={false}
             key={index}
-            handleClick={() => handleClick(format(date, "dd-MM-yyyy"))}
+            handleClick={() => setDate(format(date, "dd-MM-yyyy"))}
           >
             {format(date, "dd MMM")}
           </Label>

@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { MovieCredit, MovieDetail } from "../types/movie";
+import { useBookingStore } from "../store/useBookingStore";
 
-export function useGetSingleMovie(movieId: string) {
+export function useGetSingleMovie() {
+  const movieId = useBookingStore((state) => state.movieId);
+
   return useQuery({
     queryKey: ["movie", movieId],
     enabled: !!movieId,
@@ -11,7 +14,6 @@ export function useGetSingleMovie(movieId: string) {
         .get<MovieDetail>(`https://api.themoviedb.org/3/movie/${movieId}`, {
           params: {
             api_key: import.meta.env.VITE_TMDB_API_KEY,
-            // append_to_response:
             language: "en-US",
           },
         })
@@ -22,7 +24,6 @@ export function useGetSingleMovie(movieId: string) {
           {
             params: {
               api_key: import.meta.env.VITE_TMDB_API_KEY,
-              // append_to_response:
               language: "en-US",
             },
           }

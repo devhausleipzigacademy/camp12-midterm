@@ -1,12 +1,15 @@
 import { useQueries } from "@tanstack/react-query";
 import axios from "axios";
 import { Movie } from "../types/movie";
+import { useBookingStore } from "../store/useBookingStore";
 
 export const useGetMoviesById = () => {
-  // const ids = [748783, 46195, 280180, 519182, 1008409];
-  // change ids with storedIds for getting actual movies from local storage
+  const movieId = useBookingStore((state) => state.movieId);
 
-  const storedIds = JSON.parse(localStorage.Movies || "[]");
+  // Assuming movieId should be an array of numbers, parse it as such
+  const storedIds: number[] = movieId
+    ? JSON.parse(localStorage.getItem("Movies") || "[]").map(Number)
+    : [];
 
   const results = useQueries({
     queries: storedIds.map((id: number) => ({
