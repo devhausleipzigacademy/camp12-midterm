@@ -10,8 +10,15 @@ import { useAuthenticated } from "../hooks/useAuthenticated";
 
 export function NavBarLayout() {
   // navigate to login page if no authentifictaion
+  const navigate = useNavigate();
 
-  useAuthenticated();
+  useEffect(() => {
+    const authState = JSON.parse(localStorage.getItem("auth-state") || "{}");
+    if (!authState || !authState.token) {
+      navigate("/login");
+    }
+  });
+  
   const navItems = [
     { icon: HomeIcon, route: "/" },
     { icon: FilmIcon, route: "movies" },

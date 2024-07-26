@@ -6,6 +6,7 @@ import { KeyIcon } from "@heroicons/react/24/solid";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 import { LoginInput } from "../components/input";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -20,6 +21,22 @@ export function LoginPage() {
   const navigate = useNavigate();
   const hardCodePw = "Password123456";
   const hardCodeMail = "letsgo@hyped.com";
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { data } = await axios.post("http://localhost:3000/login", {
+      email,
+      password,
+    });
+
+    await axios.get("http://localhost:3000/protected", {
+      headers: {
+        Authorization: data.token,
+      },
+    });
+    localStorage.setItem("auth-state", JSON.stringify({ token: data.token }));
+    navigate("/");
+  };
 
   const {
     register,
@@ -33,14 +50,6 @@ export function LoginPage() {
   //   console.log("submit");
   // };
 
-  const onSubmit = (data: LoginSchema) => {
-    if (data.email === hardCodeMail && data.password === hardCodePw) {
-      localStorage.setItem("auth-state", JSON.stringify({ authState: true }));
-      navigate("/");
-    } else {
-      console.error("Invalid Email or Password");
-    }
-  };
 
   return (
     <div className="h-screen bg-dark px-5 py-8">
@@ -56,22 +65,27 @@ export function LoginPage() {
         className="flex flex-col justify-between h-full"
         noValidate
       >
-        <div className="flex flex-col gap-4">
-          <LoginInput
-            icon={<KeyIcon />}
-            placeholder="Enter your email"
-            type="email"
-            error={errors.email?.message}
-            {...register("email")}
-          />
-          <LoginInput
-            icon={<LockClosedIcon />}
-            placeholder="Enter your password"
-            type="password"
-            error={errors.password?.message}
-            {...register("password")}
-          />
-          <Button type="submit">Login</Button>
+        <div className="flex flex-col justify-between h-screen">
+          <div className="flex flex-col gap-4">
+            <LoginInput
+              onChange={(e) => setEmail(e.target.value)}
+              icon={<KeyIcon />}
+              placeholder="Enter your email"
+              type="email"
+              pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Standard email regex pattern without % or +
+            />
+            <LoginInput
+              onChange={(e) => setPassword(e.target.value)}
+              icon={<LockClosedIcon />}
+              placeholder="Enter your password"
+              type="password"
+              minLength={6}
+            />
+            {error && <p className="text-white flex justify-center">{error}</p>}
+          </div>
+          <div className="flex ">
+            <Button onClick={() => handleSubmit} children={"Login"} />
+          </div>
         </div>
       </form>
     </div>
