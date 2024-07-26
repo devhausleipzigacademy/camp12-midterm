@@ -7,6 +7,7 @@ import { LockClosedIcon } from "@heroicons/react/24/outline";
 import { LoginInput } from "../components/input";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -18,10 +19,10 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>;
 
 export function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const hardCodePw = "Password123456";
-  const hardCodeMail = "letsgo@hyped.com";
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { data } = await axios.post("http://localhost:3000/login", {
@@ -38,18 +39,13 @@ export function LoginPage() {
     navigate("/");
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginSchema>({
+  const { handleSubmit } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
 
   // const onSubmit = () => {
   //   console.log("submit");
   // };
-
 
   return (
     <div className="h-screen bg-dark px-5 py-8">
@@ -61,7 +57,7 @@ export function LoginPage() {
         your watchlist.
       </p>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={onSubmit}
         className="flex flex-col justify-between h-full"
         noValidate
       >
@@ -81,7 +77,6 @@ export function LoginPage() {
               type="password"
               minLength={6}
             />
-            {error && <p className="text-white flex justify-center">{error}</p>}
           </div>
           <div className="flex ">
             <Button onClick={() => handleSubmit} children={"Login"} />

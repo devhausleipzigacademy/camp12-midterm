@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { NavBar } from "../components/nav-bar";
 import {
   FilmIcon,
@@ -6,7 +6,7 @@ import {
   QueueListIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import { useAuthenticated } from "../hooks/useAuthenticated";
+import { useEffect } from "react";
 
 export function NavBarLayout() {
   // navigate to login page if no authentifictaion
@@ -18,7 +18,7 @@ export function NavBarLayout() {
       navigate("/login");
     }
   });
-  
+
   const navItems = [
     { icon: HomeIcon, route: "/" },
     { icon: FilmIcon, route: "movies" },
