@@ -21,6 +21,8 @@ export function LoginPage() {
   const hardCodePw = "Password123456";
   const hardCodeMail = "letsgo@hyped.com";
 
+  // const {setToken} = useContext(AuthContext)
+
   const {
     register,
     handleSubmit,
@@ -28,10 +30,6 @@ export function LoginPage() {
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
-
-  // const onSubmit = () => {
-  //   console.log("submit");
-  // };
 
   const onSubmit = (data: LoginSchema) => {
     if (data.email === hardCodeMail && data.password === hardCodePw) {

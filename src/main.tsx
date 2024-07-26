@@ -17,6 +17,7 @@ import { Movies } from "./routes/movies";
 import { ReservationPage } from "./routes/reservation-page";
 import GenreOverviewPage from "./routes/genres";
 import { Ticket } from "./routes/ticket";
+import { AuthProvider } from "./AuthContext";
 
 const queryClient = new QueryClient();
 
@@ -90,7 +91,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );
