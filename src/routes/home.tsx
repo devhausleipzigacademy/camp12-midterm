@@ -4,7 +4,7 @@ import { ComboSearchBox } from "../components/search-box";
 import { SectionTitle } from "../components/section-title";
 import { useState, useEffect } from "react";
 import { Genre } from "../utils/genre";
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 import { useGetMovies } from "../hooks/useGetMovies";
 import { useGetGenres } from "../hooks/useGetGenres";
 import { Movie } from "../types/movie";
@@ -108,12 +108,17 @@ export function Homepage() {
           <p>Error loading movies. Please try again later.</p>
         ) : filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => (
-            <img
-              key={movie.id}
-              className="rounded-md snap-center"
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-            />
+            <Link
+              to={`/movies/${movie.id}`}
+              className="rounded-md snap-center flex-shrink-0 w-36"
+            >
+              <img
+                key={movie.id}
+                className="h-full w-full"
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+              />
+            </Link>
           ))
         ) : (
           <p>No movies found for the selected genres.</p>

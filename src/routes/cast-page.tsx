@@ -14,7 +14,7 @@ type GroupedCrewMember = {
 
 export const CastPage = () => {
   const { movieId } = useParams();
-  const { data: movie } = useGetSingleMovie(movieId!);
+  const { data: movie } = useGetSingleMovie();
   console.log(movie?.credits);
   // toggle between cast and crew
   const [selectedTab, setSelectedTab] = useState<"cast" | "crew">("cast");

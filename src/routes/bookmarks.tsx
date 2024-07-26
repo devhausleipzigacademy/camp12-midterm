@@ -19,6 +19,20 @@ const BookmarkedMovies: React.FC = () => {
     setActivePage(page);
   };
 
+  if (movies.length === 0) {
+    return (
+      <div className="flex flex-col justify-center text-white-dimmed text-center text-2xl gap-4 h-full">
+        <p>You have no bookmarks yet.</p>
+        <a
+          className="underline underline-offset-4 tesxt-white-dimmed"
+          href="/movies"
+        >
+          Go to movies
+        </a>
+      </div>
+    );
+  }
+
   if (isLoading) {
     return <div>Loading...</div>;
   }

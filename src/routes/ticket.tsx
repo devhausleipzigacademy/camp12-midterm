@@ -1,30 +1,21 @@
 import Barcode from "react-barcode";
 import { Button } from "../components/button";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useGetSingleMovie } from "../hooks/useGetSingleMovie";
+import { useBookingStore } from "../store/useBookingStore"; // Import the store
 
-type Props = {
-  date?: string;
-  time?: string;
-};
+export function Ticket() {
+  // Access the global state
+  const { date, time, seats: selectedSeats } = useBookingStore();
+  const { data: movie } = useGetSingleMovie();
+  const totalPrice = 14.99; // Assuming the price is constant or can be managed in the store as well
 
-export function Ticket({ date = "08 Jan", time = "14:30" }: Props) {
-  const location = useLocation();
-  const { data: movie } = useGetSingleMovie("974262");
-  const totalPrice = 14.99;
-  const selectedSeats = ["A1", "A2"];
-  console.log("Received state:", location.state); // Debugging
-
-  // const { movieDetails, selectedSeats, totalPrice } = location.state || {};
-
-  // console.log("Selected seats:", selectedSeats); // Debugging
-
+  // Fetch movie details based on movieId
+  // This is just an example. You might want to handle it differently based on your setup.
   const imageUrl =
     movie && movie.details.backdrop_path
       ? `https://image.tmdb.org/t/p/w500${movie.details.backdrop_path}`
       : "https://www.zooplus.de/magazin/wp-content/uploads/2022/03/pallas-katze-auf-felsen-1024x683.jpg";
-
-  console.log("Received state:", location.state); // Debugging
 
   return (
     /* Background */
@@ -48,11 +39,11 @@ export function Ticket({ date = "08 Jan", time = "14:30" }: Props) {
             <div className="flex flex-row gap-8 gap-y-4 flex-wrap justify-between ">
               <div className="flex flex-col">
                 <h3 className="text-dark text-sm">Date</h3>
-                <h2 className="text-m font-semibold">{date}</h2>
+                <h2 className="text-m font-semibold">{date || "N/A"}</h2>
               </div>
               <div className="flex flex-col">
                 <h3 className="text-dark text-sm">Time</h3>
-                <h2 className="text-m font-semibold">{time}</h2>
+                <h2 className="text-m font-semibold">{time || "N/A"}</h2>
               </div>
               <div className="flex flex-col">
                 <h3 className="text-dark text-sm">Price</h3>
@@ -61,7 +52,7 @@ export function Ticket({ date = "08 Jan", time = "14:30" }: Props) {
               <div className="flex flex-col">
                 <h3 className="text-dark text-sm">Seats</h3>
                 <h2 className="text-m font-semibold">
-                  {selectedSeats.join(", ")}
+                  {selectedSeats.length > 0 ? selectedSeats.join(", ") : "N/A"}
                 </h2>
               </div>
             </div>
