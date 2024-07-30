@@ -77,6 +77,8 @@ export function MovieDetails() {
 		});
 	};
 
+	// console.log(movie);
+
 	const userRating = movie.details.vote_average * 10;
 	const ratingColorClass =
 		userRating < 50
