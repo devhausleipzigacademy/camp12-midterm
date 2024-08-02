@@ -19,15 +19,12 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>;
 
 export function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async (values: LoginSchema) => {
 
     const { data } = await axios.post("http://localhost:3000/login", {
-      email,
-      password,
+      email: values.email,
+      password: values.password,
     });
 
     await axios.get("http://localhost:3000/protected", {
@@ -39,7 +36,7 @@ export function LoginPage() {
     navigate("/");
   };
 
-  const { handleSubmit } = useForm<LoginSchema>({
+  const { handleSubmit, register } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
 
@@ -57,29 +54,30 @@ export function LoginPage() {
         your watchlist.
       </p>
       <form
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-between h-full"
         noValidate
       >
         <div className="flex flex-col justify-between h-screen">
           <div className="flex flex-col gap-4">
             <LoginInput
-              onChange={(e) => setEmail(e.target.value)}
               icon={<KeyIcon />}
               placeholder="Enter your email"
               type="email"
-              pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Standard email regex pattern without % or +
+              {...register("email")}
+              //pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Standard email regex pattern without % or +
             />
             <LoginInput
-              onChange={(e) => setPassword(e.target.value)}
               icon={<LockClosedIcon />}
               placeholder="Enter your password"
               type="password"
               minLength={6}
+              {...register("password")}
             />
           </div>
           <div className="flex ">
-            <Button onClick={() => handleSubmit} children={"Login"} />
+            <Button type="submit"
+            >Log in</Button>
           </div>
         </div>
       </form>
